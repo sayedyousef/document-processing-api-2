@@ -2,15 +2,21 @@
   <div class="max-w-xl mx-auto mt-6 p-6 bg-white rounded-lg shadow-md">
     <h3 class="text-lg font-semibold mb-4">Results Ready</h3>
 
+    <!-- Job expired warning -->
+    <div v-if="jobExpired" class="mb-4 p-3 bg-yellow-100 border border-yellow-400 text-yellow-700 rounded">
+      Job has expired. Please click "Process More Documents" below to process a new document.
+    </div>
+
     <!-- Add refresh button -->
     <button
+      v-if="!jobExpired"
       @click="refreshResults"
       class="mb-3 px-3 py-1 bg-gray-100 text-gray-600 text-sm rounded hover:bg-gray-200"
     >
       Refresh Results
     </button>
 
-    <div class="space-y-3">
+    <div v-if="!jobExpired" class="space-y-3">
       <div
         v-for="(result, index) in currentResults"
         :key="index"
@@ -44,8 +50,8 @@
       </div>
     </div>
 
-    <!-- MathJax Script Section -->
-    <div class="mt-6 border-t pt-4">
+    <!-- MathJax Script Section (hide when expired) -->
+    <div v-if="!jobExpired" class="mt-6 border-t pt-4">
       <h4 class="text-sm font-semibold text-gray-700 mb-2">MathJax Script (add to HTML head):</h4>
       <div class="relative">
         <textarea
@@ -66,7 +72,7 @@
 
     <button
       @click="downloadAll"
-      v-if="currentResults.length > 1 && !hasErrors"
+      v-if="!jobExpired && currentResults.length > 1 && !hasErrors"
       class="mt-4 w-full px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors font-semibold"
     >
       Download All as ZIP
@@ -89,11 +95,12 @@ import { API_BASE_URL } from '../config'
 export default {
   props: ['results', 'jobId'],
   emits: ['reset'],
-  setup(props) {
+  setup(props, { emit }) {
     // Use local state for results that can be refreshed
     const currentResults = ref(props.results)
     const copySuccess = ref(false)
     const mathjaxTextarea = ref(null)
+    const jobExpired = ref(false)
 
     // MathJax script for rendering equations
     const mathjaxScript = `<script>
@@ -158,34 +165,69 @@ export default {
 
     // Download with refresh check
     const downloadFileWithRefresh = async (index) => {
-      // First refresh to get latest results
-      await refreshResults()
+      try {
+        // First check if job still exists
+        const statusResponse = await axios.get(`${API_BASE_URL}/api/status/${props.jobId}`)
 
-      // Wait a bit to ensure backend has finalized
-      await new Promise(resolve => setTimeout(resolve, 500))
+        if (statusResponse.data.error) {
+          alert('Job has expired. Please process your document again.')
+          return
+        }
 
-      // Now download with updated results
-      const url = `${API_BASE_URL}/api/download/${props.jobId}/${index}`
-      console.log('[ResultDownload] Downloading file from:', url)
+        // Update results from status response
+        if (statusResponse.data.results) {
+          currentResults.value = statusResponse.data.results
+        }
 
-      const link = document.createElement('a')
-      link.href = url
-      link.download = currentResults.value[index]?.filename || `download_${index}`
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
+        // Now download
+        const url = `${API_BASE_URL}/api/download/${props.jobId}/${index}`
+        console.log('[ResultDownload] Downloading file from:', url)
+
+        const link = document.createElement('a')
+        link.href = url
+        link.download = currentResults.value[index]?.filename || `download_${index}`
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+      } catch (error) {
+        console.error('[ResultDownload] Download failed:', error)
+        if (error.response?.status === 404) {
+          jobExpired.value = true
+          alert('Job has expired or was not found. Click "Process More Documents" to start over.')
+        } else {
+          alert('Download failed. Please try again.')
+        }
+      }
     }
 
-    const downloadAll = () => {
-      const url = `${API_BASE_URL}/api/download/${props.jobId}`
-      console.log('[ResultDownload] Downloading all as ZIP from:', url)
+    const downloadAll = async () => {
+      try {
+        // First check if job still exists
+        const statusResponse = await axios.get(`${API_BASE_URL}/api/status/${props.jobId}`)
 
-      const link = document.createElement('a')
-      link.href = url
-      link.download = `results_${props.jobId}.zip`
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
+        if (statusResponse.data.error) {
+          alert('Job has expired. Please process your document again.')
+          return
+        }
+
+        const url = `${API_BASE_URL}/api/download/${props.jobId}`
+        console.log('[ResultDownload] Downloading all as ZIP from:', url)
+
+        const link = document.createElement('a')
+        link.href = url
+        link.download = `results_${props.jobId}.zip`
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+      } catch (error) {
+        console.error('[ResultDownload] Download all failed:', error)
+        if (error.response?.status === 404) {
+          jobExpired.value = true
+          alert('Job has expired or was not found. Click "Process More Documents" to start over.')
+        } else {
+          alert('Download failed. Please try again.')
+        }
+      }
     }
 
     // Auto-refresh on mount
@@ -204,7 +246,8 @@ export default {
       mathjaxScript,
       mathjaxTextarea,
       copySuccess,
-      copyMathjaxScript
+      copyMathjaxScript,
+      jobExpired
     }
   }
 }

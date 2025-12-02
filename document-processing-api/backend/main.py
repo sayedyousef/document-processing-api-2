@@ -321,14 +321,14 @@ async def process_job(job_id: str, file_paths: List[Path], processor_type: str, 
                 # Use new full converter with config
                 from word_to_html_full import FullWordToHTMLConverter, ConversionConfig
 
-                # Create config from dict
+                # Create config from dict (defaults: shapes OFF, no equation markers)
                 conv_config = ConversionConfig(
-                    convert_shapes_to_svg=config_dict.get('convert_shapes_to_svg', True) if config_dict else True,
+                    convert_shapes_to_svg=config_dict.get('convert_shapes_to_svg', False) if config_dict else False,
                     include_images=config_dict.get('include_images', True) if config_dict else True,
-                    inline_prefix=config_dict.get('inline_prefix', 'MATHSTARTINLINE') if config_dict else 'MATHSTARTINLINE',
-                    inline_suffix=config_dict.get('inline_suffix', 'MATHENDINLINE') if config_dict else 'MATHENDINLINE',
-                    display_prefix=config_dict.get('display_prefix', 'MATHSTARTDISPLAY') if config_dict else 'MATHSTARTDISPLAY',
-                    display_suffix=config_dict.get('display_suffix', 'MATHENDDISPLAY') if config_dict else 'MATHENDDISPLAY',
+                    inline_prefix=config_dict.get('inline_prefix', '') if config_dict else '',
+                    inline_suffix=config_dict.get('inline_suffix', '') if config_dict else '',
+                    display_prefix=config_dict.get('display_prefix', '') if config_dict else '',
+                    display_suffix=config_dict.get('display_suffix', '') if config_dict else '',
                     include_mathjax=config_dict.get('include_mathjax', True) if config_dict else True,
                     rtl_direction=config_dict.get('rtl_direction', True) if config_dict else True
                 )
@@ -370,14 +370,14 @@ async def process_job(job_id: str, file_paths: List[Path], processor_type: str, 
                 # Use new full converter with config
                 from word_to_html_full import FullWordToHTMLConverter, ConversionConfig
 
-                # Create config from dict
+                # Create config from dict (defaults: shapes OFF, no equation markers)
                 conv_config = ConversionConfig(
-                    convert_shapes_to_svg=config_dict.get('convert_shapes_to_svg', True) if config_dict else True,
+                    convert_shapes_to_svg=config_dict.get('convert_shapes_to_svg', False) if config_dict else False,
                     include_images=config_dict.get('include_images', True) if config_dict else True,
-                    inline_prefix=config_dict.get('inline_prefix', 'MATHSTARTINLINE') if config_dict else 'MATHSTARTINLINE',
-                    inline_suffix=config_dict.get('inline_suffix', 'MATHENDINLINE') if config_dict else 'MATHENDINLINE',
-                    display_prefix=config_dict.get('display_prefix', 'MATHSTARTDISPLAY') if config_dict else 'MATHSTARTDISPLAY',
-                    display_suffix=config_dict.get('display_suffix', 'MATHENDDISPLAY') if config_dict else 'MATHENDDISPLAY',
+                    inline_prefix=config_dict.get('inline_prefix', '') if config_dict else '',
+                    inline_suffix=config_dict.get('inline_suffix', '') if config_dict else '',
+                    display_prefix=config_dict.get('display_prefix', '') if config_dict else '',
+                    display_suffix=config_dict.get('display_suffix', '') if config_dict else '',
                     include_mathjax=config_dict.get('include_mathjax', True) if config_dict else True,
                     rtl_direction=config_dict.get('rtl_direction', True) if config_dict else True
                 )

@@ -44,8 +44,8 @@ class ConversionConfig:
     These settings are applied DURING conversion (from upload page),
     NOT embedded in the output HTML.
     """
-    # Shape conversion
-    convert_shapes_to_svg: bool = True
+    # Shape conversion - default False to ignore Word shapes and equations inside them
+    convert_shapes_to_svg: bool = False
 
     # Image settings
     include_images: bool = True  # Include images in output (always extracted to subfolder)
@@ -695,25 +695,20 @@ class FullWordToHTMLConverter:
                     else:
                         return ''  # Skip image but file is still extracted
 
-        # Check for shapes - convert to SVG if enabled
-        if self.config.convert_shapes_to_svg:
-            wsp = drawing_elem.xpath('.//wps:wsp', namespaces=ns)
-            wpg = drawing_elem.xpath('.//wpg:wgp', namespaces=ns)
+        # Check for shapes (wsp = single shape, wpg = group of shapes)
+        wsp = drawing_elem.xpath('.//wps:wsp', namespaces=ns)
+        wpg = drawing_elem.xpath('.//wpg:wgp', namespaces=ns)
 
-            if wsp or wpg:
+        if wsp or wpg:
+            # This is a Word shape (not an image)
+            if self.config.convert_shapes_to_svg:
+                # Convert shape to SVG
                 svg = self.svg_converter.convert_drawing_to_svg(drawing_elem)
-                # Save SVG to file
                 svg_filename = self._save_svg(svg)
                 return f'<img src="{svg_filename}" alt="Shape" class="shape-svg">'
-
-        # Fallback: extract text from shapes
-        texts = []
-        for t in drawing_elem.xpath('.//w:t/text() | .//a:t/text()', namespaces=ns):
-            if t.strip():
-                texts.append(t.strip())
-
-        if texts:
-            return f'<span class="shape-text">{" ".join(texts)}</span>'
+            else:
+                # Shapes disabled - completely ignore shape and its content
+                return ''
 
         return ''
 

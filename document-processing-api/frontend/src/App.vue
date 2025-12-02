@@ -140,7 +140,7 @@ export default {
       inline_suffix: '',
       display_prefix: '',
       display_suffix: '',
-      convert_shapes_to_svg: true,
+      convert_shapes_to_svg: false,  // Default: ignore Word shapes
       include_images: true,
       include_mathjax: true,
       rtl_direction: true
