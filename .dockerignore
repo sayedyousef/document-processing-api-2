@@ -1,0 +1,50 @@
+# Git
+.git
+.gitignore
+
+# Node
+node_modules
+npm-debug.log
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+venv
+.venv
+ENV
+
+# IDE
+.idea
+.vscode
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+dist
+build
+
+# Temp and output (runtime generated)
+temp/
+output/
+temp_*/
+test_output/
+
+# Test files
+*.test.*
+test docs/
+
+# Local config
+.claude/
+.env
+.env.local
+
+# Logs
+*.log
+
+# Documentation
+*.md
+!README.md

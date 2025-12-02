@@ -4,7 +4,8 @@ FIXED main.py - Works with your existing WordCOMEquationReplacer
 
 from fastapi import FastAPI, File, UploadFile, BackgroundTasks, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, JSONResponse, HTMLResponse
+from fastapi.staticfiles import StaticFiles
 import uuid
 from pathlib import Path
 from typing import List
@@ -15,7 +16,11 @@ import os
 #from doc_processor.main_word_com_equation_replacer import WordCOMEquationReplacer
 
 # Global flag to switch between Word COM and ZIP approaches
-USE_ZIP_APPROACH = False  # Set to False for Word COM, True for ZIP
+# On Windows: can use Word COM (False) or ZIP (True)
+# On Linux/Cloud Run: must use ZIP (automatically set to True)
+import platform
+IS_WINDOWS = platform.system() == 'Windows'
+USE_ZIP_APPROACH = not IS_WINDOWS  # Auto-detect: ZIP on Linux, Word COM on Windows
 
 # Setup simple logging to console
 logging.basicConfig(
@@ -31,6 +36,7 @@ logger = logging.getLogger(__name__)
 
 # Log which approach is being used
 logger.info(f"========================================")
+logger.info(f"Platform: {platform.system()}")
 logger.info(f"EQUATION PROCESSING MODE: {'ZIP' if USE_ZIP_APPROACH else 'Word COM'}")
 logger.info(f"========================================")
 
@@ -536,9 +542,9 @@ async def scan_and_verify(input_file: Path, output_dir: Path) -> Path:
     logger.info(f"Analysis saved to: {output_file}")
     return output_file
 
-@app.get("/")
-async def root():
-    """Health check"""
+@app.get("/api/health")
+async def health():
+    """Health check endpoint"""
     return {
         "status": "running",
         "message": "Document Processing API",
@@ -569,10 +575,55 @@ async def debug_job(job_id: str):
         "equation_approach": "ZIP" if USE_ZIP_APPROACH else "Word COM"
     }
 
+# Serve static frontend files (for Cloud Run deployment)
+STATIC_DIR = BASE_DIR / "static"
+if STATIC_DIR.exists():
+    # Serve static assets (JS, CSS, images)
+    app.mount("/assets", StaticFiles(directory=STATIC_DIR / "assets"), name="assets")
+
+    # Serve index.html for root and SPA routes
+    @app.get("/")
+    async def serve_index():
+        """Serve frontend index.html"""
+        index_file = STATIC_DIR / "index.html"
+        if index_file.exists():
+            return FileResponse(index_file)
+        raise HTTPException(status_code=404, detail="Frontend not found")
+
+    # Serve index.html for all non-API routes (SPA fallback)
+    @app.get("/{full_path:path}")
+    async def serve_spa(full_path: str):
+        # If path starts with api, let it 404 normally
+        if full_path.startswith("api"):
+            raise HTTPException(status_code=404, detail="Not found")
+
+        # Serve index.html for SPA routing
+        index_file = STATIC_DIR / "index.html"
+        if index_file.exists():
+            return FileResponse(index_file)
+        raise HTTPException(status_code=404, detail="Frontend not found")
+
+    logger.info(f"Static files mounted from: {STATIC_DIR}")
+else:
+    # No static files - serve API health at root
+    @app.get("/")
+    async def root():
+        """Health check (no frontend deployed)"""
+        return {
+            "status": "running",
+            "message": "Document Processing API",
+            "equation_approach": "ZIP" if USE_ZIP_APPROACH else "Word COM",
+            "temp_dir": str(TEMP_DIR),
+            "output_dir": str(OUTPUT_DIR)
+        }
+    logger.info("No static directory found - running in API-only mode")
+
 if __name__ == "__main__":
     import uvicorn
+    port = int(os.environ.get("PORT", 8000))
     logger.info("Starting Document Processing API...")
     logger.info(f"Working directory: {Path.cwd()}")
     logger.info(f"Script location: {Path(__file__).parent}")
     logger.info(f"Equation processing: {'ZIP' if USE_ZIP_APPROACH else 'Word COM'} approach")
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    logger.info(f"Port: {port}")
+    uvicorn.run(app, host="0.0.0.0", port=port)
