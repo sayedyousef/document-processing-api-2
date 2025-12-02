@@ -150,6 +150,9 @@ class ShapeToSVGConverter:
         # Get text content
         text_content = self._extract_shape_text(shape_elem)
 
+        # Check if text contains LaTeX equations
+        has_latex = text_content and ('\\(' in text_content or '\\[' in text_content)
+
         svg = []
 
         if shape_type in ['ellipse', 'oval']:
@@ -159,7 +162,13 @@ class ShapeToSVGConverter:
             ry = height / 2
             svg.append(f'<ellipse cx="{cx}" cy="{cy}" rx="{rx}" ry="{ry}" fill="{fill_color}" stroke="{stroke_color}" stroke-width="2"/>')
             if text_content:
-                svg.append(f'<text x="{cx}" y="{cy}" text-anchor="middle" dominant-baseline="middle" font-size="14" fill="#333">{text_content}</text>')
+                if has_latex:
+                    # Use foreignObject for MathJax rendering
+                    svg.append(f'<foreignObject x="{x}" y="{y}" width="{width}" height="{height}">')
+                    svg.append(f'<div xmlns="http://www.w3.org/1999/xhtml" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px;">{text_content}</div>')
+                    svg.append('</foreignObject>')
+                else:
+                    svg.append(f'<text x="{cx}" y="{cy}" text-anchor="middle" dominant-baseline="middle" font-size="14" fill="#333">{text_content}</text>')
 
         elif shape_type in ['rect', 'rectangle', 'roundRect']:
             r = 5 if shape_type == 'roundRect' else 0
@@ -167,7 +176,12 @@ class ShapeToSVGConverter:
             if text_content:
                 tx = x + width / 2
                 ty = y + height / 2
-                svg.append(f'<text x="{tx}" y="{ty}" text-anchor="middle" dominant-baseline="middle" font-size="14" fill="#333">{text_content}</text>')
+                if has_latex:
+                    svg.append(f'<foreignObject x="{x}" y="{y}" width="{width}" height="{height}">')
+                    svg.append(f'<div xmlns="http://www.w3.org/1999/xhtml" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px;">{text_content}</div>')
+                    svg.append('</foreignObject>')
+                else:
+                    svg.append(f'<text x="{tx}" y="{ty}" text-anchor="middle" dominant-baseline="middle" font-size="14" fill="#333">{text_content}</text>')
 
         elif shape_type in ['line', 'straightConnector1']:
             svg.append(f'<line x1="{x}" y1="{y}" x2="{x + width}" y2="{y + height}" stroke="{stroke_color}" stroke-width="2"/>')
@@ -178,7 +192,12 @@ class ShapeToSVGConverter:
             if text_content:
                 tx = x + width / 2
                 ty = y + height / 2
-                svg.append(f'<text x="{tx}" y="{ty}" text-anchor="middle" dominant-baseline="middle" font-size="14" fill="#333">{text_content}</text>')
+                if has_latex:
+                    svg.append(f'<foreignObject x="{x}" y="{y}" width="{width}" height="{height}">')
+                    svg.append(f'<div xmlns="http://www.w3.org/1999/xhtml" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px;">{text_content}</div>')
+                    svg.append('</foreignObject>')
+                else:
+                    svg.append(f'<text x="{tx}" y="{ty}" text-anchor="middle" dominant-baseline="middle" font-size="14" fill="#333">{text_content}</text>')
 
         return '\n'.join(svg)
 
@@ -192,12 +211,20 @@ class ShapeToSVGConverter:
         return '<line x1="50" y1="50" x2="150" y2="50" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>'
 
     def _extract_shape_text(self, shape_elem):
-        """Extract text content from shape"""
+        """Extract text content from shape, including LaTeX equations"""
         texts = []
         for t in shape_elem.xpath('.//w:t/text() | .//a:t/text()', namespaces=self.ns):
-            if t.strip():
+            if t and t.strip():
                 texts.append(t.strip())
-        return ' '.join(texts) if texts else ''
+
+        # Join with spaces, preserving LaTeX markers
+        result = ' '.join(texts) if texts else ''
+
+        # Escape HTML entities but preserve LaTeX
+        if result and '\\' not in result:
+            result = result.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+
+        return result
 
     def convert_vml_to_svg(self, pict_elem):
         """Convert VML pict element to SVG"""
@@ -596,6 +623,14 @@ class FullWordToHTMLConverter:
                 parts.append(self._convert_drawing(child))
             elif tag == 'pict':
                 parts.append(self._convert_pict(child))
+            elif tag == 'AlternateContent':
+                # Handle mc:AlternateContent - shapes are inside mc:Choice/w:drawing
+                drawing = child.xpath('.//w:drawing', namespaces=ns)
+                pict = child.xpath('.//w:pict', namespaces=ns)
+                if drawing:
+                    parts.append(self._convert_drawing(drawing[0]))
+                elif pict:
+                    parts.append(self._convert_pict(pict[0]))
             elif tag == 'footnoteReference':
                 fn_id = child.get(f'{{{ns["w"]}}}id')
                 # Bidirectional linking: reference links to footnote, footnote links back
