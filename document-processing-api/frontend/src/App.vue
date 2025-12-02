@@ -132,14 +132,14 @@ export default {
     const completedJobId = ref(null)
     const results = ref([])
     const processorType = ref('word_to_html')
-    const markerPreset = ref('markers')
+    const markerPreset = ref('none')
 
     // Conversion configuration
     const conversionConfig = reactive({
-      inline_prefix: 'MATHSTARTINLINE',
-      inline_suffix: 'MATHENDINLINE',
-      display_prefix: 'MATHSTARTDISPLAY',
-      display_suffix: 'MATHENDDISPLAY',
+      inline_prefix: '',
+      inline_suffix: '',
+      display_prefix: '',
+      display_suffix: '',
       convert_shapes_to_svg: true,
       include_images: true,
       include_mathjax: true,
