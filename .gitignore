@@ -1,0 +1,98 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+venv/
+ENV/
+env/
+.venv/
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+document-processing-api/frontend/dist/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+app_debug.log
+
+# Temp and output folders (contain processed files)
+document-processing-api/backend/temp/
+document-processing-api/backend/output/
+backend/temp/
+backend/output/
+temp_*/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Test outputs
+test_output/
+*_converted.docx
+*_latex_equations.docx
+
+# Cache
+.cache/
+*.cache
+
+# Byte-compiled / optimized / DLL files
+*.pyc
+*.pyo
+*.pyd
+
+# Distribution / packaging
+*.manifest
+*.spec
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Coverage
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+
+# Windows reserved names
+NUL
+CON
+PRN
+AUX
+
+# Claude settings (local)
+.claude/

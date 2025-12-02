@@ -1,0 +1,16 @@
+{
+  "model": "claude-opus-4-1-20250805",
+  "maxTokens": 64000,
+  "temperature": 0.8,
+  "contextWindow": 200000,
+  "streamingEnabled": true,
+  "fallbackModel": "claude-sonnet-4-1-20250805",
+  "verbose": true,
+  "env": {
+    "CLAUDE_MODEL": "claude-opus-4-1-20250805",
+    "CLAUDE_CODE_MAX_OUTPUT_TOKENS": "32000",
+    "MAX_THINKING_TOKENS": "1024",
+    "CLAUDE_MAX_TOKENS": "64000",
+    "CLAUDE_CONTEXT_WINDOW": "200000"
+  }
+}

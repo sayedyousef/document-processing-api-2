@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word to HTML Converter - Upload</title>
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        /* Upload Area */
+        .upload-area {
+            border: 3px dashed #ccc;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            background: #fafafa;
+        }
+
+        .upload-area:hover, .upload-area.dragover {
+            border-color: #667eea;
+            background: #f0f0ff;
+        }
+
+        .upload-area.has-file {
+            border-color: #28a745;
+            background: #f0fff0;
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .upload-text {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .file-name {
+            margin-top: 15px;
+            padding: 10px;
+            background: #e8f5e9;
+            border-radius: 6px;
+            color: #2e7d32;
+            font-weight: 500;
+        }
+
+        #file-input {
+            display: none;
+        }
+
+        /* Configuration Section */
+        .config-section {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .config-section h2 {
+            margin: 0 0 20px 0;
+            font-size: 18px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .config-group {
+            margin-bottom: 20px;
+        }
+
+        .config-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .config-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #444;
+        }
+
+        .config-group select,
+        .config-group input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .config-group select:focus,
+        .config-group input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .config-group .custom-input {
+            margin-top: 10px;
+            display: none;
+        }
+
+        .config-group .custom-input.visible {
+            display: block;
+        }
+
+        .config-group .hint {
+            font-size: 12px;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        /* Checkbox styling */
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .checkbox-group:hover {
+            border-color: #667eea;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .checkbox-group .checkbox-label {
+            flex: 1;
+        }
+
+        .checkbox-group .checkbox-label strong {
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .checkbox-group .checkbox-label small {
+            color: #666;
+        }
+
+        /* Convert Button */
+        .convert-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .convert-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .convert-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Progress */
+        .progress-container {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 10px;
+            color: #666;
+        }
+
+        /* Result */
+        .result {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .result.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .result.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .download-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 30px;
+            background: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .download-btn:hover {
+            background: #218838;
+        }
+
+        /* Preset buttons */
+        .preset-btns {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .preset-btn {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+
+        .preset-btn:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .preset-btn.active {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Word to HTML Converter</h1>
+        <p class="subtitle">Convert Word documents with equations, shapes, tables, and more</p>
+
+        <!-- Upload Area -->
+        <div class="upload-area" id="upload-area">
+            <div class="upload-icon">📄</div>
+            <div class="upload-text">
+                <strong>Drag & drop your Word file here</strong><br>
+                or click to browse
+            </div>
+            <div class="file-name" id="file-name" style="display:none;"></div>
+        </div>
+        <input type="file" id="file-input" accept=".docx">
+
+        <!-- Configuration -->
+        <div class="config-section">
+            <h2>⚙️ Conversion Settings</h2>
+
+            <!-- Equation Markers Preset -->
+            <div class="config-group">
+                <label>Equation Marker Style:</label>
+                <div class="preset-btns">
+                    <button type="button" class="preset-btn" onclick="setPreset('none')">
+                        None<br><small>Raw LaTeX</small>
+                    </button>
+                    <button type="button" class="preset-btn active" onclick="setPreset('markers')">
+                        Markers<br><small>MATHSTART/END</small>
+                    </button>
+                    <button type="button" class="preset-btn" onclick="setPreset('custom')">
+                        Custom<br><small>Your own</small>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Inline Equation Settings -->
+            <div class="config-group">
+                <label>Inline Equation Wrapper:</label>
+                <select id="inline-prefix" onchange="updateCustomVisibility('inline')">
+                    <option value="">None (empty)</option>
+                    <option value="MATHSTARTINLINE" selected>MATHSTARTINLINE</option>
+                    <option value="[INLINE]">[INLINE]</option>
+                    <option value="custom">Custom...</option>
+                </select>
+                <input type="text" id="inline-prefix-custom" class="custom-input" placeholder="Enter custom prefix">
+
+                <select id="inline-suffix" style="margin-top: 10px;" onchange="updateCustomVisibility('inline-suffix')">
+                    <option value="">None (empty)</option>
+                    <option value="MATHENDINLINE" selected>MATHENDINLINE</option>
+                    <option value="[/INLINE]">[/INLINE]</option>
+                    <option value="custom">Custom...</option>
+                </select>
+                <input type="text" id="inline-suffix-custom" class="custom-input" placeholder="Enter custom suffix">
+                <div class="hint">Wraps inline equations: PREFIX\(...\)SUFFIX</div>
+            </div>
+
+            <!-- Display Equation Settings -->
+            <div class="config-group">
+                <label>Display Equation Wrapper:</label>
+                <select id="display-prefix" onchange="updateCustomVisibility('display')">
+                    <option value="">None (empty)</option>
+                    <option value="MATHSTARTDISPLAY" selected>MATHSTARTDISPLAY</option>
+                    <option value="[DISPLAY]">[DISPLAY]</option>
+                    <option value="custom">Custom...</option>
+                </select>
+                <input type="text" id="display-prefix-custom" class="custom-input" placeholder="Enter custom prefix">
+
+                <select id="display-suffix" style="margin-top: 10px;" onchange="updateCustomVisibility('display-suffix')">
+                    <option value="">None (empty)</option>
+                    <option value="MATHENDDISPLAY" selected>MATHENDDISPLAY</option>
+                    <option value="[/DISPLAY]">[/DISPLAY]</option>
+                    <option value="custom">Custom...</option>
+                </select>
+                <input type="text" id="display-suffix-custom" class="custom-input" placeholder="Enter custom suffix">
+                <div class="hint">Wraps display equations: PREFIX\[...\]SUFFIX</div>
+            </div>
+
+            <!-- Shape Conversion -->
+            <div class="config-group">
+                <label class="checkbox-group">
+                    <input type="checkbox" id="convert-shapes" checked>
+                    <div class="checkbox-label">
+                        <strong>Convert Shapes to SVG</strong>
+                        <small>Converts Word shapes (ovals, rectangles, etc.) to SVG files</small>
+                    </div>
+                </label>
+            </div>
+
+            <!-- Include Images -->
+            <div class="config-group">
+                <label class="checkbox-group">
+                    <input type="checkbox" id="include-images" checked>
+                    <div class="checkbox-label">
+                        <strong>Include Images in HTML</strong>
+                        <small>Images are always extracted to subfolder; this controls if they appear in HTML</small>
+                    </div>
+                </label>
+            </div>
+
+            <!-- Include MathJax -->
+            <div class="config-group">
+                <label class="checkbox-group">
+                    <input type="checkbox" id="include-mathjax" checked>
+                    <div class="checkbox-label">
+                        <strong>Include MathJax Library</strong>
+                        <small>Adds MathJax script for rendering LaTeX equations in browser</small>
+                    </div>
+                </label>
+            </div>
+
+            <!-- RTL Support -->
+            <div class="config-group">
+                <label class="checkbox-group">
+                    <input type="checkbox" id="rtl-direction" checked>
+                    <div class="checkbox-label">
+                        <strong>RTL (Right-to-Left) Direction</strong>
+                        <small>For Arabic, Hebrew, and other RTL languages</small>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <!-- Convert Button -->
+        <button class="convert-btn" id="convert-btn" disabled onclick="convertDocument()">
+            Select a file to convert
+        </button>
+
+        <!-- Progress -->
+        <div class="progress-container" id="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="progress-text" id="progress-text">Processing...</div>
+        </div>
+
+        <!-- Result -->
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        // Elements
+        const uploadArea = document.getElementById('upload-area');
+        const fileInput = document.getElementById('file-input');
+        const fileName = document.getElementById('file-name');
+        const convertBtn = document.getElementById('convert-btn');
+        const progressContainer = document.getElementById('progress-container');
+        const progressFill = document.getElementById('progress-fill');
+        const progressText = document.getElementById('progress-text');
+        const result = document.getElementById('result');
+
+        let selectedFile = null;
+
+        // Upload area events
+        uploadArea.addEventListener('click', () => fileInput.click());
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0 && files[0].name.endsWith('.docx')) {
+                handleFile(files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFile(e.target.files[0]);
+            }
+        });
+
+        function handleFile(file) {
+            if (!file.name.endsWith('.docx')) {
+                alert('Please select a .docx file');
+                return;
+            }
+            selectedFile = file;
+            fileName.textContent = '📎 ' + file.name;
+            fileName.style.display = 'block';
+            uploadArea.classList.add('has-file');
+            convertBtn.disabled = false;
+            convertBtn.textContent = 'Convert to HTML';
+            result.style.display = 'none';
+        }
+
+        // Preset buttons
+        function setPreset(preset) {
+            document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.closest('.preset-btn').classList.add('active');
+
+            if (preset === 'none') {
+                document.getElementById('inline-prefix').value = '';
+                document.getElementById('inline-suffix').value = '';
+                document.getElementById('display-prefix').value = '';
+                document.getElementById('display-suffix').value = '';
+            } else if (preset === 'markers') {
+                document.getElementById('inline-prefix').value = 'MATHSTARTINLINE';
+                document.getElementById('inline-suffix').value = 'MATHENDINLINE';
+                document.getElementById('display-prefix').value = 'MATHSTARTDISPLAY';
+                document.getElementById('display-suffix').value = 'MATHENDDISPLAY';
+            } else if (preset === 'custom') {
+                document.getElementById('inline-prefix').value = 'custom';
+                document.getElementById('inline-suffix').value = 'custom';
+                document.getElementById('display-prefix').value = 'custom';
+                document.getElementById('display-suffix').value = 'custom';
+            }
+
+            updateCustomVisibility('inline');
+            updateCustomVisibility('inline-suffix');
+            updateCustomVisibility('display');
+            updateCustomVisibility('display-suffix');
+        }
+
+        function updateCustomVisibility(type) {
+            const select = document.getElementById(type.replace('-suffix', '') + (type.includes('suffix') ? '-suffix' : '-prefix'));
+            const customInput = document.getElementById(type.replace('-suffix', '') + (type.includes('suffix') ? '-suffix-custom' : '-prefix-custom'));
+
+            if (select && customInput) {
+                if (select.value === 'custom') {
+                    customInput.classList.add('visible');
+                } else {
+                    customInput.classList.remove('visible');
+                }
+            }
+        }
+
+        // Get configuration
+        function getConfig() {
+            const getValue = (selectId, customId) => {
+                const select = document.getElementById(selectId);
+                if (select.value === 'custom') {
+                    return document.getElementById(customId).value;
+                }
+                return select.value;
+            };
+
+            return {
+                inline_prefix: getValue('inline-prefix', 'inline-prefix-custom'),
+                inline_suffix: getValue('inline-suffix', 'inline-suffix-custom'),
+                display_prefix: getValue('display-prefix', 'display-prefix-custom'),
+                display_suffix: getValue('display-suffix', 'display-suffix-custom'),
+                convert_shapes_to_svg: document.getElementById('convert-shapes').checked,
+                include_images: document.getElementById('include-images').checked,
+                include_mathjax: document.getElementById('include-mathjax').checked,
+                rtl_direction: document.getElementById('rtl-direction').checked
+            };
+        }
+
+        // API base URL - change this if running on different server
+        const API_BASE = window.location.origin;
+
+        // Convert document
+        async function convertDocument() {
+            if (!selectedFile) return;
+
+            const config = getConfig();
+            console.log('Conversion config:', config);
+
+            // Show progress
+            convertBtn.disabled = true;
+            progressContainer.style.display = 'block';
+            result.style.display = 'none';
+            progressFill.style.width = '10%';
+            progressText.textContent = 'Uploading document...';
+
+            try {
+                // Create form data
+                const formData = new FormData();
+                formData.append('file', selectedFile);
+                formData.append('config', JSON.stringify(config));
+
+                progressFill.style.width = '30%';
+                progressText.textContent = 'Converting equations...';
+
+                // Send to API
+                const response = await fetch(`${API_BASE}/api/convert`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                progressFill.style.width = '70%';
+                progressText.textContent = 'Processing document...';
+
+                const data = await response.json();
+
+                progressFill.style.width = '100%';
+
+                if (data.success) {
+                    progressText.textContent = 'Complete!';
+
+                    setTimeout(() => {
+                        progressContainer.style.display = 'none';
+                        result.className = 'result success';
+                        result.innerHTML = `
+                            <strong>✅ Conversion Successful!</strong><br>
+                            <p>Your document has been converted with the following settings:</p>
+                            <ul style="text-align: left; display: inline-block;">
+                                <li>Inline wrapper: <code>${config.inline_prefix || '(none)'}...${config.inline_suffix || '(none)'}</code></li>
+                                <li>Display wrapper: <code>${config.display_prefix || '(none)'}...${config.display_suffix || '(none)'}</code></li>
+                                <li>SVG shapes: ${config.convert_shapes_to_svg ? 'Yes (saved to images/)' : 'No'}</li>
+                                <li>Include images: ${config.include_images ? 'Yes' : 'No (files still extracted)'}</li>
+                                <li>MathJax: ${config.include_mathjax ? 'Included' : 'Not included'}</li>
+                                <li>RTL: ${config.rtl_direction ? 'Yes' : 'No'}</li>
+                            </ul>
+                            <div style="margin-top: 15px;">
+                                <a href="${API_BASE}${data.download_url}" class="download-btn">Download HTML</a>
+                                <a href="${API_BASE}${data.download_zip_url}" class="download-btn" style="background: #6c757d; margin-left: 10px;">Download ZIP (with images)</a>
+                            </div>
+                            <div style="margin-top: 10px;">
+                                <a href="${API_BASE}/api/preview/${data.output_id}/${data.filename}" target="_blank" style="color: #667eea;">Preview in new tab →</a>
+                            </div>
+                        `;
+                        result.style.display = 'block';
+                        convertBtn.disabled = false;
+                    }, 500);
+                } else {
+                    throw new Error(data.error || 'Conversion failed');
+                }
+
+            } catch (error) {
+                progressContainer.style.display = 'none';
+                result.className = 'result error';
+                result.innerHTML = `
+                    <strong>❌ Conversion Failed</strong><br>
+                    <p>${error.message}</p>
+                    <p style="font-size: 12px; color: #666;">Make sure the API server is running (python api_server.py)</p>
+                `;
+                result.style.display = 'block';
+                convertBtn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>

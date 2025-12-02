@@ -1,0 +1,2569 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <title>Document with LaTeX Equations</title>
+    <script>
+    window.addEventListener('DOMContentLoaded', function() {
+        var content = document.body.innerHTML;
+        
+        content = content.replace(/MATHSTARTINLINE([\s\S]*?)MATHENDINLINE/g, function(match, latex) {
+            return '<span class="inlineMath">' + latex + '</span>';
+        });
+        
+        content = content.replace(/MATHSTARTDISPLAY([\s\S]*?)MATHENDDISPLAY/g, function(match, latex) {
+            return '<div class="Math_box">' + latex + '</div>';
+        });
+        
+        document.body.innerHTML = content;
+        
+        if (window.MathJax) {
+            MathJax.typesetPromise();
+        }
+    });
+    </script>
+    <script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']]
+        }
+    };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+    .inlineMath { display: inline; margin: 0 2px; color: #cc0000; }
+    .Math_box { display: block; margin: 15px auto; text-align: center; color: #008800; font-size: 1.1em; }
+    body { direction: rtl; text-align: right; font-family: Arial, Tahoma, sans-serif; }
+    </style>
+</head>
+<body lang="AR-SA" dir="rtl">
+
+
+<div class=WordSection1>
+
+<h1 align=center dir=RTL style='text-align:center;direction:rtl;unicode-bidi:
+embed'><span lang=AR-SA style='font-family:"Simplified Arabic",serif'>&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;
+</span><span class=rynqvb><b><span dir=LTR style='font-size:18.0pt;line-height:
+107%;font-family:"Times New Roman",serif'>Similarity</span></b></span></h1>
+
+<p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:18.0pt;line-height:115%;font-family:"Simplified Arabic",serif;
+color:#0070C0'>&#1573;&#1602;&#1576;&#1575;&#1604; &#1580;&#1576;&#1585;&#1610;&#1604;</span></p>
+
+<div align=center>
+
+<table class=MsoTableGrid dir=rtl border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none'>
+ <tr>
+  <td width=342 valign=top style='width:256.2pt;border:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <div align=right>
+  <table class=MsoTableGrid dir=rtl border=0 cellspacing=0 cellpadding=0
+   style='border-collapse:collapse;border:none'>
+   <tr>
+    <td width=238 valign=top style='width:178.2pt;padding:0in 5.4pt 0in 5.4pt'>
+    <p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;
+    text-align:center;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+    lang=AR-SA dir=LTR style='font-size:14.0pt;line-height:115%;font-family:
+    "Simplified Arabic",serif'><img width=179 height=173 id="Picture 4"
+    src="&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;%20(&#1580;&#1575;&#1607;&#1586;&#1577;%20&#1604;&#1604;&#1606;&#1588;&#1585;)%20-%20Copy_converted_files/image001.png"></span></p>
+    </td>
+    <td width=193 valign=top style='width:145.0pt;padding:0in 5.4pt 0in 5.4pt'>
+    <p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:right;
+    line-height:115%;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+    dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><img
+    width=116 height=133 id="Picture 5"
+    src="&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;%20(&#1580;&#1575;&#1607;&#1586;&#1577;%20&#1604;&#1604;&#1606;&#1588;&#1585;)%20-%20Copy_converted_files/image002.png"></span></p>
+    </td>
+   </tr>
+  </table>
+  </div>
+  <p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:right;
+  line-height:115%;direction:rtl;unicode-bidi:embed'></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=342 valign=top style='width:256.2pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+  line-height:115%;direction:rtl;unicode-bidi:embed'><span lang=AR-JO
+  style='font-size:14.0pt;line-height:115%;font-family:"Sakkal Majalla";
+  color:black'>&#1575;&#1604;&#1578;&#1593;&#1585;&#1610;&#1601;</span><span
+  dir=LTR></span><span dir=LTR style='font-size:14.0pt;line-height:115%;
+  font-family:"Sakkal Majalla";color:black'><span dir=LTR></span>:</span><span
+  dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:
+  "Sakkal Majalla";color:black'><span dir=RTL></span> <span lang=AR-JO>&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;
+  &#1607;&#1608; &#1593;&#1604;&#1575;&#1602;&#1577; &#1576;&#1610;&#1606;
+  &#1588;&#1603;&#1604;&#1610;&#1606;
+  &#1607;&#1606;&#1583;&#1587;&#1610;&#1610;&#1606;
+  &#1610;&#1603;&#1608;&#1606; &#1571;&#1581;&#1583;&#1607;&#1605;&#1575;
+  &#1606;&#1587;&#1582;&#1577; &#1605;&#1603;&#1576;&#1617;&#1585;&#1577;
+  &#1571;&#1608; &#1605;&#1589;&#1594;&#1617;&#1585;&#1577; &#1605;&#1606;
+  &#1575;&#1604;&#1570;&#1582;&#1585;&#1548; &#1605;&#1593;
+  &#1575;&#1604;&#1581;&#1601;&#1575;&#1592; &#1593;&#1604;&#1609;</span></span><span
+  dir=LTR></span><span dir=LTR style='font-size:14.0pt;line-height:115%;
+  font-family:"Sakkal Majalla";color:black'><span dir=LTR></span>:</span></p>
+  <p class=MsoListParagraphCxSpFirst dir=RTL style='margin-top:0in;margin-right:
+  .5in;margin-bottom:0in;margin-left:0in;text-align:justify;text-indent:-.25in;
+  line-height:115%;direction:rtl;unicode-bidi:embed'><span style='font-size:
+  14.0pt;line-height:115%;font-family:Symbol;color:black'>·<span
+  style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+  dir=RTL></span><span lang=AR-JO style='font-size:14.0pt;line-height:115%;
+  font-family:"Sakkal Majalla";color:black'>&#1578;&#1587;&#1575;&#1608;&#1610;
+  &#1575;&#1604;&#1586;&#1608;&#1575;&#1610;&#1575;
+  &#1575;&#1604;&#1605;&#1578;&#1606;&#1575;&#1592;&#1585;&#1577;.</span></p>
+  <p class=MsoListParagraphCxSpLast dir=RTL style='margin-top:0in;margin-right:
+  .5in;margin-bottom:0in;margin-left:0in;text-align:justify;text-indent:-.25in;
+  line-height:115%;direction:rtl;unicode-bidi:embed'><span style='font-size:
+  14.0pt;line-height:115%;font-family:Symbol;color:black'>·<span
+  style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+  dir=RTL></span><span lang=AR-JO style='font-size:14.0pt;line-height:115%;
+  font-family:"Sakkal Majalla";color:black'>&#1578;&#1606;&#1575;&#1587;&#1576;
+  &#1571;&#1591;&#1608;&#1575;&#1604;
+  &#1575;&#1604;&#1571;&#1590;&#1604;&#1575;&#1593;
+  &#1575;&#1604;&#1605;&#1578;&#1606;&#1575;&#1592;&#1585;&#1577;</span><span
+  dir=LTR></span><span dir=LTR style='font-size:14.0pt;line-height:115%;
+  font-family:"Sakkal Majalla";color:black'><span dir=LTR></span>.</span></p>
+  <p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:right;
+  line-height:115%;direction:rtl;unicode-bidi:embed'><span lang=AR-JO
+  style='font-size:14.0pt;line-height:115%;font-family:"Sakkal Majalla";
+  color:black'>&#1575;&#1604;&#1578;&#1582;&#1589;&#1589;
+  &#1575;&#1604;&#1583;&#1602;&#1610;&#1602;</span><span dir=LTR></span><span
+  dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Sakkal Majalla";
+  color:black'><span dir=LTR></span>:</span><span dir=RTL></span><span
+  style='font-size:14.0pt;line-height:115%;font-family:"Sakkal Majalla";
+  color:black'><span dir=RTL></span> <span lang=AR-JO>&#1575;&#1604;&#1607;&#1606;&#1583;&#1587;&#1577;
+  &#1575;&#1604;&#1571;&#1602;&#1604;&#1610;&#1583;&#1610;&#1577; (</span></span><span
+  dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Sakkal Majalla";
+  color:black'>Euclidean Geometry</span><span dir=RTL></span><span lang=AR-JO
+  style='font-size:14.0pt;line-height:115%;font-family:"Sakkal Majalla";
+  color:black'><span dir=RTL></span>).</span></p>
+  <p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+  line-height:115%;direction:rtl;unicode-bidi:embed'><span lang=AR-JO
+  style='font-size:14.0pt;line-height:115%;font-family:"Sakkal Majalla";
+  color:black'>&#1578;&#1588;&#1575;&#1576;&#1607;
+  &#1575;&#1604;&#1605;&#1590;&#1604;&#1593;&#1575;&#1578;</span><span dir=LTR></span><span
+  dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Sakkal Majalla";
+  color:black'><span dir=LTR></span>:</span><span dir=RTL></span><span
+  style='font-size:14.0pt;line-height:115%;font-family:"Sakkal Majalla";
+  color:black'><span dir=RTL></span> <span lang=AR-JO>&#1575;&#1604;&#1605;&#1590;&#1604;&#1593;&#1575;&#1606;
+  &#1605;&#1578;&#1588;&#1575;&#1576;&#1607;&#1575;&#1606;
+  &#1573;&#1584;&#1575; &#1603;&#1575;&#1606;&#1578;
+  &#1586;&#1608;&#1575;&#1610;&#1575;&#1607;&#1605;&#1575;
+  &#1575;&#1604;&#1605;&#1578;&#1606;&#1575;&#1592;&#1585;&#1577;
+  &#1605;&#1578;&#1587;&#1575;&#1608;&#1610;&#1577;
+  &#1608;&#1571;&#1590;&#1604;&#1575;&#1593;&#1607;&#1605;&#1575;
+  &#1575;&#1604;&#1605;&#1578;&#1606;&#1575;&#1592;&#1585;&#1577;
+  &#1605;&#1578;&#1606;&#1575;&#1587;&#1576;&#1577;</span></span><span dir=LTR></span><span
+  dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Sakkal Majalla";
+  color:black'><span dir=LTR></span>.</span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:18.0pt;line-height:115%;font-family:"Simplified Arabic",serif;
+color:#0070C0'>&nbsp;</span></p>
+
+<p class=MsoNormal dir=RTL style='text-align:justify;text-indent:.5in;
+line-height:115%;direction:rtl;unicode-bidi:embed'><span lang=AR-JO
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;
+(</span><span dir=LTR style='font-size:14.0pt;line-height:115%;font-family:
+"Simplified Arabic",serif'>Similarity</span><span dir=RTL></span><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span>) &#1601;&#1610;
+&#1575;&#1604;&#1585;&#1610;&#1575;&#1590;&#1610;&#1575;&#1578; &#1607;&#1608;
+&#1593;&#1604;&#1575;&#1602;&#1577; &#1576;&#1610;&#1606;
+&#1588;&#1603;&#1604;&#1610;&#1606; &#1576;&#1581;&#1610;&#1579;
+&#1610;&#1603;&#1608;&#1606; &#1571;&#1581;&#1583;&#1607;&#1605;&#1575;
+&#1589;&#1608;&#1585;&#1577; &#1605;&#1603;&#1576;&#1585;&#1577; &#1571;&#1608;
+&#1605;&#1589;&#1594;&#1585;&#1577; &#1605;&#1606;
+&#1575;&#1604;&#1570;&#1582;&#1585;&#1548; &#1605;&#1593;
+&#1575;&#1604;&#1581;&#1601;&#1575;&#1592; &#1593;&#1604;&#1609;
+&#1575;&#1604;&#1606;&#1587;&#1576; &#1606;&#1601;&#1587;&#1607;&#1575; &#1576;&#1610;&#1606;
+&#1571;&#1591;&#1608;&#1575;&#1604;
+&#1575;&#1604;&#1571;&#1590;&#1604;&#1575;&#1593;
+&#1575;&#1604;&#1605;&#1578;&#1606;&#1575;&#1592;&#1585;&#1577;
+&#1608;&#1578;&#1587;&#1575;&#1608;&#1610; &#1575;&#1604;&#1586;&#1608;&#1575;&#1610;&#1575;
+&#1575;&#1604;&#1605;&#1578;&#1606;&#1575;&#1592;&#1585;&#1577;. &#1578;&#1588;&#1575;&#1576;&#1607;
+<span style='color:#0070C0'>&#1575;&#1604;&#1605;&#1590;&#1604;&#1593;&#1575;&#1578;
+</span></span><span dir=LTR></span><span dir=LTR style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'><span dir=LTR></span>(</span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Times New Roman",serif'>Similarity
+of polygons</span><span dir=LTR style='font-size:14.0pt;line-height:115%;
+font-family:"Simplified Arabic",serif'>)</span><span dir=RTL></span><span
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif;
+color:#0070C0'><span dir=RTL></span> </span><span lang=AR-JO style='font-size:
+14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1607;&#1608;
+&#1605;&#1601;&#1607;&#1608;&#1605; &#1601;&#1610;
+&#1575;&#1604;&#1607;&#1606;&#1583;&#1587;&#1577; &#1610;&#1588;&#1610;&#1585;
+&#1573;&#1604;&#1609; &#1571;&#1606; &#1605;&#1590;&#1604;&#1593;&#1610;&#1606;
+- &#1604;&#1607;&#1605;&#1575; &#1575;&#1604;&#1593;&#1583;&#1583; &#1606;&#1601;&#1587;&#1607;
+&#1605;&#1606; &#1575;&#1604;&#1571;&#1590;&#1604;&#1575;&#1593; - &#1610;&#1603;&#1608;&#1606;&#1575;&#1606;
+&#1605;&#1578;&#1588;&#1575;&#1576;&#1607;&#1610;&#1606; <span
+style='color:black'>&#1573;&#1584;&#1575; &#1603;&#1575;&#1606;&#1578;
+&#1586;&#1608;&#1575;&#1610;&#1575;&#1607;&#1605;&#1575; </span>&#1575;&#1604;&#1605;&#1578;&#1606;&#1575;&#1592;&#1585;&#1577;
+<span style='color:black'>&#1605;&#1578;&#1591;&#1575;&#1576;&#1602;&#1577;</span>&#1548;<span
+style='color:#0070C0'> </span>&#1608;&#1603;&#1575;&#1606;&#1578; &#1571;&#1591;&#1608;&#1575;&#1604;
+&#1571;&#1590;&#1604;&#1575;&#1593;&#1607;&#1605;&#1575;
+&#1575;&#1604;&#1605;&#1578;&#1606;&#1575;&#1592;&#1585;&#1577; <span
+style='color:#0070C0'>&#1605;&#1578;&#1606;&#1575;&#1587;&#1576;&#1577;</span>.
+&#1576;&#1605;&#1593;&#1606;&#1609; &#1570;&#1582;&#1585;&#1548;
+&#1610;&#1605;&#1603;&#1606; &#1575;&#1604;&#1581;&#1589;&#1608;&#1604;
+&#1593;&#1604;&#1609; &#1571;&#1581;&#1583;
+&#1575;&#1604;&#1605;&#1590;&#1604;&#1593;&#1610;&#1606; &#1605;&#1606;
+&#1575;&#1604;&#1570;&#1582;&#1585; &#1593;&#1606; &#1591;&#1585;&#1610;&#1602;
+&#1578;&#1603;&#1576;&#1610;&#1585; &#1571;&#1581;&#1583;&#1607;&#1605;&#1575; &#1576;&#1580;&#1605;&#1610;&#1593;
+&#1571;&#1590;&#1604;&#1575;&#1593;&#1607; &#1576;&#1606;&#1587;&#1576;&#1577;
+&#1579;&#1575;&#1576;&#1578;&#1577; &#1605;&#1593;
+&#1575;&#1604;&#1581;&#1601;&#1575;&#1592; &#1593;&#1604;&#1609;
+&#1602;&#1610;&#1575;&#1587;&#1575;&#1578; <span style='color:black'>&#1575;&#1604;&#1586;&#1608;&#1575;&#1610;&#1575;</span>
+&#1571;&#1608; &#1578;&#1589;&#1594;&#1610;&#1585;&#1607;. &#1605;&#1575;
+&#1610;&#1593;&#1606;&#1610; &#1571;&#1606; &#1575;&#1604;&#1605;&#1590;&#1604;&#1593;&#1575;&#1578;
+&#1575;&#1604;&#1605;&#1578;&#1588;&#1575;&#1576;&#1607;&#1577;</span><span
+dir=LTR></span><span dir=LTR style='font-size:14.0pt;line-height:115%;
+font-family:"Simplified Arabic",serif'><span dir=LTR></span> (</span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Times New Roman",serif'>Similar
+polygons</span><span dir=LTR style='font-size:14.0pt;line-height:115%;
+font-family:"Simplified Arabic",serif'>) </span><span lang=AR-JO
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1607;&#1610;
+&#1605;&#1590;&#1604;&#1593;&#1575;&#1578;
+&#1578;&#1578;&#1588;&#1575;&#1576;&#1607; &#1601;&#1610;
+&#1575;&#1604;&#1588;&#1603;&#1604;&#1548;
+&#1608;&#1604;&#1603;&#1606;&#1607;&#1575; &#1602;&#1583;
+&#1578;&#1582;&#1578;&#1604;&#1601; &#1601;&#1610; <span style='color:#0070C0'>&#1575;&#1604;&#1581;&#1580;&#1605;</span>&#1548;
+&#1571;&#1610; &#1571;&#1591;&#1608;&#1575;&#1604; &#1575;&#1604;&#1571;&#1590;&#1604;&#1575;&#1593;&#1548;
+&#1571;&#1610; &#1571;&#1606;&#1607;&#1575; &#1578;&#1588;&#1578;&#1585;&#1603;
+&#1601;&#1602;&#1591; &#1601;&#1610; &#1602;&#1610;&#1575;&#1587;&#1575;&#1578;
+<span style='color:black'>&#1575;&#1604;&#1586;&#1608;&#1575;&#1610;&#1575; </span>&#1575;&#1604;&#1605;&#1578;&#1606;&#1575;&#1592;&#1585;&#1577;
+&#1576;&#1610;&#1606;&#1605;&#1575; &#1578;&#1603;&#1608;&#1606;
+&#1571;&#1591;&#1608;&#1575;&#1604;
+&#1575;&#1604;&#1571;&#1590;&#1604;&#1575;&#1593;
+&#1575;&#1604;&#1605;&#1578;&#1606;&#1575;&#1592;&#1585;&#1577;
+&#1605;&#1578;&#1606;&#1575;&#1587;&#1576;&#1577;<a href="#_ftn1"
+name="_ftnref1" title=""><span class=MsoFootnoteReference><span dir=LTR><span
+class=MsoFootnoteReference><span style='font-size:14.0pt;line-height:107%;
+font-family:"Simplified Arabic",serif'>[1]</span></span></span></span></a>.</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1610;&#1605;&#1603;&#1606;
+&#1575;&#1587;&#1578;&#1582;&#1583;&#1575;&#1605;
+&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607; &#1601;&#1610;
+&#1575;&#1604;&#1603;&#1579;&#1610;&#1585; &#1605;&#1606; &#1575;&#1604;&#1605;&#1608;&#1575;&#1602;&#1601;
+&#1575;&#1604;&#1581;&#1610;&#1575;&#1578;&#1610;&#1577;
+&#1576;&#1588;&#1603;&#1604; &#1593;&#1575;&#1605;&#1548; &#1608;&#1601;&#1610;
+<span style='color:black'>&#1575;&#1604;&#1585;&#1610;&#1575;&#1590;&#1610;&#1575;&#1578;
+</span>&#1576;&#1588;&#1603;&#1604; &#1582;&#1575;&#1589;&#1548; &#1573;&#1584;
+&#1610;&#1605;&#1603;&#1606; &#1575;&#1587;&#1578;&#1582;&#1583;&#1575;&#1605;
+&#1582;&#1608;&#1575;&#1589;
+&#1575;&#1604;&#1605;&#1590;&#1604;&#1593;&#1575;&#1578;
+&#1575;&#1604;&#1605;&#1578;&#1588;&#1575;&#1576;&#1607;&#1577;
+&#1604;&#1578;&#1603;&#1608;&#1610;&#1606; <span style='color:#0070C0'>&#1575;&#1604;&#1605;&#1593;&#1575;&#1583;&#1604;&#1575;&#1578;
+&#1575;&#1604;&#1580;&#1576;&#1585;&#1610;&#1577; </span>&#1604;&#1581;&#1587;&#1575;&#1576;
+&#1571;&#1591;&#1608;&#1575;&#1604; &#1575;&#1604;&#1571;&#1590;&#1604;&#1575;&#1593;
+&#1575;&#1604;&#1605;&#1580;&#1607;&#1608;&#1604;&#1577; &#1608;&#1581;&#1604;&#1607;&#1575;&#1548;
+&#1573;&#1590;&#1575;&#1601;&#1577; &#1573;&#1604;&#1609; &#1571;&#1606;&#1607;
+&#1610;&#1605;&#1603;&#1606; &#1575;&#1587;&#1578;&#1582;&#1583;&#1575;&#1605;
+&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607; &#1604;&#1573;&#1610;&#1580;&#1575;&#1583;
+<span style='color:#0070C0'>&#1602;&#1610;&#1575;&#1587;&#1575;&#1578;
+&#1575;&#1604;&#1586;&#1608;&#1575;&#1610;&#1575; </span>&#1575;&#1604;&#1605;&#1580;&#1607;&#1608;&#1604;&#1577;
+&#1571;&#1610;&#1590;&#1611;&#1575;&#1548; &#1603;&#1605;&#1575;
+&#1610;&#1587;&#1578;&#1582;&#1583;&#1605;
+&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607; &#1601;&#1610;
+&#1575;&#1604;&#1578;&#1591;&#1576;&#1610;&#1602;&#1575;&#1578; <span
+style='color:black'>&#1575;&#1604;&#1607;&#1606;&#1583;&#1587;&#1610;&#1577;</span>&#1548;<span
+style='color:#0070C0'> </span>&#1573;&#1584; &#1610;&#1605;&#1603;&#1606;
+&#1575;&#1587;&#1578;&#1582;&#1583;&#1575;&#1605;
+&#1578;&#1588;&#1575;&#1576;&#1607;
+&#1575;&#1604;&#1605;&#1590;&#1604;&#1593;&#1575;&#1578; &#1601;&#1610;
+&#1578;&#1589;&#1605;&#1610;&#1605; &#1575;&#1604;&#1571;&#1588;&#1603;&#1575;&#1604;
+&#1575;&#1604;&#1607;&#1606;&#1583;&#1587;&#1610;&#1577;
+&#1575;&#1604;&#1605;&#1582;&#1578;&#1604;&#1601;&#1577; &#1608;&#1576;&#1606;&#1575;&#1574;&#1607;&#1575;&#1548;
+&#1608;&#1610;&#1587;&#1578;&#1582;&#1583;&#1605; &#1571;&#1610;&#1590;&#1611;&#1575;
+&#1601;&#1610; &#1605;&#1593;&#1585;&#1601;&#1577; &#1571;&#1576;&#1593;&#1575;&#1583;
+&#1602;&#1591;&#1593;&#1577; &#1571;&#1585;&#1590; &#1605;&#1585;&#1587;&#1608;&#1605;&#1577;
+&#1573;&#1584;&#1575; &#1593;&#1615;&#1604;&#1616;&#1605; &#1605;&#1593;&#1575;&#1605;&#1604;
+<span style='color:black'>&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607; (&#1605;&#1602;&#1610;&#1575;&#1587;
+&#1575;&#1604;&#1585;&#1587;&#1605;).</span></span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1575;&#1604;&#1603;&#1604;&#1605;&#1575;&#1578;
+&#1575;&#1604;&#1605;&#1601;&#1578;&#1575;&#1581;&#1610;&#1577;: &#1575;&#1604;&#1605;&#1590;&#1604;&#1593;&#1575;&#1578;&#1548;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579;&#1575;&#1578;&#1548; &#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;&#1548;
+&#1578;&#1588;&#1575;&#1576;&#1607;
+&#1575;&#1604;&#1605;&#1590;&#1604;&#1593;&#1575;&#1578;&#1548; &#1578;&#1588;&#1575;&#1576;&#1607;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579;&#1575;&#1578;&#1548; &#1578;&#1606;&#1575;&#1587;&#1576;
+&#1575;&#1604;&#1571;&#1590;&#1604;&#1575;&#1593;&#1548; &#1578;&#1591;&#1575;&#1576;&#1602;
+&#1575;&#1604;&#1586;&#1608;&#1575;&#1610;&#1575;&#1548; </span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Times New Roman",serif'>Similarity</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<h2 dir=RTL style='text-align:right;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-family:"Times New Roman",serif'>&#1578;&#1588;&#1575;&#1576;&#1607;
+&#1575;&#1604;&#1605;&#1590;&#1604;&#1593;&#1575;&#1578; </span></h2>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1610;&#1615;&#1593;&#1583;&#1617;</span><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>
+</span><span lang=AR-SA style='font-size:14.0pt;line-height:115%;font-family:
+"Simplified Arabic",serif;color:black'>&#1575;&#1604;&#1605;&#1590;&#1604;&#1593;
+</span><span lang=AR-SA style='font-size:14.0pt;line-height:115%;font-family:
+"Simplified Arabic",serif;color:#0070C0'>&#1588;&#1603;&#1604;&#1611;&#1575;
+&#1605;&#1594;&#1604;&#1602;&#1611;&#1575; </span><span lang=AR-SA
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1579;&#1606;&#1575;&#1574;&#1610;
+&#1575;&#1604;&#1571;&#1576;&#1593;&#1575;&#1583; &#1605;&#1603;&#1608;&#1606;&#1611;&#1575;
+&#1593;&#1604;&#1609; &#1575;&#1604;&#1571;&#1602;&#1604; &#1605;&#1606;
+&#1579;&#1604;&#1575;&#1579; <span style='color:#0070C0'>&#1602;&#1591;&#1593;
+&#1605;&#1587;&#1578;&#1602;&#1610;&#1605;&#1577; </span>&#1594;&#1610;&#1585; &#1605;&#1578;&#1602;&#1575;&#1591;&#1593;&#1577;&#1548;
+&#1578;&#1578;&#1604;&#1575;&#1602;&#1609; &#1603;&#1604;
+&#1575;&#1579;&#1606;&#1578;&#1610;&#1606; &#1605;&#1606;&#1607;&#1605;&#1575;
+&#1601;&#1610; &#1606;&#1602;&#1591;&#1577; &#1608;&#1575;&#1581;&#1583;&#1577;
+&#1578;&#1587;&#1605;&#1609; &#1585;&#1571;&#1587;
+&#1575;&#1604;&#1605;&#1590;&#1604;&#1593; &#1571;&#1608;
+&#1586;&#1575;&#1608;&#1610;&#1578;&#1607;&#1548; &#1608;&#1593;&#1583;&#1583; &#1571;&#1590;&#1604;&#1575;&#1593;&#1607;
+&#1610;&#1587;&#1575;&#1608;&#1610; <span style='color:black'>&#1593;&#1583;&#1583;
+&#1586;&#1608;&#1575;&#1610;&#1575;&#1607;&#1548; </span>&#1608;&#1610;&#1615;&#1587;&#1605;&#1609;
+&#1575;&#1604;&#1605;&#1590;&#1604;&#1593; &#1576;&#1593;&#1583;&#1583; &#1571;&#1590;&#1604;&#1575;&#1593;&#1607;
+(&#1571;&#1608; &#1585;&#1572;&#1608;&#1587;&#1607;)&#1548;
+&#1601;&#1605;&#1579;&#1604;&#1611;&#1575;
+&#1575;&#1604;&#1605;&#1590;&#1604;&#1593; &#1575;&#1604;&#1584;&#1610;
+&#1610;&#1578;&#1603;&#1608;&#1606; &#1605;&#1606; &#1579;&#1604;&#1575;&#1579;&#1577;
+&#1571;&#1590;&#1604;&#1575;&#1593; <span style='color:black'>&#1610;&#1615;&#1587;&#1605;&#1609;
+&#1605;&#1579;&#1604;&#1579;&#1611;&#1575;&#1548; </span>&#1571;&#1605;&#1575;
+&#1575;&#1604;&#1584;&#1610; &#1610;&#1578;&#1603;&#1608;&#1606; &#1605;&#1606;
+&#1571;&#1585;&#1576;&#1593;&#1577; &#1571;&#1590;&#1604;&#1575;&#1593; <span
+style='color:black'>&#1601;&#1610;&#1587;&#1605;&#1609;
+&#1585;&#1576;&#1575;&#1593;&#1610;&#1611;&#1617;&#1575;&#1548; </span>&#1608;&#1607;&#1603;&#1584;&#1575;<a
+href="#_ftn2" name="_ftnref2" title=""><span class=MsoFootnoteReference><span
+dir=LTR><span class=MsoFootnoteReference><span style='font-size:14.0pt;
+line-height:107%;font-family:"Simplified Arabic",serif'>[2]</span></span></span></span></a>.
+</span></p>
+
+<p class=q-text dir=RTL style='margin:0in;text-align:justify;text-indent:.5in;
+line-height:115%;direction:rtl;unicode-bidi:embed'><span lang=AR-JO
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1573;&#1584;&#1575;
+&#1603;&#1575;&#1606;&#1578; <span style='color:#0070C0'>&#1575;&#1604;&#1571;&#1588;&#1603;&#1575;&#1604;
+&#1575;&#1604;&#1605;&#1578;&#1591;&#1575;&#1576;&#1602;&#1577; </span>&#1604;&#1607;&#1575;
+&#1575;&#1604;&#1588;&#1603;&#1604; &#1606;&#1601;&#1587;&#1607; &#1608;&#1575;&#1604;&#1581;&#1580;&#1605;
+&#1606;&#1601;&#1587;&#1607;&#1548; &#1601;&#1573;&#1606; &#1575;&#1604;&#1571;&#1588;&#1603;&#1575;&#1604;
+&#1575;&#1604;&#1605;&#1578;&#1588;&#1575;&#1576;&#1607;&#1577; &#1604;&#1607;&#1575;
+&#1575;&#1604;&#1588;&#1603;&#1604; &#1606;&#1601;&#1587;&#1607; &#1608;&#1604;&#1603;&#1606;&#1607;&#1575;
+&#1578;&#1582;&#1578;&#1604;&#1601; &#1601;&#1610; <span style='color:#0070C0'>&#1575;&#1604;&#1581;&#1580;&#1605;</span>&#1548;
+&#1608;&#1610;&#1585;&#1578;&#1576;&#1591; &#1575;&#1604;&#1588;&#1603;&#1604;
+&#1575;&#1585;&#1578;&#1576;&#1575;&#1591;&#1611;&#1575;
+&#1608;&#1579;&#1610;&#1602;&#1611;&#1575;
+&#1576;&#1605;&#1601;&#1607;&#1608;&#1605; <span style='color:#0070C0'>&#1575;&#1604;&#1578;&#1606;&#1575;&#1587;&#1576;</span>&#1548;
+&#1608;&#1607;&#1584;&#1575; &#1605;&#1575; &#1604;&#1575;&#1581;&#1592;&#1607;
+&#1575;&#1604;&#1581;&#1585;&#1601;&#1610;&#1608;&#1606;
+&#1575;&#1604;&#1605;&#1589;&#1585;&#1610;&#1608;&#1606;
+&#1575;&#1604;&#1602;&#1583;&#1605;&#1575;&#1569; &#1605;&#1606;&#1584;
+&#1601;&#1578;&#1585;&#1577; &#1591;&#1608;&#1610;&#1604;&#1577;&#1563; &#1601;&#1610;&#1602;&#1575;&#1604;
+&#1573;&#1606; &#1575;&#1604;&#1571;&#1590;&#1604;&#1575;&#1593;
+&#1584;&#1575;&#1578; &#1575;&#1604;&#1571;&#1591;&#1608;&#1575;&#1604; </span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(b\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> </span><span lang=AR-AE style='font-size:14.0pt;line-height:
+115%;font-family:"Simplified Arabic",serif'>&#1548;  </span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(c\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-AE>&#1548; </span></span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(d\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> </span><span
+style='font-size:12.0pt;line-height:115%;font-family:"Aptos",sans-serif;
+position:relative;top:17.5pt'><img width=4 height=40
+src="&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;%20(&#1580;&#1575;&#1607;&#1586;&#1577;%20&#1604;&#1604;&#1606;&#1588;&#1585;)%20-%20Copy_converted_files/image003.png"></span><span
+dir=RTL></span><span lang=AR-AE style='font-size:14.0pt;line-height:115%;
+font-family:"Simplified Arabic",serif'><span dir=RTL></span>&#1548; </span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(a:b=c:d\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> </span><span
+style='font-size:12.0pt;line-height:115%;font-family:"Aptos",sans-serif;
+position:relative;top:17.5pt'><img width=4 height=40
+src="&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;%20(&#1580;&#1575;&#1607;&#1586;&#1577;%20&#1604;&#1604;&#1606;&#1588;&#1585;)%20-%20Copy_converted_files/image003.png"></span><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1605;&#1578;&#1606;&#1575;&#1587;&#1576;&#1577;
+&#1573;&#1584;&#1575; &#1603;&#1575;&#1606;  </span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(m\angle
+A\)MATHENDINLINE</span><span dir=RTL></span><span style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'><span dir=RTL></span> </span><span
+lang=AR-AE style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1548;
+&#1573;&#1584; &#1573;&#1606; &#1575;&#1604;&#1606;&#1602;&#1591;&#1578;&#1610;&#1606;
+&#1601;&#1608;&#1602; &#1576;&#1593;&#1590;&#1607;&#1605;&#1575; (:)
+&#1601;&#1610; <span style='color:black'>&#1575;&#1604;&#1585;&#1610;&#1575;&#1590;&#1610;&#1575;&#1578;
+</span>&#1578;&#1615;&#1587;&#1578;&#1582;&#1583;&#1605;
+&#1593;&#1575;&#1583;&#1577;&#1611; &#1604;&#1578;&#1605;&#1579;&#1610;&#1604; <span
+style='color:#0070C0'>&#1575;&#1604;&#1606;&#1587;&#1576;&#1577; </span>(</span><span
+dir=LTR style='font-size:14.0pt;line-height:115%'>Ratio</span><span dir=RTL></span><span
+lang=AR-AE style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span>) &#1576;&#1610;&#1606;
+&#1603;&#1605;&#1610;&#1578;&#1610;&#1606;&#1548; &#1608;&#1575;&#1604;&#1606;&#1587;&#1576;&#1577;
+&#1578;&#1593;&#1576;&#1585; &#1593;&#1606;
+&#1575;&#1604;&#1593;&#1604;&#1575;&#1602;&#1577;
+&#1575;&#1604;&#1603;&#1605;&#1610;&#1577; &#1576;&#1610;&#1606;
+&#1602;&#1610;&#1605;&#1578;&#1610;&#1606;&#1548; &#1608;&#1578;&#1615;&#1602;&#1585;&#1571;
+&#1608;&#1601;&#1602; &#1605;&#1575; &#1610;&#1604;&#1610;:
+&quot;&#1606;&#1587;&#1576;&#1577; &#1603;&#1584;&#1575; &#1573;&#1604;&#1609;
+&#1603;&#1584;&#1575;&quot;<a href="#_ftn3" name="_ftnref3" title=""><span
+class=MsoFootnoteReference><span dir=LTR><span class=MsoFootnoteReference><span
+style='font-size:14.0pt;line-height:107%;font-family:"Simplified Arabic",serif'>[3]</span></span></span></span></a>.</span></p>
+
+<p class=q-text dir=RTL style='margin:0in;text-align:justify;text-indent:.5in;
+line-height:115%;direction:rtl;unicode-bidi:embed'><b><span lang=AR-SA
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1578;&#1593;&#1585;&#1610;&#1601;:
+(&#1578;&#1588;&#1575;&#1576;&#1607; &#1575;&#1604;&#1605;&#1590;&#1604;&#1593;&#1575;&#1578;)
+</span></b></p>
+
+<p class=q-text dir=RTL style='margin-bottom:12.0pt;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-SA style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1610;&#1578;&#1588;&#1575;&#1576;&#1607;
+&#1605;&#1590;&#1604;&#1593;&#1575;&#1606; &#1604;&#1607;&#1605;&#1575; &#1575;&#1604;&#1593;&#1583;&#1583;
+&#1606;&#1601;&#1587;&#1607; &#1605;&#1606; &#1575;&#1604;&#1571;&#1590;&#1604;&#1575;&#1593;
+&#1573;&#1584;&#1575; &#1603;&#1575;&#1606;&#1578; &#1586;&#1608;&#1575;&#1610;&#1575;&#1607;&#1605;&#1575;
+&#1575;&#1604;&#1605;&#1578;&#1606;&#1575;&#1592;&#1585;&#1577; &#1605;&#1578;&#1591;&#1575;&#1576;&#1602;&#1577;&#1548;
+&#1608;&#1571;&#1590;&#1604;&#1575;&#1593;&#1607;&#1605;&#1575; &#1575;&#1604;&#1605;&#1578;&#1606;&#1575;&#1592;&#1585;&#1577;
+&#1605;&#1578;&#1606;&#1575;&#1587;&#1576;&#1577;&#1548;
+&#1608;&#1610;&#1585;&#1605;&#1586;
+&#1604;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607; &#1576;&#1610;&#1606;
+&#1575;&#1604;&#1571;&#1588;&#1603;&#1575;&#1604;
+&#1575;&#1604;&#1607;&#1606;&#1583;&#1587;&#1610;&#1577; &#1576;&#1575;&#1604;&#1585;&#1605;&#1586;
+&quot;~&quot;<a href="#_ftn4" name="_ftnref4" title=""><span
+class=MsoFootnoteReference><span dir=LTR><span class=MsoFootnoteReference><span
+style='font-size:14.0pt;line-height:107%;font-family:"Simplified Arabic",serif'>[4]</span></span></span></span></a>.
+</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-SA style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1610;&#1615;&#1602;&#1589;&#1583;
+&#1576;&#1578;&#1591;&#1575;&#1576;&#1602; <span style='color:black'>&#1575;&#1604;&#1586;&#1608;&#1575;&#1610;&#1575;
+&#1575;&#1604;&#1605;&#1578;&#1606;&#1575;&#1592;&#1585;&#1577; </span>&#1571;&#1606;
+&#1604;&#1607;&#1575; &#1575;&#1604;&#1602;&#1610;&#1575;&#1587; &#1606;&#1601;&#1587;&#1607;&#1548;
+&#1608;&#1610;&#1615;&#1602;&#1589;&#1583; &#1576;&#1578;&#1606;&#1575;&#1587;&#1576;
+&#1575;&#1604;&#1571;&#1590;&#1604;&#1575;&#1593; &#1571;&#1606; &#1575;&#1604;&#1606;&#1587;&#1576;&#1577;
+&#1576;&#1610;&#1606; &#1603;&#1604; &#1590;&#1604;&#1593;&#1610;&#1606; &#1605;&#1578;&#1606;&#1575;&#1592;&#1585;&#1610;&#1606;
+&#1579;&#1575;&#1576;&#1578;&#1577; &#1604;&#1603;&#1604; &#1575;&#1604;&#1571;&#1590;&#1604;&#1575;&#1593;.</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-SA style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1601;&#1605;&#1579;&#1604;&#1611;&#1575;&#1548;
+&#1575;&#1604;&#1585;&#1605;&#1586;  </span><span dir=LTR style='font-size:
+14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(A\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-SA>&#1601;&#1610;
+&#1575;&#1604;&#1585;&#1610;&#1575;&#1590;&#1610;&#1575;&#1578;
+&#1608;&#1575;&#1604;&#1607;&#1606;&#1583;&#1587;&#1577;
+&#1610;&#1615;&#1587;&#1578;&#1582;&#1583;&#1605;
+&#1604;&#1604;&#1573;&#1588;&#1575;&#1585;&#1577; &#1573;&#1604;&#1609; &quot;<span
+style='color:#0070C0'>&#1602;&#1610;&#1575;&#1587;
+&#1575;&#1604;&#1586;&#1575;&#1608;&#1610;&#1577;</span></span></span><span
+dir=LTR></span><span dir=LTR style='font-size:14.0pt;line-height:115%;
+font-family:"Simplified Arabic",serif'><span dir=LTR></span>&quot;
+MATHSTARTINLINE\(m\)MATHENDINLINE </span><span dir=RTL></span><span lang=AR-JO
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span>.</span></p>
+
+<p class=MsoListParagraphCxSpFirst dir=RTL style='margin-top:0in;margin-right:
+1.25in;margin-bottom:0in;margin-left:0in;text-align:justify;text-indent:-.25in;
+line-height:115%;direction:rtl;unicode-bidi:embed'><span style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'>-<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+dir=RTL></span><span lang=AR-SA style='font-size:14.0pt;line-height:115%;
+font-family:"Simplified Arabic",serif'>&#1571;&#1605;&#1575; &#1575;&#1604;&#1581;&#1585;&#1601;
+ </span><span dir=LTR style='font-size:14.0pt;line-height:115%;font-family:
+"Simplified Arabic",serif'>MATHSTARTINLINE\(\angle A\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-SA>&#1607;&#1606;&#1575; &#1601;&#1610;&#1593;&#1606;&#1610;</span></span><span
+dir=LTR></span><span dir=LTR style='font-size:14.0pt;line-height:115%;
+font-family:"Simplified Arabic",serif'><span dir=LTR></span>&quot;</span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Times New Roman",serif'>measure</span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&quot;</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> </span><span lang=AR-AE style='font-size:14.0pt;line-height:
+115%;font-family:"Simplified Arabic",serif'>(</span><span lang=AR-SA
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif;
+color:black'>&#1602;&#1610;&#1575;&#1587;</span><span lang=AR-SA
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>)</span><span
+dir=LTR></span><span dir=LTR style='font-size:14.0pt;line-height:115%;
+font-family:"Simplified Arabic",serif'><span dir=LTR></span>.</span></p>
+
+<p class=MsoListParagraphCxSpLast dir=RTL style='margin-top:0in;margin-right:
+1.25in;margin-bottom:0in;margin-left:0in;text-align:justify;text-indent:-.25in;
+line-height:115%;direction:rtl;unicode-bidi:embed'><span dir=RTL></span><span
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>-<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+dir=RTL></span><span dir=RTL></span><span style='font-size:14.0pt;line-height:
+115%;font-family:"Simplified Arabic",serif'><span dir=RTL></span> </span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(A\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-SA>&#1610;&#1593;&#1606;&#1610;
+&quot;&#1575;&#1604;&#1586;&#1575;&#1608;&#1610;&#1577; </span></span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(m\angle
+A\)MATHENDINLINE</span><span dir=RTL></span><span style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'><span dir=RTL></span> <span
+lang=AR-SA>.</span></span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-SA style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1573;&#1584;&#1606;
+ </span><span dir=LTR style='font-size:14.0pt;line-height:115%;font-family:
+"Simplified Arabic",serif'>MATHSTARTINLINE\(A\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-SA>&#1610;&#1593;&#1606;&#1610;
+&#1602;&#1610;&#1575;&#1587; &#1575;&#1604;&#1586;&#1575;&#1608;&#1610;&#1577;</span></span><span
+dir=LTR></span><span lang=AR-SA dir=LTR style='font-size:14.0pt;line-height:
+115%;font-family:"Simplified Arabic",serif'><span dir=LTR></span> </span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'> MATHSTARTINLINE\(ABCD\)MATHENDINLINE
+</span><span lang=AR-SA style='font-size:14.0pt;line-height:115%;font-family:
+"Simplified Arabic",serif'>&#1576;&#1608;&#1581;&#1583;&#1577;
+&#1605;&#1593;&#1610;&#1606;&#1577;&#1548; &#1605;&#1579;&#1604; <span
+style='color:#0070C0'>&#1575;&#1604;&#1583;&#1585;&#1580;&#1575;&#1578; </span>&#1571;&#1608;
+<span style='color:#0070C0'>&#1575;&#1604;&#1585;&#1575;&#1583;&#1610;&#1575;&#1606;</span>&#1548;
+&#1608;&#1610;&#1615;&#1587;&#1578;&#1582;&#1583;&#1605; &#1593;&#1575;&#1583;</span><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1577;&#1611;</span><span
+lang=AR-SA style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>
+&#1601;&#1610; &#1581;&#1587;&#1575;&#1576;
+&#1602;&#1610;&#1575;&#1587;&#1575;&#1578;
+&#1575;&#1604;&#1586;&#1608;&#1575;&#1610;&#1575; &#1601;&#1610;
+&#1575;&#1604;&#1571;&#1588;&#1603;&#1575;&#1604;
+&#1575;&#1604;&#1607;&#1606;&#1583;&#1587;&#1610;&#1577;</span><span dir=LTR></span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=LTR></span>.</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-SA style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1605;&#1604;&#1575;&#1581;&#1592;&#1575;&#1578;
+&#1578;&#1582;&#1589; &#1578;&#1588;&#1575;&#1576;&#1607; &#1575;&#1604;&#1605;&#1590;&#1604;&#1593;&#1575;&#1578;<a
+href="#_ftn5" name="_ftnref5" title=""><span class=MsoFootnoteReference><span
+dir=LTR><span class=MsoFootnoteReference><span style='font-size:14.0pt;
+line-height:107%;font-family:"Simplified Arabic",serif'>[5]</span></span></span></span></a>:</span><span
+dir=LTR></span><span lang=AR-JO dir=LTR style='font-size:14.0pt;line-height:
+115%;font-family:"Simplified Arabic",serif'><span dir=LTR></span> </span></p>
+
+<p class=MsoListParagraphCxSpFirst dir=RTL style='margin-top:0in;margin-right:
+40.5pt;margin-bottom:0in;margin-left:0in;text-align:justify;line-height:115%;
+direction:rtl;unicode-bidi:embed'><span lang=AR-JO style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'>&#1571;. &#1603;&#1604;
+&#1605;&#1590;&#1604;&#1593; &#1605;&#1588;&#1575;&#1576;&#1607; &#1604;&#1606;&#1601;&#1587;&#1607;
+&#1576;&#1605;&#1593;&#1575;&#1605;&#1604; &#1578;&#1588;&#1575;&#1576;&#1607;
+1.</span></p>
+
+<p class=MsoListParagraphCxSpMiddle dir=RTL style='margin-top:0in;margin-right:
+40.5pt;margin-bottom:0in;margin-left:0in;text-align:justify;line-height:115%;
+direction:rtl;unicode-bidi:embed'><span lang=AR-JO style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif;color:black'>&#1576;. &#1575;&#1604;&#1605;&#1590;&#1604;&#1593;&#1575;&#1606;
+&#1575;&#1604;&#1605;&#1578;&#1591;&#1575;&#1576;&#1602;&#1575;&#1606; </span><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1605;&#1578;&#1588;&#1575;&#1576;&#1607;&#1575;&#1606;.</span></p>
+
+<p class=MsoListParagraphCxSpMiddle dir=RTL style='margin-top:0in;margin-right:
+40.5pt;margin-bottom:0in;margin-left:0in;text-align:justify;line-height:115%;
+direction:rtl;unicode-bidi:embed'><span lang=AR-JO style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'>&#1578;. &#1603;&#1604;
+&#1575;&#1604;&#1605;&#1585;&#1576;&#1593;&#1575;&#1578; &#1605;&#1578;&#1588;&#1575;&#1576;&#1607;&#1577;&#1563;
+&#1608;&#1584;&#1604;&#1603; &#1604;&#1571;&#1606; &#1580;&#1605;&#1610;&#1593;
+&#1586;&#1608;&#1575;&#1610;&#1575; &#1575;&#1604;&#1605;&#1585;&#1576;&#1593; &#1602;&#1575;&#1574;&#1605;&#1577;&#1548;
+&#1608;&#1571;&#1591;&#1608;&#1575;&#1604; &#1571;&#1590;&#1604;&#1575;&#1593;&#1607;
+&#1605;&#1578;&#1587;&#1575;&#1608;&#1610;&#1577;.</span></p>
+
+<p class=MsoListParagraphCxSpMiddle dir=RTL style='margin-top:0in;margin-right:
+40.5pt;margin-bottom:0in;margin-left:0in;text-align:justify;line-height:115%;
+direction:rtl;unicode-bidi:embed'><span lang=AR-JO style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif;color:black'>&#1579;. </span><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif;
+color:#5B9BD5'>&#1575;&#1604;&#1605;&#1590;&#1604;&#1593;&#1575;&#1578;
+&#1575;&#1604;&#1605;&#1606;&#1578;&#1592;&#1605;&#1577; </span><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1575;&#1604;&#1578;&#1610;
+&#1604;&#1607;&#1575; &#1575;&#1604;&#1593;&#1583;&#1583; &#1606;&#1601;&#1587;&#1607;
+&#1605;&#1606; &#1575;&#1604;&#1571;&#1590;&#1604;&#1575;&#1593;
+&#1580;&#1605;&#1610;&#1593;&#1607;&#1575; &#1605;&#1578;&#1588;&#1575;&#1576;&#1607;&#1577;.</span></p>
+
+<p class=MsoListParagraphCxSpMiddle dir=RTL style='margin-top:0in;margin-right:
+40.5pt;margin-bottom:0in;margin-left:0in;text-align:justify;line-height:115%;
+direction:rtl;unicode-bidi:embed'><span lang=AR-JO style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'>&#1580;. &#1573;&#1584;&#1575;
+&#1603;&#1575;&#1606; &#1604;&#1583;&#1610;&#1606;&#1575; &#1579;&#1604;&#1575;&#1579;&#1577;
+&#1605;&#1590;&#1604;&#1593;&#1575;&#1578;&#1548; &#1608;&#1603;&#1575;&#1606; &#1575;&#1604;&#1605;&#1590;&#1604;&#1593;
+&#1575;&#1604;&#1571;&#1608;&#1604; &#1610;&#1588;&#1576;&#1607; &#1575;&#1604;&#1605;&#1590;&#1604;&#1593;
+&#1575;&#1604;&#1579;&#1575;&#1606;&#1610;&#1548; &#1608;&#1603;&#1575;&#1606; &#1575;&#1604;&#1605;&#1590;&#1604;&#1593;
+&#1575;&#1604;&#1579;&#1575;&#1606;&#1610; &#1610;&#1588;&#1576;&#1607; &#1575;&#1604;&#1605;&#1590;&#1604;&#1593;
+&#1575;&#1604;&#1579;&#1575;&#1604;&#1579;&#1548; &#1601;&#1573;&#1606; &#1575;&#1604;&#1605;&#1590;&#1604;&#1593;
+&#1575;&#1604;&#1571;&#1608;&#1604; &#1610;&#1588;&#1576;&#1607; &#1575;&#1604;&#1605;&#1590;&#1604;&#1593;
+&#1575;&#1604;&#1579;&#1575;&#1604;&#1579;.</span></p>
+
+<p class=MsoListParagraphCxSpLast dir=RTL style='margin-top:0in;margin-right:
+40.5pt;margin-bottom:0in;margin-left:0in;text-align:justify;line-height:115%;
+direction:rtl;unicode-bidi:embed'><span lang=AR-JO style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'>&#1581;. &#1580;&#1605;&#1610;&#1593;
+<span style='color:black'>&#1575;&#1604;&#1583;&#1608;&#1575;&#1574;&#1585; </span>&#1605;&#1578;&#1588;&#1575;&#1576;&#1607;&#1577;&#1548;
+&#1593;&#1604;&#1609; &#1575;&#1604;&#1585;&#1594;&#1605; &#1605;&#1606;
+&#1571;&#1606;&#1607;&#1575; &#1604;&#1575; &#1578;&#1589;&#1606;&#1601;
+&#1605;&#1590;&#1604;&#1593;&#1575;&#1578;&#1548; &#1573;&#1584; &#1573;&#1606;&#1607;
+&#1610;&#1605;&#1603;&#1606; &#1575;&#1604;&#1581;&#1589;&#1608;&#1604;
+&#1593;&#1604;&#1609; &#1571;&#1610; &#1583;&#1575;&#1574;&#1585;&#1577;
+&#1605;&#1606; &#1583;&#1575;&#1574;&#1585;&#1577; &#1571;&#1582;&#1585;&#1609;
+&#1576;&#1578;&#1589;&#1594;&#1610;&#1585; &#1606;&#1589;&#1601; &#1602;&#1591;&#1585;&#1607;&#1575;
+&#1571;&#1608; &#1578;&#1603;&#1576;&#1610;&#1585;&#1607;.</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-SA style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1605;&#1579;&#1575;&#1604;
+&#1593;&#1604;&#1609; &#1584;&#1604;&#1603;: &#1581;&#1578;&#1609;
+&#1610;&#1603;&#1608;&#1606; &#1575;&#1604;&#1588;&#1603;&#1604;&#1575;&#1606; </span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(A'B'C'D'\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> </span><span lang=AR-JO style='font-size:14.0pt;line-height:
+115%;font-family:"Simplified Arabic",serif'>&#1548;  </span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTDISPLAY\[m\angle
+A^{'}=m\angle A, m\angle B^{'}=m\angle B,\]MATHENDDISPLAY</span><span dir=RTL></span><span
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>&#1605;&#1578;&#1588;&#1575;&#1576;&#1607;&#1610;&#1606;
+(&#1575;&#1604;&#1588;&#1603;&#1604; 1)&#1548; &#1610;&#1580;&#1576; &#1571;&#1606;
+&#1610;&#1603;&#1608;&#1606;</span></span></p>
+
+<p class=MsoListParagraphCxSpFirst style='margin-top:0in;margin-right:0in;
+margin-bottom:0in;margin-left:58.5pt;text-align:justify;text-indent:.5in;
+line-height:115%'><span dir=LTR></span><span style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'>1.<span
+style='font:7.0pt "Times New Roman"'> </span></span><span dir=LTR></span><span
+lang=AR-JO dir=RTL style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'> </span><span
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(m\angle
+C^{'}=m\angle C,\)MATHENDINLINE<span dir=RTL></span><span dir=RTL><span
+dir=RTL></span>   </span>MATHSTARTDISPLAY\[\frac{AB}{A'B'}=\frac{BC}{B'C'}=\frac{CD}{C'D'}=\frac{DA}{D'A'}=s\]MATHENDDISPLAY<span
+dir=RTL></span><span dir=RTL><span dir=RTL></span> </span></span></p>
+
+<p class=MsoListParagraphCxSpLast style='margin-top:0in;margin-right:0in;
+margin-bottom:0in;margin-left:58.5pt;text-align:justify;text-indent:.5in;
+line-height:115%'><span dir=LTR></span><span style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'>2.<span
+style='font:7.0pt "Times New Roman"'> </span></span><span dir=LTR></span><span
+dir=LTR></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=LTR></span> MATHSTARTINLINE\(s\)MATHENDINLINE </span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-SA style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1578;&#1615;&#1587;&#1605;&#1609;
+&#1575;&#1604;&#1606;&#1587;&#1576;&#1577;
+&#1575;&#1604;&#1579;&#1575;&#1576;&#1578;&#1577;  </span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(ABCD\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-SA>&#1605;&#1593;&#1575;&#1605;&#1604;
+&#1578;&#1588;&#1575;&#1576;&#1607; &#1575;&#1604;&#1605;&#1590;&#1604;&#1593;  </span></span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(A'B'C'D'\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-SA>&#1573;&#1604;&#1609;
+&#1575;&#1604;&#1605;&#1590;&#1604;&#1593;  </span></span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(\frac{1}{s}\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> </span><span lang=AR-JO style='font-size:14.0pt;line-height:
+115%;font-family:"Simplified Arabic",serif'>&#1548;</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-SA style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1608;&#1578;&#1615;&#1587;&#1605;&#1609;
+&#1575;&#1604;&#1606;&#1587;&#1576;&#1577;
+&#1575;&#1604;&#1579;&#1575;&#1576;&#1578;&#1577;  </span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(A'B'C'D'\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span>  <span lang=AR-SA>&#1605;&#1593;&#1575;&#1605;&#1604;
+&#1578;&#1588;&#1575;&#1576;&#1607; &#1575;&#1604;&#1605;&#1590;&#1604;&#1593;  </span></span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(ABCD\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-SA>&#1573;&#1604;&#1609;
+&#1575;&#1604;&#1605;&#1590;&#1604;&#1593; </span></span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(ABCDE\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> </span><span lang=AR-JO style='font-size:14.0pt;line-height:
+115%;font-family:"Simplified Arabic",serif'>.</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<div align=right>
+
+<table class=MsoTableGrid dir=rtl border=0 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none'>
+ <tr>
+  <td width=623 colspan=2 valign=top style='width:467.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoListParagraph align=center dir=RTL style='margin:0in;text-align:
+  center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><b><span
+  lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif;
+  color:black'>[&#1575;&#1604;&#1588;&#1603;&#1604; 1]</span></b></p>
+  <p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+  center;line-height:115%;direction:rtl;unicode-bidi:embed'><b><span
+  lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif;
+  color:black'>&#1605;&#1590;&#1604;&#1593;&#1575;&#1606; &#1605;&#1578;&#1588;&#1575;&#1576;&#1607;&#1575;&#1606;:
+  &#1586;&#1608;&#1575;&#1610;&#1575;&#1607;&#1605;&#1575;
+  &#1575;&#1604;&#1605;&#1578;&#1606;&#1575;&#1592;&#1585;&#1577;
+  &#1605;&#1578;&#1591;&#1575;&#1576;&#1602;&#1577;&#1548; &#1608;&#1571;&#1590;&#1604;&#1575;&#1593;&#1607;&#1605;&#1575;
+  &#1575;&#1604;&#1605;&#1578;&#1606;&#1575;&#1592;&#1585;&#1577;
+  &#1605;&#1578;&#1606;&#1575;&#1587;&#1576;&#1577;</span></b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=312 valign=top style='width:233.75pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+  text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+  lang=AR-SA dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><img
+  width=195 height=212 id="Picture 2"
+  src="&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;%20(&#1580;&#1575;&#1607;&#1586;&#1577;%20&#1604;&#1604;&#1606;&#1588;&#1585;)%20-%20Copy_converted_files/image004.png"></span></p>
+  </td>
+  <td width=312 valign=top style='width:233.75pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+  text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+  lang=AR-SA dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><img
+  width=223 height=256 id="Picture 3"
+  src="&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;%20(&#1580;&#1575;&#1607;&#1586;&#1577;%20&#1604;&#1604;&#1606;&#1588;&#1585;)%20-%20Copy_converted_files/image005.png"></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=623 colspan=2 valign=top style='width:467.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoListParagraph dir=RTL style='margin:0in;text-align:justify;
+  text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+  lang=AR-SA style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif;
+  color:black'>&nbsp;</span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-SA style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1605;&#1579;&#1575;&#1604;:
+</span><span lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:
+"Simplified Arabic",serif'>&#1604;&#1610;&#1603;&#1606;
+&#1575;&#1604;&#1588;&#1603;&#1604;  </span><span dir=LTR style='font-size:
+14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(PQRST\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>&#1608;&#1575;&#1604;&#1588;&#1603;&#1604;  </span></span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(PT=8\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> </span><span lang=AR-SA style='font-size:14.0pt;line-height:
+115%;font-family:"Simplified Arabic",serif'>&#1605;&#1578;&#1588;&#1575;&#1576;&#1607;&#1610;&#1606;
+(&#1575;&#1604;&#1588;&#1603;&#1604; 2). </span><span lang=AR-JO
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1573;&#1584;&#1575;
+&#1593;&#1604;&#1605;&#1578; &#1571;&#1606;  </span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(TS=10\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>&#1548;  </span></span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(ED=6\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>&#1548;  </span></span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(\angle
+PQR=120^\circ\)MATHENDINLINE</span><span dir=RTL></span><span style='font-size:
+14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span dir=RTL></span>
+<span lang=AR-JO>&#1548; &#1608;&#1602;&#1610;&#1575;&#1587;
+&#1575;&#1604;&#1586;&#1575;&#1608;&#1610;&#1577;  </span></span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(AE\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>&#1548;</span></span><span lang=AR-JO
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>
+</span><span lang=AR-SA style='font-size:14.0pt;line-height:115%;font-family:
+"Simplified Arabic",serif'>&#1606;&#1580;&#1583; &#1605;&#1575;
+&#1610;&#1604;&#1610;: </span></p>
+
+<p class=MsoListParagraphCxSpFirst dir=RTL style='margin-top:0in;margin-right:
+1.25in;margin-bottom:0in;margin-left:0in;text-align:justify;text-indent:-.25in;
+line-height:115%;direction:rtl;unicode-bidi:embed'><span style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'>-<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+dir=RTL></span><span lang=AR-SA style='font-size:14.0pt;line-height:115%;
+font-family:"Simplified Arabic",serif'>&#1591;&#1608;&#1604;
+&#1575;&#1604;&#1590;&#1604;&#1593; </span><span dir=LTR style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(\angle
+ABC\)MATHENDINLINE</span><span dir=RTL></span><span style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'><span dir=RTL></span> </span><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>.</span></p>
+
+<p class=MsoListParagraphCxSpMiddle dir=RTL style='margin-top:0in;margin-right:
+1.25in;margin-bottom:0in;margin-left:0in;text-align:justify;text-indent:-.25in;
+line-height:115%;direction:rtl;unicode-bidi:embed'><span style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'>-<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+dir=RTL></span><span lang=AR-JO style='font-size:14.0pt;line-height:115%;
+font-family:"Simplified Arabic",serif'>&#1602;&#1610;&#1575;&#1587;
+&#1575;&#1604;&#1586;&#1575;&#1608;&#1610;&#1577; </span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(ABCDE\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>.</span></span></p>
+
+<p class=MsoListParagraphCxSpLast dir=RTL style='margin-top:0in;margin-right:
+1.25in;margin-bottom:0in;margin-left:0in;text-align:justify;text-indent:-.25in;
+line-height:115%;direction:rtl;unicode-bidi:embed'><span style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'>-<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+dir=RTL></span><span lang=AR-JO style='font-size:14.0pt;line-height:115%;
+font-family:"Simplified Arabic",serif'>&#1605;&#1593;&#1575;&#1605;&#1604; &#1578;&#1588;&#1575;&#1576;&#1607;
+&#1575;&#1604;&#1605;&#1590;&#1604;&#1593;  </span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(PQRST\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>&#1573;&#1604;&#1609;
+&#1575;&#1604;&#1588;&#1603;&#1604; </span></span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(ABCDE\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>.</span></span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<p class=MsoListParagraph align=center dir=RTL style='margin-left:0in;
+text-align:center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:
+embed'><b><span lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:
+"Simplified Arabic",serif'>[&#1575;&#1604;&#1588;&#1603;&#1604; 2]</span></b></p>
+
+<p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><b><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1605;&#1590;&#1604;&#1593;&#1575;&#1606;
+&#1605;&#1578;&#1588;&#1575;&#1576;&#1607;&#1575;&#1606; ( </span></b><b><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(PQRST\)MATHENDINLINE</span></b><span
+dir=RTL></span><b><span style='font-size:14.0pt;line-height:115%;font-family:
+"Simplified Arabic",serif'><span dir=RTL></span> <span lang=AR-JO>&#1608; </span></span></b><b><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTDISPLAY\[\angle
+ABC=\angle PQR=120^\circ\]MATHENDDISPLAY</span></b><span dir=RTL></span><b><span
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> </span></b><b><span lang=AR-SA style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'>)</span></b><b><span
+lang=AR-SA style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>
+</span></b></p>
+
+<div align=right>
+
+<table class=MsoTableGrid dir=rtl border=0 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none'>
+ <tr>
+  <td width=312 valign=top style='width:233.75pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+  center;line-height:115%;direction:rtl;unicode-bidi:embed'><b><span
+  lang=AR-SA dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><img
+  width=210 height=176 id="Picture 17"
+  src="&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;%20(&#1580;&#1575;&#1607;&#1586;&#1577;%20&#1604;&#1604;&#1606;&#1588;&#1585;)%20-%20Copy_converted_files/image006.png"></span></b></p>
+  </td>
+  <td width=312 valign=top style='width:233.75pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+  center;line-height:115%;direction:rtl;unicode-bidi:embed'><b><span
+  lang=AR-SA dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><img
+  width=255 height=210 id="Picture 16"
+  src="&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;%20(&#1580;&#1575;&#1607;&#1586;&#1577;%20&#1604;&#1604;&#1606;&#1588;&#1585;)%20-%20Copy_converted_files/image007.png"></span></b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=623 colspan=2 valign=top style='width:467.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoListParagraph align=center dir=RTL style='margin:0in;text-align:
+  center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+  lang=AR-SA style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif;
+  color:black'>&nbsp;</span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1575;&#1604;&#1581;&#1604;:
+                </span></p>
+
+<p class=MsoListParagraph dir=RTL style='margin-top:0in;margin-right:1.0in;
+margin-bottom:0in;margin-left:0in;text-align:justify;line-height:115%;
+direction:rtl;unicode-bidi:embed'><span lang=AR-JO style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'>&#1571;. &#1576;&#1605;&#1575;
+&#1571;&#1606; &#1575;&#1604;&#1588;&#1603;&#1604;&#1610;&#1606; &#1605;&#1578;&#1588;&#1575;&#1576;&#1607;&#1575;&#1606;&#1548;
+&#1601;&#1573;&#1606; &#1575;&#1604;&#1586;&#1608;&#1575;&#1610;&#1575;
+&#1575;&#1604;&#1605;&#1578;&#1606;&#1575;&#1592;&#1585;&#1577;
+&#1605;&#1578;&#1591;&#1575;&#1576;&#1602;&#1577;&#1548; &#1571;&#1610; &#1605;&#1578;&#1587;&#1575;&#1608;&#1610;&#1577;
+&#1601;&#1610; &#1575;&#1604;&#1602;&#1610;&#1575;&#1587;&#1548; &#1605;&#1575;
+&#1610;&#1593;&#1606;&#1610; &#1571;&#1606; </span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'> </span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(\frac{PT}{AE}=\frac{TS}{ED}.\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> </span></p>
+
+<p class=MsoListParagraph dir=RTL style='margin-top:0in;margin-right:1.0in;
+margin-bottom:0in;margin-left:0in;text-align:justify;line-height:115%;
+direction:rtl;unicode-bidi:embed'><span lang=AR-JO style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'>&#1576;. &#1576;&#1605;&#1575;
+&#1571;&#1606; &#1575;&#1604;&#1588;&#1603;&#1604;&#1610;&#1606; &#1605;&#1578;&#1588;&#1575;&#1576;&#1607;&#1575;&#1606;&#1548;
+&#1601;&#1573;&#1606; &#1575;&#1604;&#1571;&#1590;&#1604;&#1575;&#1593; &#1575;&#1604;&#1605;&#1578;&#1606;&#1575;&#1592;&#1585;&#1577;
+&#1605;&#1578;&#1606;&#1575;&#1587;&#1576;&#1577;&#1548; &#1605;&#1575;
+&#1610;&#1593;&#1606;&#1610; &#1571;&#1606;</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'> </span><i><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(\frac{8}{AE}=\frac{10}{6}.\)MATHENDINLINE</span></i><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> </span></p>
+
+<p class=MsoNormal dir=RTL style='margin-top:0in;margin-right:31.5pt;
+margin-bottom:0in;margin-left:0in;text-align:justify;text-indent:.5in;
+line-height:115%;direction:rtl;unicode-bidi:embed'><span lang=AR-JO
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1571;&#1610;
+&#1571;&#1606;</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-top:0in;margin-right:31.5pt;
+margin-bottom:0in;margin-left:0in;text-align:justify;text-indent:.5in;
+line-height:115%;direction:rtl;unicode-bidi:embed'><span lang=AR-JO
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'> </span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(AE=4.8\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> </span></p>
+
+<p class=MsoNormal dir=RTL style='margin-top:0in;margin-right:31.5pt;
+margin-bottom:0in;margin-left:0in;text-align:justify;text-indent:.5in;
+line-height:115%;direction:rtl;unicode-bidi:embed'><span lang=AR-JO
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1608;&#1576;&#1581;&#1604;
+&#1575;&#1604;&#1578;&#1606;&#1575;&#1587;&#1576; &#1610;&#1603;&#1608;&#1606;
+&#1575;&#1604;&#1606;&#1575;&#1578;&#1580; </span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(ABCDE\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>.</span></span></p>
+
+<p class=MsoListParagraphCxSpFirst dir=RTL style='margin-top:0in;margin-right:
+.75in;margin-bottom:0in;margin-left:0in;text-align:justify;line-height:115%;
+direction:rtl;unicode-bidi:embed'><span lang=AR-JO style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'>&#1578;. &#1605;&#1593;&#1575;&#1605;&#1604;
+&#1578;&#1588;&#1575;&#1576;&#1607; &#1575;&#1604;&#1605;&#1590;&#1604;&#1593;  </span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(PQRST\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>&#1573;&#1604;&#1609;
+&#1575;&#1604;&#1588;&#1603;&#1604;  </span></span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(\frac{6}{10}=\frac{ED}{TS}\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>&#1548; &#1607;&#1608; &#1575;&#1604;&#1606;&#1587;&#1576;&#1577;
+(&#1575;&#1604;&#1579;&#1575;&#1576;&#1578;&#1577;) &#1576;&#1610;&#1606; &#1571;&#1591;&#1608;&#1575;&#1604;
+&#1575;&#1604;&#1571;&#1590;&#1604;&#1575;&#1593;&#1548; &#1605;&#1575;
+&#1610;&#1593;&#1606;&#1610; &#1571;&#1606; </span></span></p>
+
+<p class=MsoListParagraphCxSpLast dir=RTL style='margin-top:0in;margin-right:
+.25in;margin-bottom:0in;margin-left:0in;text-align:justify;text-indent:.5in;
+line-height:115%;direction:rtl;unicode-bidi:embed'><span lang=AR-JO
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1605;&#1593;&#1575;&#1605;&#1604;
+&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607; = </span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(s\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>.</span></span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1605;&#1604;&#1575;&#1581;&#1592;&#1577;:
+&#1573;&#1584;&#1575; &#1603;&#1575;&#1606; &#1605;&#1593;&#1575;&#1605;&#1604;
+&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;  </span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(8
+cm\)MATHENDINLINE</span><span dir=RTL></span><span style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'><span dir=RTL></span> <span
+lang=AR-JO>&#1571;&#1603;&#1576;&#1585; &#1605;&#1606; 1&#1548;
+&#1601;&#1575;&#1604;&#1588;&#1603;&#1604; &#1575;&#1604;&#1571;&#1608;&#1604;
+&#1578;&#1603;&#1576;&#1610;&#1585; &#1604;&#1604;&#1588;&#1603;&#1604;
+&#1575;&#1604;&#1579;&#1575;&#1606;&#1610;&#1548; &#1608;&#1573;&#1584;&#1575;
+&#1603;&#1575;&#1606; &#1605;&#1593;&#1575;&#1605;&#1604;
+&#1575;&#1604;&#1588;&#1576;&#1607; &#1571;&#1602;&#1604; &#1605;&#1606; 1&#1548;
+&#1601;&#1573;&#1606; &#1575;&#1604;&#1588;&#1603;&#1604; &#1575;&#1604;&#1571;&#1608;&#1604;
+&#1578;&#1589;&#1594;&#1610;&#1585; &#1604;&#1604;&#1588;&#1603;&#1604; &#1575;&#1604;&#1579;&#1575;&#1606;&#1610;<a
+href="#_ftn6" name="_ftnref6" title=""><span class=MsoFootnoteReference><span
+dir=LTR><span class=MsoFootnoteReference><span style='font-size:14.0pt;
+line-height:107%;font-family:"Simplified Arabic",serif'>[6]</span></span></span></span></a>.</span></span><span
+lang=AR-JO style='font-family:"Arial",sans-serif'> </span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-AE style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'> </span><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1605;&#1579;&#1575;&#1604;:
+<span style='color:black'>&#1605;&#1587;&#1578;&#1591;&#1610;&#1604;&#1575;&#1606;
+</span>&#1605;&#1578;&#1588;&#1575;&#1576;&#1607;&#1575;&#1606;&#1548;
+&#1576;&#1593;&#1583;&#1575; &#1575;&#1604;&#1571;&#1608;&#1604;  </span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(</span><span
+dir=RTL></span><span lang=AR-JO style='font-size:14.0pt;line-height:115%;
+font-family:"Simplified Arabic",serif'><span dir=RTL></span>&#1548;12 </span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>cm\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>&#1548;  </span></span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(200
+cm\)MATHENDINLINE</span><span dir=RTL></span><span style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'><span dir=RTL></span> <span
+lang=AR-JO>&#1608;&#1605;&#1581;&#1610;&#1591;
+&#1575;&#1604;&#1579;&#1575;&#1606;&#1610;  </span></span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(x\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>&#1548; &#1573;&#1584;&#1575;
+&#1571;&#1585;&#1583;&#1606;&#1575; &#1573;&#1610;&#1580;&#1575;&#1583; &#1576;&#1593;&#1583;&#1610;
+&#1575;&#1604;&#1605;&#1587;&#1578;&#1591;&#1610;&#1604; &#1575;&#1604;&#1579;&#1575;&#1606;&#1610;
+&#1608;&#1605;&#1587;&#1575;&#1581;&#1578;&#1607;<a href="#_ftn7"
+name="_ftnref7" title=""><span class=MsoFootnoteReference><span dir=LTR><span
+class=MsoFootnoteReference><span style='font-size:14.0pt;line-height:107%;
+font-family:"Simplified Arabic",serif'>[7]</span></span></span></span></a>. </span></span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1575;&#1604;&#1581;&#1604;:
+&#1606;&#1601;&#1585;&#1590; &#1571;&#1606; &#1591;&#1608;&#1604;
+&#1575;&#1604;&#1605;&#1587;&#1578;&#1591;&#1610;&#1604;
+&#1575;&#1604;&#1579;&#1575;&#1606;&#1610;  </span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(y\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>&#1608;&#1593;&#1585;&#1590;&#1607; </span></span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(2x+2y=200,\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>.</span></span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1608;&#1605;&#1606;
+&#1575;&#1604;&#1605;&#1593;&#1591;&#1610;&#1575;&#1578; &#1601;&#1573;&#1606;&#1607;
+&#1581;&#1587;&#1576; &#1602;&#1575;&#1606;&#1608;&#1606; <span
+style='color:#0070C0'>&#1575;&#1604;&#1605;&#1581;&#1610;&#1591; </span>&#1604;&#1604;&#1605;&#1587;&#1578;&#1591;&#1610;&#1604;
+&#1606;&#1587;&#1578;&#1606;&#1578;&#1580; &#1571;&#1606; </span></p>
+
+<p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'> </span><i><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(y=100-x,\)MATHENDINLINE</span></i><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> </span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1605;&#1575;
+&#1610;&#1593;&#1606;&#1610; &#1571;&#1606;</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'> </span><i><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(\frac{x}{12}=\frac{y}{8},\)MATHENDINLINE</span></i><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> </span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1608;&#1576;&#1605;&#1575;
+&#1571;&#1606;
+&#1575;&#1604;&#1605;&#1587;&#1578;&#1591;&#1610;&#1604;&#1610;&#1606;
+&#1605;&#1578;&#1588;&#1575;&#1576;&#1607;&#1575;&#1606; &#1601;&#1573;&#1606; </span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'> </span><i><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(y\)MATHENDINLINE</span></i><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> </span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1606;&#1593;&#1608;&#1590;
+&#1605;&#1603;&#1575;&#1606; &#1602;&#1610;&#1605;&#1577;  </span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(100-x\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>&#1576;&#1575;&#1604;&#1602;&#1610;&#1605;&#1577;
+ </span></span><span dir=LTR style='font-size:14.0pt;line-height:115%;
+font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(\frac{x}{12}=\frac{100-x}{8}.\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>&#1606;&#1581;&#1589;&#1604; &#1593;&#1604;&#1609;</span></span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'> </span><i><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(x=60
+cm\)MATHENDINLINE</span></i><span dir=RTL></span><span style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'><span dir=RTL></span> </span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1608;&#1576;&#1581;&#1604;
+&#1575;&#1604;&#1605;&#1593;&#1575;&#1583;&#1604;&#1577; &#1610;&#1603;&#1608;&#1606;
+&#1575;&#1604;&#1606;&#1575;&#1578;&#1580; &#1591;&#1608;&#1604;
+&#1575;&#1604;&#1605;&#1587;&#1578;&#1591;&#1610;&#1604;
+&#1575;&#1604;&#1579;&#1575;&#1606;&#1610; &#1607;&#1608; </span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(y=40
+cm\)MATHENDINLINE</span><span dir=RTL></span><span style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'><span dir=RTL></span> <span
+lang=AR-JO>.</span></span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1573;&#1584;&#1606;
+</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1593;&#1585;&#1590;
+&#1575;&#1604;&#1605;&#1587;&#1578;&#1591;&#1610;&#1604;
+&#1575;&#1604;&#1579;&#1575;&#1606;&#1610; &#1607;&#1608;  </span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(xy=2400
+cm^{2}\)MATHENDINLINE</span><span dir=RTL></span><span style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'><span dir=RTL></span> <span
+lang=AR-JO>&#1548;</span></span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1605;&#1587;&#1575;&#1581;&#1577;
+&#1575;&#1604;&#1605;&#1587;&#1578;&#1591;&#1610;&#1604;
+&#1575;&#1604;&#1579;&#1575;&#1606;&#1610; &#1607;&#1610; </span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(1:120\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>.</span></span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1605;&#1579;&#1575;&#1604;:
+&#1601;&#1610; &#1605;&#1582;&#1591;&#1591;
+&#1604;&#1604;&#1591;&#1575;&#1576;&#1602; &#1575;&#1604;&#1571;&#1585;&#1590;&#1610;
+&#1604;&#1571;&#1581;&#1583; &#1575;&#1604;&#1605;&#1606;&#1575;&#1586;&#1604; (&#1575;&#1604;&#1588;&#1603;&#1604;
+3) &#1576;&#1605;&#1602;&#1610;&#1575;&#1587; &#1585;&#1587;&#1605;  </span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(1:120\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>&#1548; &#1573;&#1584;&#1575;
+&#1571;&#1585;&#1583;&#1606;&#1575; &#1573;&#1610;&#1580;&#1575;&#1583; &#1605;&#1587;&#1575;&#1581;&#1577;
+&#1594;&#1585;&#1601;&#1577; &#1575;&#1604;&#1575;&#1587;&#1578;&#1602;&#1576;&#1575;&#1604;:</span></span></p>
+
+<p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><b><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>[&#1575;&#1604;&#1588;&#1603;&#1604;
+3]</span></b></p>
+
+<p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><b><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'> &#1605;&#1582;&#1591;&#1591;
+&#1604;&#1604;&#1591;&#1575;&#1576;&#1602; &#1575;&#1604;&#1571;&#1585;&#1590;&#1610;
+&#1604;&#1571;&#1581;&#1583; &#1575;&#1604;&#1605;&#1606;&#1575;&#1586;&#1604;
+&#1576;&#1605;&#1602;&#1610;&#1575;&#1587; &#1585;&#1587;&#1605;  </span></b><b><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(6
+cm\)MATHENDINLINE</span></b><span dir=RTL></span><b><span style='font-size:
+14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span dir=RTL></span>
+</span></b></p>
+
+<div align=right>
+
+<table class=MsoTableGrid dir=rtl border=0 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none'>
+ <tr>
+  <td width=623 valign=top style='width:467.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+  text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+  style='position:absolute;z-index:-1895811072;left:0px;margin-left:20px;
+  margin-top:19190px;width:1560px;height:1px'><img width=624 height=0
+  src="&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;%20(&#1580;&#1575;&#1607;&#1586;&#1577;%20&#1604;&#1604;&#1606;&#1588;&#1585;)%20-%20Copy_converted_files/image008.png"></span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+dir=RTL></span><span lang=AR-JO style='font-size:14.0pt;line-height:115%;
+font-family:"Simplified Arabic",serif'><span dir=RTL></span>                        
+&#1594;&#1585;&#1601;&#1577; &#1575;&#1604;&#1605;&#1604;&#1575;&#1576;&#1587;                 
+&#1594;&#1585;&#1601;&#1577; &#1575;&#1604;&#1575;&#1587;&#1578;&#1602;&#1576;&#1575;&#1604;</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>                                                                                              
+&#1576;&#1604;&#1603;&#1608;&#1606;&#1577;</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>      
+</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>                 
+&#1594;&#1585;&#1601;&#1577; &#1606;&#1608;&#1605;</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>                                                              
+&#1575;&#1604;&#1605;&#1583;&#1582;&#1604;</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1575;&#1604;&#1581;&#1604;:
+&#1591;&#1608;&#1604; &#1594;&#1585;&#1601;&#1577;
+&#1575;&#1604;&#1575;&#1587;&#1578;&#1602;&#1576;&#1575;&#1604; &#1601;&#1610;
+&#1575;&#1604;&#1585;&#1587;&#1605; &#1607;&#1608;  </span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(4.5
+cm\)MATHENDINLINE</span><span dir=RTL></span><span style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'><span dir=RTL></span> <span
+lang=AR-JO>&#1548; &#1608;&#1593;&#1585;&#1590;&#1607;&#1575; &#1607;&#1608; </span></span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(6\times
+120=720 cm=7.2 m\)MATHENDINLINE</span><span dir=RTL></span><span
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>.</span></span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1573;&#1584;&#1606;
+</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-top:0in;margin-right:63.0pt;
+margin-bottom:0in;margin-left:0in;text-align:justify;text-indent:.5in;
+line-height:115%;direction:rtl;unicode-bidi:embed'><span lang=AR-JO
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1575;&#1604;&#1591;&#1608;&#1604;
+&#1575;&#1604;&#1581;&#1602;&#1610;&#1602;&#1610; &#1607;&#1608; </span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(4.5\times
+120=540 cm=5.4 m\)MATHENDINLINE</span><span dir=RTL></span><span
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>.</span></span></p>
+
+<p class=MsoNormal dir=RTL style='margin-top:0in;margin-right:63.0pt;
+margin-bottom:0in;margin-left:0in;text-align:justify;text-indent:.5in;
+line-height:115%;direction:rtl;unicode-bidi:embed'><span lang=AR-JO
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1575;&#1604;&#1593;&#1585;&#1590;
+&#1575;&#1604;&#1581;&#1602;&#1610;&#1602;&#1610; &#1607;&#1608; </span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(38.88\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>.</span></span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1605;&#1575;
+&#1610;&#1593;&#1606;&#1610; &#1571;&#1606; &#1605;&#1587;&#1575;&#1581;&#1577;
+&#1594;&#1585;&#1601;&#1577; &#1575;&#1604;&#1575;&#1587;&#1578;&#1602;&#1576;&#1575;&#1604;
+&#1607;&#1610;</span><span lang=AR-JO style='font-size:14.0pt;line-height:115%;
+font-family:"Simplified Arabic",serif'>  </span><span dir=LTR style='font-size:
+14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(A=7.2\times
+5.4=38.88 m^{2}.\)MATHENDINLINE</span><span dir=RTL></span><span
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-SA> &#1605;&#1578;&#1585;&#1611;&#1575;</span></span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-SA style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'> </span><i><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(s\)MATHENDINLINE</span></i><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> </span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+line-height:115%;direction:rtl;unicode-bidi:embed'><b><span lang=AR-SA
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></b></p>
+
+<h2 dir=RTL style='text-align:right;direction:rtl;unicode-bidi:embed'><span
+lang=AR-SA style='font-family:"Times New Roman",serif'> &#1578;&#1588;&#1575;&#1576;&#1607;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579;&#1575;&#1578; </span></h2>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif;
+color:black'>&#1575;&#1604;&#1605;&#1579;&#1604;&#1579; &#1607;&#1608;
+&#1605;&#1590;&#1604;&#1593; &#1579;&#1604;&#1575;&#1579;&#1610; &#1575;&#1604;&#1571;&#1590;&#1604;&#1575;&#1593;&#1563;
+&#1573;&#1584; &#1610;&#1578;&#1603;&#1608;&#1606; &#1605;&#1606;
+&#1579;&#1604;&#1575;&#1579; &#1602;&#1591;&#1593;
+&#1605;&#1587;&#1578;&#1602;&#1610;&#1605;&#1577;&#1548; </span><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1578;&#1615;&#1587;&#1605;&#1609;
+&#1571;&#1590;&#1604;&#1575;&#1593;&#1607;&#1548;
+&#1608;&#1578;&#1578;&#1602;&#1575;&#1591;&#1593; &#1606;&#1602;&#1575;&#1591;
+&#1606;&#1607;&#1575;&#1610;&#1578;&#1607;&#1575; &#1593;&#1606;&#1583;
+&#1606;&#1602;&#1575;&#1591; &#1578;&#1593;&#1585;&#1601;
+&#1576;&#1575;&#1587;&#1605; &#1575;&#1604;&#1585;&#1572;&#1608;&#1587;</span><span
+dir=LTR></span><span dir=LTR style='font-size:14.0pt;line-height:115%;
+font-family:"Simplified Arabic",serif'><span dir=LTR></span>.</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>&#1578;&#1606;&#1589;
+&#1575;&#1604;&#1606;&#1592;&#1585;&#1610;&#1577;
+&#1575;&#1604;&#1571;&#1587;&#1575;&#1587;&#1610;&#1577;
+&#1604;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607; &#1593;&#1604;&#1609;
+&#1571;&#1606; &#1575;&#1604;&#1602;&#1591;&#1593;&#1577;
+&#1575;&#1604;&#1605;&#1587;&#1578;&#1602;&#1610;&#1605;&#1577;
+&#1578;&#1602;&#1587;&#1605; &#1590;&#1604;&#1593;&#1610;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579; &#1573;&#1604;&#1609;
+&#1571;&#1580;&#1586;&#1575;&#1569; &#1605;&#1578;&#1606;&#1575;&#1587;&#1576;&#1577;
+&#1573;&#1584;&#1575; &#1608;&#1601;&#1602;&#1591; &#1573;&#1584;&#1575;
+&#1603;&#1575;&#1606;&#1578; &#1575;&#1604;&#1602;&#1591;&#1593;&#1577;
+&#1605;&#1608;&#1575;&#1586;&#1610;&#1577; &#1604;&#1604;&#1590;&#1604;&#1593; &#1575;&#1604;&#1579;&#1575;&#1604;&#1579;
+&#1604;&#1604;&#1605;&#1579;&#1604;&#1579;&#1548;
+&#1608;&#1610;&#1605;&#1603;&#1606; &#1573;&#1593;&#1575;&#1583;&#1577;
+&#1589;&#1610;&#1575;&#1594;&#1577; &#1606;&#1592;&#1585;&#1610;&#1577;
+&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;
+&#1576;&#1575;&#1593;&#1578;&#1576;&#1575;&#1585;&#1607;&#1575;
+&#1606;&#1592;&#1585;&#1610;&#1577;
+&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607; (&#1586;&#1575;&#1608;&#1610;&#1577;-&#1586;&#1575;&#1608;&#1610;&#1577;-&#1586;&#1575;&#1608;&#1610;&#1577;)
+&#1608;&#1601;&#1602; &#1605;&#1575; &#1610;&#1604;&#1610;: &#1604;&#1571;&#1610;
+&#1605;&#1579;&#1604;&#1579;&#1610;&#1606; &#1578;&#1603;&#1608;&#1606; &#1575;&#1604;&#1586;&#1608;&#1575;&#1610;&#1575;
+&#1605;&#1578;&#1606;&#1575;&#1592;&#1585;&#1577; &#1605;&#1578;&#1591;&#1575;&#1576;&#1602;&#1577;
+&#1573;&#1584;&#1575; &#1608;&#1601;&#1602;&#1591; &#1573;&#1584;&#1575; &#1603;&#1575;&#1606;&#1578;
+&#1571;&#1590;&#1604;&#1575;&#1593;&#1607;&#1605;&#1575;
+&#1575;&#1604;&#1605;&#1578;&#1606;&#1575;&#1592;&#1585;&#1577;
+&#1605;&#1578;&#1606;&#1575;&#1587;&#1576;&#1577;.
+&#1610;&#1585;&#1578;&#1576;&#1591; &#1575;&#1604;&#1605;&#1579;&#1604;&#1579;&#1575;&#1606;
+&#1575;&#1604;&#1605;&#1578;&#1588;&#1575;&#1576;&#1607;&#1575;&#1606; &#1576;&#1605;&#1593;&#1575;&#1605;&#1604;
+&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;  </span></span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(\alpha
+,\beta ,\gamma\)MATHENDINLINE</span><span dir=RTL></span><span
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>&#1548; &#1573;&#1584; &#1573;&#1606;&#1607; &#1573;&#1584;&#1575;
+&#1603;&#1575;&#1606;&#1578; &#1571;&#1591;&#1608;&#1575;&#1604; &#1571;&#1590;&#1604;&#1575;&#1593;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579; &#1575;&#1604;&#1571;&#1608;&#1604;  </span></span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(s\alpha
+,s\beta ,s\gamma\)MATHENDINLINE</span><span dir=RTL></span><span
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>&#1548; &#1601;&#1573;&#1606; &#1571;&#1591;&#1608;&#1575;&#1604;
+&#1571;&#1590;&#1604;&#1575;&#1593; &#1575;&#1604;&#1605;&#1579;&#1604;&#1579;
+&#1575;&#1604;&#1579;&#1575;&#1606;&#1610; &#1607;&#1610;  </span></span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(</span><span
+dir=RTL></span><span lang=AR-JO style='font-size:14.0pt;line-height:115%;
+font-family:"Simplified Arabic",serif'><span dir=RTL></span>&#1548;180</span><span
+dir=LTR></span><span dir=LTR style='font-size:14.0pt;line-height:115%;
+font-family:"Simplified Arabic",serif'><span dir=LTR></span>^\circ\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <a href="#_ftn8" name="_ftnref8" title=""><span
+class=MsoFootnoteReference><span lang=AR-JO><span dir=LTR><span
+class=MsoFootnoteReference><span style='font-size:14.0pt;line-height:107%;
+font-family:"Simplified Arabic",serif'>[8]</span></span></span></span></span></a><span
+lang=AR-JO>.</span></span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1573;&#1590;&#1575;&#1601;&#1577;
+&#1573;&#1604;&#1609;
+&#1575;&#1604;&#1575;&#1587;&#1578;&#1582;&#1583;&#1575;&#1605; &#1575;&#1604;&#1608;&#1575;&#1587;&#1593;
+&#1575;&#1604;&#1606;&#1591;&#1575;&#1602; &#1604;&#1605;&#1593;&#1575;&#1605;&#1604;&#1575;&#1578;
+&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607; &#1601;&#1610;
+&#1582;&#1591;&#1591; &#1575;&#1604;&#1576;&#1606;&#1575;&#1569;
+&#1608;&#1575;&#1604;&#1582;&#1585;&#1575;&#1574;&#1591;
+&#1575;&#1604;&#1580;&#1594;&#1585;&#1575;&#1601;&#1610;&#1577;&#1563;
+&#1573;&#1584; &#1610;&#1615;&#1593;&#1583;&#1617;
+&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;
+&#1571;&#1605;&#1585;&#1611;&#1575; &#1571;&#1587;&#1575;&#1587;&#1610;&#1617;&#1611;&#1575;
+&#1601;&#1610; &#1593;&#1604;&#1605;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579;&#1575;&#1578;.</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<h3 dir=RTL style='text-align:right;direction:rtl;unicode-bidi:embed'><span
+lang=AR-SA style='font-family:"Times New Roman",serif'>&#1581;&#1575;&#1604;&#1575;&#1578;
+&#1578;&#1588;&#1575;&#1576;&#1607; &#1575;&#1604;&#1605;&#1579;&#1604;&#1579;&#1575;&#1578;
+</span></h3>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1605;&#1606;
+&#1582;</span><span lang=AR-SA style='font-size:14.0pt;line-height:115%;
+font-family:"Simplified Arabic",serif'>&#1604;&#1575;&#1604;
+&#1583;&#1585;&#1575;&#1587;&#1577; &#1578;&#1588;&#1575;&#1576;&#1607;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579;&#1575;&#1578; </span><span dir=LTR></span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=LTR></span>(</span><span dir=LTR style='font-size:14.0pt;line-height:115%;
+font-family:"Times New Roman",serif'>Similarity</span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>
+</span><span dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Times New Roman",serif'>of</span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>
+</span><span dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Times New Roman",serif'>triangles</span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>)</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-SA>&#1578;&#1576;&#1610;&#1606; &#1571;&#1606;&#1607;&#1575;
+&#1578;&#1606;&#1591;&#1608;&#1610; &#1593;&#1604;&#1609;
+&#1575;&#1604;&#1593;&#1583;&#1610;&#1583; &#1605;&#1606; &#1575;&#1604;&#1606;&#1578;&#1575;&#1574;&#1580;
+&#1575;&#1604;&#1605;&#1576;&#1606;&#1610;&#1577; &#1593;&#1604;&#1609;
+&#1582;&#1589;&#1575;&#1574;&#1589; &#1575;&#1604;&#1605;&#1579;&#1604;&#1579;</span></span><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1548;
+&#1573;&#1584; &#1610;&#1605;&#1603;&#1606; &#1575;&#1604;&#1581;&#1603;&#1605;
+&#1593;&#1604;&#1609; &#1578;&#1588;&#1575;&#1576;&#1607;
+&#1605;&#1579;&#1604;&#1579;&#1610;&#1606; &#1583;&#1608;&#1606;
+&#1575;&#1604;&#1606;&#1592;&#1585; &#1573;&#1604;&#1609;
+&#1580;&#1605;&#1610;&#1593; &#1575;&#1604;&#1571;&#1590;&#1604;&#1575;&#1593;
+&#1608;&#1575;&#1604;&#1586;&#1608;&#1575;&#1610;&#1575;&#1548; &#1576;&#1604;
+&#1605;&#1606; &#1582;&#1604;&#1575;&#1604; &#1580;&#1586;&#1569;
+&#1605;&#1606;&#1607;&#1575;&#1548; &#1608;&#1571;&#1576;&#1585;&#1586;
+&#1607;&#1584;&#1607; &#1575;&#1604;&#1581;&#1575;&#1604;&#1575;&#1578;:</span><span
+dir=LTR></span><span lang=AR-JO dir=LTR style='font-size:14.0pt;line-height:
+115%;font-family:"Simplified Arabic",serif'><span dir=LTR></span> </span><span
+dir=RTL></span><span lang=AR-JO style='font-size:14.0pt;line-height:115%;
+font-family:"Simplified Arabic",serif;background:yellow'><span dir=RTL></span>(</span><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif;
+background:yellow'>&#1575;&#1604;&#1610;&#1606;&#1576;&#1593;&#1575;&#1608;&#1610;&#1548;
+2007)</span></p>
+
+<p class=MsoListParagraph dir=RTL style='margin-top:0in;margin-right:49.5pt;
+margin-bottom:0in;margin-left:0in;text-align:justify;line-height:115%;
+direction:rtl;unicode-bidi:embed'><span lang=AR-SA style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'>&#1571;. &#1578;&#1591;&#1575;&#1576;&#1602;
+&#1575;&#1604;&#1586;&#1608;&#1575;&#1610;&#1575;: </span><span lang=AR-JO
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1573;&#1584;&#1575;
+&#1578;&#1591;&#1575;&#1576;&#1602;&#1578;
+&#1586;&#1575;&#1608;&#1610;&#1578;&#1575;&#1606; &#1601;&#1610;
+&#1605;&#1579;&#1604;&#1579; &#1605;&#1593;
+&#1586;&#1575;&#1608;&#1610;&#1578;&#1610;&#1606; &#1601;&#1610; &#1605;&#1579;&#1604;&#1579;
+&#1570;&#1582;&#1585; &#1601;&#1573;&#1606;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579;&#1610;&#1606;
+&#1605;&#1578;&#1588;&#1575;&#1576;&#1607;&#1575;&#1606;&#1548;</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1571;&#1605;&#1575;
+&#1593;&#1606; &#1587;&#1576;&#1576; &#1593;&#1583;&#1605; &#1584;&#1603;&#1585;
+&#1575;&#1604;&#1586;&#1575;&#1608;&#1610;&#1577;
+&#1575;&#1604;&#1579;&#1575;&#1604;&#1579;&#1577; &#1601;&#1604;&#1571;&#1606;
+&#1605;&#1580;&#1605;&#1608;&#1593; &#1586;&#1608;&#1575;&#1610;&#1575;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579;  </span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(</span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Cambria Math",serif'>&#8710;</span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>DEF,
+</span><span dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Cambria Math",serif'>&#8710;</span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>ABC\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span>  <span lang=AR-JO>&#1605;&#1575; &#1610;&#1593;&#1606;&#1610; &#1571;&#1606;
+&#1578;&#1591;&#1575;&#1576;&#1602; &#1586;&#1575;&#1608;&#1610;&#1578;&#1610;&#1606;
+&#1601;&#1610; &#1575;&#1604;&#1605;&#1579;&#1604;&#1579; &#1575;&#1604;&#1571;&#1608;&#1604;
+&#1605;&#1593; &#1586;&#1575;&#1608;&#1610;&#1578;&#1610;&#1606; &#1601;&#1610;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579; &#1575;&#1604;&#1579;&#1575;&#1606;&#1610;&#1548;
+&#1610;&#1593;&#1606;&#1610; &#1578;&#1591;&#1575;&#1576;&#1602; &#1575;&#1604;&#1579;&#1575;&#1604;&#1579;&#1577;
+&#1601;&#1610; &#1603;&#1604;&#1610;&#1607;&#1605;&#1575;.</span></span><span
+dir=LTR></span><span lang=AR-JO dir=LTR style='font-size:14.0pt;line-height:
+115%;font-family:"Simplified Arabic",serif'><span dir=LTR></span> </span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1601;&#1605;&#1579;&#1604;&#1611;&#1575;&#1548;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579;&#1575;&#1606;  </span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTDISPLAY\[\angle
+ABC=\angle DEF=87^\circ\]MATHENDDISPLAY</span><span dir=RTL></span><span
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>&#1605;&#1578;&#1588;&#1575;&#1576;&#1607;&#1575;&#1606;
+(&#1575;&#1604;&#1588;&#1603;&#1604; 4)&#1548; &#1608;&#1584;&#1604;&#1603; &#1604;&#1571;&#1606;</span></span></p>
+
+<p class=MsoNormal align=center style='margin-bottom:0in;text-align:center;
+text-indent:.5in;line-height:115%'><span dir=LTR></span><span style='font-size:
+14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span dir=LTR></span> MATHSTARTDISPLAY\[\angle
+BCA=\angle DFE=38^\circ\]MATHENDDISPLAY ,</span></p>
+
+<p class=MsoNormal align=center style='margin-bottom:0in;text-align:center;
+text-indent:.5in;line-height:115%'><span dir=LTR></span><span style='font-size:
+14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span dir=LTR></span> MATHSTARTINLINE\(</span><span
+style='font-size:14.0pt;line-height:115%;font-family:"Cambria Math",serif'>&#8710;</span><span
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>ABC\)MATHENDINLINE
+.</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;text-align:justify;text-indent:
+.5in;line-height:115%'><span lang=AR-JO dir=RTL style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><b><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>[&#1575;&#1604;&#1588;&#1603;&#1604;
+</span></b><span dir=LTR></span><b><span dir=LTR style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'><span dir=LTR></span>4</span></b><span
+dir=RTL></span><b><span lang=AR-JO style='font-size:14.0pt;line-height:115%;
+font-family:"Simplified Arabic",serif'><span dir=RTL></span>]</span></b></p>
+
+<p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><b><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'> &#1605;&#1579;&#1604;&#1579;&#1575;&#1606;
+&#1605;&#1578;&#1591;&#1575;&#1576;&#1602;&#1575;&#1606; &#1601;&#1610;
+&#1575;&#1604;&#1586;&#1608;&#1575;&#1610;&#1575;</span></b></p>
+
+<table class=MsoTableGrid border=0 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none'>
+ <tr>
+  <td width=312 valign=top style='width:233.75pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;text-align:justify;text-indent:
+  .5in;line-height:115%'><span lang=AR-SA style='font-size:14.0pt;line-height:
+  115%;font-family:"Simplified Arabic",serif'><img width=294 height=266
+  id="Picture 11"
+  src="&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;%20(&#1580;&#1575;&#1607;&#1586;&#1577;%20&#1604;&#1604;&#1606;&#1588;&#1585;)%20-%20Copy_converted_files/image009.png"></span></p>
+  </td>
+  <td width=312 valign=top style='width:233.75pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;text-align:justify;text-indent:
+  .5in;line-height:115%'><span lang=AR-SA style='font-size:14.0pt;line-height:
+  115%;font-family:"Simplified Arabic",serif'><img width=233 height=270
+  id="Picture 14"
+  src="&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;%20(&#1580;&#1575;&#1607;&#1586;&#1577;%20&#1604;&#1604;&#1606;&#1588;&#1585;)%20-%20Copy_converted_files/image010.png"></span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoListParagraphCxSpFirst dir=RTL style='margin-top:0in;margin-right:
+.25in;margin-bottom:0in;margin-left:0in;text-align:justify;text-indent:.5in;
+line-height:115%;direction:rtl;unicode-bidi:embed'><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<p class=MsoListParagraphCxSpLast dir=RTL style='margin-top:0in;margin-right:
+.75in;margin-bottom:0in;margin-left:0in;text-align:justify;line-height:115%;
+direction:rtl;unicode-bidi:embed'><span lang=AR-JO style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'>&#1576;. &#1578;&#1606;&#1575;&#1587;&#1576;
+&#1580;&#1605;&#1610;&#1593; &#1575;&#1604;&#1571;&#1590;&#1604;&#1575;&#1593;:
+&#1573;&#1584;&#1575; &#1578;&#1606;&#1575;&#1587;&#1576;&#1578; &#1571;&#1591;&#1608;&#1575;&#1604;
+&#1575;&#1604;&#1571;&#1590;&#1604;&#1575;&#1593; &#1575;&#1604;&#1605;&#1578;&#1606;&#1575;&#1592;&#1585;&#1577;
+&#1601;&#1610; &#1605;&#1579;&#1604;&#1579;&#1610;&#1606; &#1601;&#1573;&#1606;&#1607;&#1605;&#1575;
+&#1605;&#1578;&#1588;&#1575;&#1576;&#1607;&#1575;&#1606;.</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1601;&#1605;&#1579;&#1604;&#1611;&#1575;&#1548;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579;&#1575;&#1606;  </span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(</span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Cambria Math",serif'>&#8710;</span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>DEF\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>&#1548;  </span></span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTDISPLAY\[\frac{AB}{DE}=\frac{BC}{EF}=\frac{CA}{FD}=\frac{1}{2}\]MATHENDDISPLAY</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>&#1605;&#1578;&#1588;&#1575;&#1576;&#1607;&#1575;&#1606;
+(&#1575;&#1604;&#1588;&#1603;&#1604; 5)&#1563; &#1604;&#1571;&#1606; </span></span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(</span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Cambria Math",serif'>&#8710;</span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>ABC,
+</span><span dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Cambria Math",serif'>&#8710;</span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>A'B'C'\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> </span><span lang=AR-SA style='font-size:14.0pt;line-height:
+115%;font-family:"Simplified Arabic",serif'>.</span><span dir=LTR></span><span
+lang=AR-SA dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=LTR></span> </span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-SA style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><b><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>[&#1575;&#1604;&#1588;&#1603;&#1604;
+5]</span></b></p>
+
+<p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><b><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'> &#1605;&#1579;&#1604;&#1579;&#1575;&#1606;
+&#1571;&#1590;&#1604;&#1575;&#1593;&#1607;&#1605;&#1575;
+&#1605;&#1578;&#1606;&#1575;&#1587;&#1576;&#1577;</span></b></p>
+
+<div align=right>
+
+<table class=MsoTableGrid dir=rtl border=0 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none'>
+ <tr>
+  <td width=384 valign=top style='width:287.7pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+  center;line-height:115%;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+  dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><img
+  width=418 height=148 id="Picture 9"
+  src="&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;%20(&#1580;&#1575;&#1607;&#1586;&#1577;%20&#1604;&#1604;&#1606;&#1588;&#1585;)%20-%20Copy_converted_files/image011.png"></span></p>
+  </td>
+  <td width=240 valign=top style='width:179.8pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+  center;line-height:115%;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+  dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><img
+  width=247 height=144 id="Picture 8"
+  src="&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;%20(&#1580;&#1575;&#1607;&#1586;&#1577;%20&#1604;&#1604;&#1606;&#1588;&#1585;)%20-%20Copy_converted_files/image012.png"></span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-SA style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<p class=MsoListParagraph dir=RTL style='margin-top:0in;margin-right:.75in;
+margin-bottom:0in;margin-left:0in;text-align:justify;line-height:115%;
+direction:rtl;unicode-bidi:embed'><span lang=AR-JO style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'>&#1578;. </span><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1590;&#1604;&#1593;&#1575;&#1606;
+&#1608;&#1586;&#1575;&#1608;&#1610;&#1577; &#1605;&#1581;&#1589;&#1608;&#1585;&#1577;
+&#1576;&#1610;&#1606;&#1607;&#1605;&#1575;: &#1573;&#1584;&#1575;
+&#1603;&#1575;&#1606; &#1591;&#1608;&#1604;&#1575;
+&#1590;&#1604;&#1593;&#1610;&#1606; &#1601;&#1610; &#1605;&#1579;&#1604;&#1579;
+&#1605;&#1578;&#1606;&#1575;&#1587;&#1576;&#1610;&#1606; &#1605;&#1593;
+&#1591;&#1608;&#1604;&#1610; &#1590;&#1604;&#1593;&#1610;&#1606; &#1601;&#1610;
+&#1605;&#1579;&#1604;&#1579; &#1570;&#1582;&#1585;&#1548;
+&#1608;&#1603;&#1575;&#1606;&#1578;
+&#1575;&#1604;&#1586;&#1575;&#1608;&#1610;&#1577;
+&#1575;&#1604;&#1605;&#1581;&#1589;&#1608;&#1585;&#1577; &#1576;&#1610;&#1606;
+&#1575;&#1604;&#1590;&#1604;&#1593;&#1610;&#1606; &#1601;&#1610;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579; &#1575;&#1604;&#1571;&#1608;&#1604;
+&#1578;&#1578;&#1591;&#1575;&#1576;&#1602; &#1605;&#1593; &#1578;&#1604;&#1603;
+&#1575;&#1604;&#1605;&#1581;&#1589;&#1608;&#1585;&#1577; &#1576;&#1610;&#1606;
+&#1575;&#1604;&#1590;&#1604;&#1593;&#1610;&#1606; &#1601;&#1610; &#1575;&#1604;&#1605;&#1579;&#1604;&#1579;
+&#1575;&#1604;&#1570;&#1582;&#1585; &#1601;&#1573;&#1606;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579;&#1610;&#1606;
+&#1605;&#1578;&#1588;&#1575;&#1576;&#1607;&#1575;&#1606;.</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-top:0in;margin-right:.25in;margin-bottom:
+0in;margin-left:0in;text-align:justify;text-indent:.5in;line-height:115%;
+direction:rtl;unicode-bidi:embed'><span lang=AR-JO style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'>&#1601;&#1605;&#1579;&#1604;&#1611;&#1575;&#1548;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579;&#1575;&#1606;  </span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTDISPLAY\[\frac{AB}{A'B'}=\frac{BC}{B'C'}=\frac{1}{2},\]MATHENDDISPLAY</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO> &#1605;&#1578;&#1588;&#1575;&#1576;&#1607;&#1575;&#1606;
+(&#1575;&#1604;&#1588;&#1603;&#1604; 6)&#1563; &#1608;&#1584;&#1604;&#1603; &#1604;&#1571;&#1606;</span></span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;text-align:justify;text-indent:.5in;line-height:115%'><span
+dir=LTR></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=LTR></span> MATHSTARTDISPLAY\[\angle ABC=\angle
+A^{'}B^{'}C^{'}=66^\circ\]MATHENDDISPLAY </span></p>
+
+<p class=MsoNormal dir=RTL style='margin-top:0in;margin-right:.25in;margin-bottom:
+0in;margin-left:0in;text-align:justify;text-indent:.5in;line-height:115%;
+direction:rtl;unicode-bidi:embed'><span lang=AR-JO style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'>&#1608;&#1571;&#1610;&#1590;&#1611;&#1575;</span></p>
+
+<p class=MsoNormal align=center dir=RTL style='margin-top:0in;margin-right:
+.25in;margin-bottom:0in;margin-left:0in;text-align:center;text-indent:.5in;
+line-height:115%;direction:rtl;unicode-bidi:embed'><span dir=LTR></span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=LTR></span>. MATHSTARTINLINE\(1.85 m\)MATHENDINLINE </span><span dir=RTL></span><span
+lang=AR-SA style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span>.</span></p>
+
+<p class=MsoNormal align=center dir=RTL style='margin-top:0in;margin-right:
+.25in;margin-bottom:0in;margin-left:0in;text-align:center;text-indent:.5in;
+line-height:115%;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+center;line-height:115%;direction:rtl;unicode-bidi:embed'><b><span lang=AR-JO
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>[&#1575;&#1604;&#1588;&#1603;&#1604;
+6]</span></b></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><b><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'> &#1605;&#1579;&#1604;&#1579;&#1575;&#1606;
+</span></b><b><span lang=AR-JO style='font-size:14.0pt;line-height:115%;
+font-family:"Simplified Arabic",serif'>&#1605;&#1578;&#1606;&#1575;&#1587;&#1576;&#1575;&#1606;
+&#1601;&#1610; &#1590;&#1604;&#1593;&#1610;&#1606;&#1548; &#1608;&#1605;&#1578;&#1591;&#1575;&#1576;&#1602;&#1575;&#1606;
+&#1601;&#1610; &#1586;&#1575;&#1608;&#1610;&#1577; &#1605;&#1581;&#1589;&#1608;&#1585;&#1577;
+&#1576;&#1610;&#1606; &#1575;&#1604;&#1590;&#1604;&#1593;&#1610;&#1606;</span></b><b><span
+lang=AR-SA style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>
+&#1575;&#1604;</span></b><b><span lang=AR-JO style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'>&#1605;&#1578;&#1606;&#1575;&#1587;&#1576;&#1610;&#1606;</span></b></p>
+
+<p class=MsoNormal align=center dir=RTL style='margin-top:0in;margin-right:
+.25in;margin-bottom:0in;margin-left:0in;text-align:center;text-indent:.5in;
+line-height:115%;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<div align=right>
+
+<table class=MsoTableGrid dir=rtl border=0 cellspacing=0 cellpadding=0
+ style='margin-left:.25in;border-collapse:collapse;border:none'>
+ <tr>
+  <td width=312 valign=top style='width:233.75pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+  center;line-height:115%;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+  dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Sakkal Majalla"'><img
+  width=223 height=169 id="Picture 7"
+  src="&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;%20(&#1580;&#1575;&#1607;&#1586;&#1577;%20&#1604;&#1604;&#1606;&#1588;&#1585;)%20-%20Copy_converted_files/image013.png"></span></p>
+  </td>
+  <td width=312 valign=top style='width:233.75pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+  center;line-height:115%;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+  dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Sakkal Majalla"'><img
+  width=256 height=233 id="Picture 6"
+  src="&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;%20(&#1580;&#1575;&#1607;&#1586;&#1577;%20&#1604;&#1604;&#1606;&#1588;&#1585;)%20-%20Copy_converted_files/image014.png"></span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><b><span
+lang=AR-SA style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></b></p>
+
+<h3 dir=RTL style='text-align:right;direction:rtl;unicode-bidi:embed'><span
+lang=AR-SA style='font-family:"Times New Roman",serif'>&#1581;&#1575;&#1604;&#1575;&#1578;
+&#1582;&#1575;&#1589;&#1577; &#1604;&#1578;&#1588;&#1575;&#1576;&#1607;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579;&#1575;&#1578;
+(&#1578;&#1588;&#1575;&#1576;&#1607;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579;&#1575;&#1578;
+&#1575;&#1604;&#1602;&#1575;&#1574;&#1605;&#1577;)</span></h3>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1607;&#1606;&#1575;&#1603;
+&#1576;&#1593;&#1590; &#1575;&#1604;&#1581;&#1575;&#1604;&#1575;&#1578;
+&#1575;&#1604;&#1578;&#1610; &#1610;&#1605;&#1603;&#1606; &#1571;&#1606;
+&#1610;&#1578;&#1606;&#1575;&#1587;&#1576; &#1601;&#1610;&#1607;&#1575; &#1590;&#1604;&#1593;&#1575;&#1606;
+&#1601;&#1610; &#1605;&#1579;&#1604;&#1579; &#1605;&#1593;
+&#1590;&#1604;&#1593;&#1610;&#1606; &#1601;&#1610; &#1605;&#1579;&#1604;&#1579;
+&#1570;&#1582;&#1585;&#1548; &#1608;&#1610;&#1603;&#1608;&#1606;
+&#1602;&#1610;&#1575;&#1587; &#1586;&#1575;&#1608;&#1610;&#1577;
+&#1601;&#1610;&#1607;&#1548; &#1594;&#1610;&#1585;
+&#1605;&#1581;&#1589;&#1608;&#1585;&#1577; &#1576;&#1610;&#1606;
+&#1575;&#1604;&#1590;&#1604;&#1593;&#1610;&#1606;
+&#1575;&#1604;&#1605;&#1578;&#1606;&#1575;&#1587;&#1576;&#1610;&#1606;&#1548; &#1605;&#1587;&#1575;&#1608;&#1610;&#1611;&#1575;
+&#1604;&#1602;&#1610;&#1575;&#1587; &#1586;&#1575;&#1608;&#1610;&#1577;
+&#1571;&#1582;&#1585;&#1609; &#1601;&#1610;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579;
+&#1575;&#1604;&#1570;&#1582;&#1585;&#1548; &#1608;&#1607;&#1610;
+&#1575;&#1604;&#1581;&#1575;&#1604;&#1577;
+&#1575;&#1604;&#1605;&#1593;&#1585;&#1608;&#1601;&#1577; &#1576;&#1600;(&#1590;&#1604;&#1593;-&#1590;&#1604;&#1593;-&#1586;&#1575;&#1608;&#1610;&#1577;)&#1548;
+&#1571;&#1608; (&#1586;&#1575;&#1608;&#1610;&#1577;-&#1590;&#1604;&#1593;-&#1590;&#1604;&#1593;)&#1548;
+&#1608;&#1575;&#1604;&#1578;&#1610; &#1604;&#1575; &#1578;&#1579;&#1576;&#1578;
+&#1578;&#1588;&#1575;&#1576;&#1607; &#1575;&#1604;&#1605;&#1579;&#1604;&#1579;&#1610;&#1606;
+&#1576;&#1588;&#1603;&#1604; &#1593;&#1575;&#1605;&#1548;
+&#1608;&#1604;&#1603;&#1606;&#1607;&#1575; &#1578;&#1579;&#1576;&#1578;
+&#1578;&#1588;&#1575;&#1576;&#1607;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579;&#1610;&#1606; &#1601;&#1610;
+&#1576;&#1593;&#1590; &#1575;&#1604;&#1581;&#1575;&#1604;&#1575;&#1578;
+&#1575;&#1604;&#1582;&#1575;&#1589;&#1577;&#1548; &#1605;&#1579;&#1604;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579;&#1575;&#1578;
+&#1602;&#1575;&#1574;&#1605;&#1577;
+&#1575;&#1604;&#1586;&#1575;&#1608;&#1610;&#1577;<a href="#_ftn9"
+name="_ftnref9" title=""><span class=MsoFootnoteReference><span dir=LTR><span
+class=MsoFootnoteReference><span style='font-size:14.0pt;line-height:107%;
+font-family:"Simplified Arabic",serif'>[9]</span></span></span></span></a>. </span></p>
+
+<p class=MsoListParagraphCxSpFirst dir=RTL style='margin-top:0in;margin-right:
+.5in;margin-bottom:0in;margin-left:0in;text-align:justify;line-height:115%;
+direction:rtl;unicode-bidi:embed'><span lang=AR-JO style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'>&#1571;. &#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;
+&#1576;&#1575;&#1604;&#1586;&#1575;&#1608;&#1610;&#1577; &#1575;&#1604;&#1581;&#1575;&#1583;&#1577;:
+&#1573;&#1584;&#1575; &#1578;&#1591;&#1575;&#1576;&#1602;&#1578; &#1586;&#1575;&#1608;&#1610;&#1577;
+&#1581;&#1575;&#1583;&#1577; &#1601;&#1610; &#1605;&#1579;&#1604;&#1579; &#1602;&#1575;&#1574;&#1605;
+&#1575;&#1604;&#1586;&#1575;&#1608;&#1610;&#1577; &#1605;&#1593; &#1586;&#1575;&#1608;&#1610;&#1577;
+&#1581;&#1575;&#1583;&#1577; &#1601;&#1610; &#1605;&#1579;&#1604;&#1579; &#1570;&#1582;&#1585;
+&#1602;&#1575;&#1574;&#1605; &#1575;&#1604;&#1586;&#1575;&#1608;&#1610;&#1577; &#1601;&#1573;&#1606;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579;&#1610;&#1606;
+&#1605;&#1578;&#1588;&#1575;&#1576;&#1607;&#1575;&#1606;&#1548;
+&#1608;&#1584;&#1604;&#1603;
+&#1576;&#1575;&#1604;&#1575;&#1593;&#1578;&#1605;&#1575;&#1583;
+&#1593;&#1604;&#1609; &#1581;&#1575;&#1604;&#1577;
+&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;: &#1586;&#1575;&#1608;&#1610;&#1577;-&#1586;&#1575;&#1608;&#1610;&#1577;
+(&#1575;&#1604;&#1588;&#1603;&#1604; 7).</span><span dir=LTR></span><span
+lang=AR-JO dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=LTR></span> </span></p>
+
+<p class=MsoListParagraphCxSpLast dir=RTL style='margin-top:0in;margin-right:
+.5in;margin-bottom:0in;margin-left:0in;text-align:justify;line-height:115%;
+direction:rtl;unicode-bidi:embed'><span dir=LTR style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+dir=RTL></span><b><span lang=AR-JO style='font-size:14.0pt;line-height:115%;
+font-family:"Simplified Arabic",serif'><span dir=RTL></span>[&#1575;&#1604;&#1588;&#1603;&#1604;
+7]</span></b></p>
+
+<p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><b><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1605;&#1579;&#1604;&#1579;&#1575;&#1606;
+</span></b><b><span lang=AR-JO style='font-size:14.0pt;line-height:115%;
+font-family:"Simplified Arabic",serif'>&#1602;&#1575;&#1574;&#1605;&#1575; &#1575;&#1604;&#1586;&#1575;&#1608;&#1610;&#1577;:
+&#1590;&#1604;&#1593;&#1575;&#1606; &#1605;&#1578;&#1591;&#1575;&#1576;&#1602;&#1575;&#1606;
+&#1576;&#1575;&#1604;&#1586;&#1575;&#1608;&#1610;&#1577;
+&#1575;&#1604;&#1581;&#1575;&#1583;&#1577;</span></b></p>
+
+<div align=right>
+
+<table class=MsoTableGrid dir=rtl border=0 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none'>
+ <tr>
+  <td width=272 valign=top style='width:203.7pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+  text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+  style='position:absolute;z-index:251660288;left:0px;margin-left:701px;
+  margin-top:12214px;width:35px;height:1px'><img width=14 height=0
+  src="&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;%20(&#1580;&#1575;&#1607;&#1586;&#1577;%20&#1604;&#1604;&#1606;&#1588;&#1585;)%20-%20Copy_converted_files/image015.png"></span><span
+  lang=AR-SA dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><img
+  width=186 height=165 id="Picture 21"
+  src="&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;%20(&#1580;&#1575;&#1607;&#1586;&#1577;%20&#1604;&#1604;&#1606;&#1588;&#1585;)%20-%20Copy_converted_files/image016.png"></span></p>
+  </td>
+  <td width=352 valign=top style='width:264.3pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+  text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+  style='position:absolute;z-index:251659264;left:0px;margin-left:611px;
+  margin-top:12214px;width:38px;height:1px'><img width=15 height=0
+  src="&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;%20(&#1580;&#1575;&#1607;&#1586;&#1577;%20&#1604;&#1604;&#1606;&#1588;&#1585;)%20-%20Copy_converted_files/image017.png"></span><span
+  lang=AR-SA dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><img
+  width=338 height=262 id="Picture 22"
+  src="&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;%20(&#1580;&#1575;&#1607;&#1586;&#1577;%20&#1604;&#1604;&#1606;&#1588;&#1585;)%20-%20Copy_converted_files/image018.png"></span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p class=MsoListParagraph dir=RTL style='margin-top:0in;margin-right:.5in;
+margin-bottom:0in;margin-left:0in;text-align:justify;line-height:115%;
+direction:rtl;unicode-bidi:embed'><span lang=AR-JO style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'>&#1576;. </span><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;
+&#1576;&#1590;&#1604;&#1593;&#1610; &#1575;&#1604;&#1602;&#1575;&#1574;&#1605;&#1577;:
+&#1573;&#1584;&#1575; &#1603;&#1575;&#1606;&#1578;
+&#1571;&#1591;&#1608;&#1575;&#1604; &#1590;&#1604;&#1593;&#1610;
+&#1575;&#1604;&#1586;&#1575;&#1608;&#1610;&#1577;
+&#1575;&#1604;&#1602;&#1575;&#1574;&#1605;&#1577;
+&#1605;&#1578;&#1606;&#1575;&#1587;&#1576;&#1577;
+&#1604;&#1605;&#1579;&#1604;&#1579;&#1610;&#1606;
+&#1602;&#1575;&#1574;&#1605;&#1610;
+&#1575;&#1604;&#1586;&#1575;&#1608;&#1610;&#1577;&#1548; &#1601;&#1573;&#1606;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579;&#1610;&#1606;
+&#1605;&#1578;&#1588;&#1575;&#1576;&#1607;&#1575;&#1606;&#1548; &#1608;&#1584;&#1604;&#1603;
+&#1576;&#1575;&#1604;&#1575;&#1593;&#1578;&#1605;&#1575;&#1583;
+&#1593;&#1604;&#1609; &#1581;&#1575;&#1604;&#1577;
+&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;: &#1590;&#1604;&#1593;-&#1586;&#1575;&#1608;&#1610;&#1577;-&#1590;&#1604;&#1593;
+(&#1575;&#1604;&#1588;&#1603;&#1604; 8).</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><b><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>[&#1575;&#1604;&#1588;&#1603;&#1604;
+8]</span></b></p>
+
+<p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><b><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1605;&#1579;&#1604;&#1579;&#1575;&#1606;
+</span></b><b><span lang=AR-JO style='font-size:14.0pt;line-height:115%;
+font-family:"Simplified Arabic",serif'>&#1602;&#1575;&#1574;&#1605;&#1575;
+&#1575;&#1604;&#1586;&#1575;&#1608;&#1610;&#1577;:
+&#1571;&#1591;&#1608;&#1575;&#1604; &#1590;&#1604;&#1593;&#1610; &#1575;&#1604;&#1586;&#1575;&#1608;&#1610;&#1577;
+&#1575;&#1604;&#1602;&#1575;&#1574;&#1605;&#1577;
+&#1605;&#1578;&#1606;&#1575;&#1587;&#1576;&#1577;</span></b></p>
+
+<div align=right>
+
+<table class=MsoTableGrid dir=rtl border=0 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none'>
+ <tr>
+  <td width=405 valign=top style='width:303.45pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+  text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+  lang=AR-SA dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><img
+  width=280 height=206 id="Picture 18"
+  src="&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;%20(&#1580;&#1575;&#1607;&#1586;&#1577;%20&#1604;&#1604;&#1606;&#1588;&#1585;)%20-%20Copy_converted_files/image019.png"></span></p>
+  </td>
+  <td width=219 valign=top style='width:164.05pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+  text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+  lang=AR-SA dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><img
+  width=194 height=179 id="Picture 19"
+  src="&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;%20(&#1580;&#1575;&#1607;&#1586;&#1577;%20&#1604;&#1604;&#1606;&#1588;&#1585;)%20-%20Copy_converted_files/image020.png"></span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p class=MsoListParagraphCxSpFirst dir=RTL style='margin-top:0in;margin-right:
+.5in;margin-bottom:0in;margin-left:0in;text-align:justify;line-height:115%;
+direction:rtl;unicode-bidi:embed'><span lang=AR-JO style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'>&#1578;. </span><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;
+&#1576;&#1608;&#1578;&#1585; &#1608;&#1590;&#1604;&#1593;:
+&#1573;&#1584;&#1575; &#1603;&#1575;&#1606;&#1578;
+&#1575;&#1604;&#1606;&#1587;&#1576;&#1577; &#1576;&#1610;&#1606;
+&#1571;&#1591;&#1608;&#1575;&#1604;
+&#1575;&#1604;&#1608;&#1578;&#1585;&#1610;&#1606;
+&#1578;&#1587;&#1575;&#1608;&#1610; &#1575;&#1604;&#1606;&#1587;&#1576;&#1577;
+&#1576;&#1610;&#1606; &#1571;&#1591;&#1608;&#1575;&#1604;
+&#1573;&#1581;&#1583;&#1609; &#1575;&#1604;&#1587;&#1575;&#1602;&#1610;&#1606;
+&#1601;&#1610; &#1605;&#1579;&#1604;&#1579;&#1610;&#1606;
+&#1602;&#1575;&#1574;&#1605;&#1610;
+&#1575;&#1604;&#1586;&#1575;&#1608;&#1610;&#1577;&#1548; &#1601;&#1573;&#1606;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579;&#1610;&#1606;
+&#1605;&#1578;&#1588;&#1575;&#1576;&#1607;&#1575;&#1606;&#1548;
+&#1608;&#1584;&#1604;&#1603; &#1571;&#1610;&#1590;&#1611;&#1575; &#1576;&#1575;&#1604;&#1575;&#1593;&#1578;&#1605;&#1575;&#1583;
+&#1593;&#1604;&#1609; &#1581;&#1575;&#1604;&#1577;
+&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;: &#1590;&#1604;&#1593;-&#1586;&#1575;&#1608;&#1610;&#1577;-&#1590;&#1604;&#1593;
+(&#1575;&#1604;&#1588;&#1603;&#1604; 9).</span></p>
+
+<p class=MsoListParagraphCxSpLast dir=RTL style='margin-top:0in;margin-right:
+.5in;margin-bottom:0in;margin-left:0in;text-align:justify;line-height:115%;
+direction:rtl;unicode-bidi:embed'><span dir=LTR style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+dir=RTL></span><b><span lang=AR-JO style='font-size:14.0pt;line-height:115%;
+font-family:"Simplified Arabic",serif'><span dir=RTL></span>[&#1575;&#1604;&#1588;&#1603;&#1604;
+9]</span></b></p>
+
+<p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><b><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'> &#1605;&#1579;&#1604;&#1579;&#1575;&#1606;
+</span></b><b><span lang=AR-JO style='font-size:14.0pt;line-height:115%;
+font-family:"Simplified Arabic",serif'>&#1602;&#1575;&#1574;&#1605;&#1575;
+&#1575;&#1604;&#1586;&#1575;&#1608;&#1610;&#1577;:
+&#1571;&#1591;&#1608;&#1575;&#1604;
+&#1575;&#1604;&#1608;&#1578;&#1585;&#1610;&#1606;
+&#1578;&#1587;&#1575;&#1608;&#1610; &#1575;&#1604;&#1606;&#1587;&#1576;&#1577;
+&#1576;&#1610;&#1606; &#1571;&#1591;&#1608;&#1575;&#1604;
+&#1573;&#1581;&#1583;&#1609; &#1575;&#1604;&#1587;&#1575;&#1602;&#1610;&#1606;</span></b></p>
+
+<div align=right>
+
+<table class=MsoTableGrid dir=rtl border=0 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none'>
+ <tr>
+  <td width=312 valign=top style='width:233.75pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+  center;line-height:115%;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+  dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><img
+  width=192 height=159 id="Picture 15"
+  src="&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;%20(&#1580;&#1575;&#1607;&#1586;&#1577;%20&#1604;&#1604;&#1606;&#1588;&#1585;)%20-%20Copy_converted_files/image021.png"></span></p>
+  </td>
+  <td width=312 valign=top style='width:233.75pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+  center;line-height:115%;direction:rtl;unicode-bidi:embed'><span lang=AR-SA
+  dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><img
+  width=362 height=222 id="Picture 13"
+  src="&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;%20(&#1580;&#1575;&#1607;&#1586;&#1577;%20&#1604;&#1604;&#1606;&#1588;&#1585;)%20-%20Copy_converted_files/image022.png"></span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<h3 dir=RTL style='text-align:right;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-family:"Times New Roman",serif'> </span><span
+lang=AR-SA style='font-family:"Times New Roman",serif'>&#1606;&#1592;&#1585;&#1610;&#1575;&#1578;
+&#1601;&#1610; &#1578;&#1588;&#1575;&#1576;&#1607; &#1575;&#1604;&#1605;&#1579;&#1604;&#1579;&#1575;&#1578;.</span></h3>
+
+<p class=MsoListParagraph dir=RTL style='margin-top:0in;margin-right:49.5pt;
+margin-bottom:0in;margin-left:0in;text-align:justify;line-height:115%;
+direction:rtl;unicode-bidi:embed'><span lang=AR-JO style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'>&#1571;. &#1601;&#1610;
+&#1571;&#1610; &#1605;&#1579;&#1604;&#1579;&#1548; &#1578;&#1603;&#1608;&#1606;
+&#1575;&#1604;&#1602;&#1591;&#1593;&#1577; &#1575;&#1604;&#1605;&#1587;&#1578;&#1602;&#1610;&#1605;&#1577;
+&#1575;&#1604;&#1578;&#1610; &#1578;&#1589;&#1604; &#1606;&#1602;&#1591;&#1578;&#1610;&#1606;
+&#1593;&#1604;&#1609; &#1590;&#1604;&#1593;&#1610;&#1606; &#1601;&#1610; &#1575;&#1604;&#1605;&#1579;&#1604;&#1579;
+&#1608;&#1578;&#1608;&#1575;&#1586;&#1610; &#1575;&#1604;&#1590;&#1604;&#1593; &#1575;&#1604;&#1579;&#1575;&#1604;&#1579;
+&#1578;&#1602;&#1587;&#1605; &#1607;&#1584;&#1610;&#1606;
+&#1575;&#1604;&#1590;&#1604;&#1593;&#1610;&#1606; &#1573;&#1604;&#1609;
+&#1571;&#1580;&#1586;&#1575;&#1569;
+&#1605;&#1578;&#1606;&#1575;&#1587;&#1576;&#1577;&#1548;
+&#1608;&#1610;&#1603;&#1608;&#1606; &#1575;&#1604;&#1605;&#1579;&#1604;&#1579;
+&#1575;&#1604;&#1606;&#1575;&#1578;&#1580; &#1605;&#1588;&#1575;&#1576;&#1607;&#1611;&#1575;
+&#1604;&#1604;&#1605;&#1579;&#1604;&#1579;
+&#1575;&#1604;&#1571;&#1589;&#1604;&#1610; (&#1575;&#1604;&#1588;&#1603;&#1604;
+10)<a href="#_ftn10" name="_ftnref10" title=""><span
+class=MsoFootnoteReference><span dir=LTR><span class=MsoFootnoteReference><span
+style='font-size:14.0pt;line-height:107%;font-family:"Simplified Arabic",serif'>[10]</span></span></span></span></a>.</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><b><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>[&#1575;&#1604;&#1588;&#1603;&#1604;
+10]</span></b></p>
+
+<p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><b><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'> &#1575;&#1604;&#1602;&#1591;&#1593;&#1577;
+&#1575;&#1604;&#1605;&#1587;&#1578;&#1602;&#1610;&#1605;&#1577;
+&#1575;&#1604;&#1578;&#1610; &#1578;&#1589;&#1604;
+&#1606;&#1602;&#1591;&#1578;&#1610;&#1606; &#1593;&#1604;&#1609;
+&#1590;&#1604;&#1593;&#1610;&#1606; &#1601;&#1610;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579; &#1608;&#1578;&#1608;&#1575;&#1586;&#1610;
+&#1575;&#1604;&#1590;&#1604;&#1593; &#1575;&#1604;&#1579;&#1575;&#1604;&#1579;
+&#1578;&#1602;&#1587;&#1605; &#1607;&#1584;&#1610;&#1606;
+&#1575;&#1604;&#1590;&#1604;&#1593;&#1610;&#1606; &#1573;&#1604;&#1609;
+&#1571;&#1580;&#1586;&#1575;&#1569; &#1605;&#1578;&#1606;&#1575;&#1587;&#1576;&#1577;</span></b></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><img
+width=459 height=271 id="Picture 30"
+src="&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;%20(&#1580;&#1575;&#1607;&#1586;&#1577;%20&#1604;&#1604;&#1606;&#1588;&#1585;)%20-%20Copy_converted_files/image023.png"></span></p>
+
+<p class=MsoListParagraph dir=RTL style='margin-top:0in;margin-right:31.5pt;
+margin-bottom:0in;margin-left:0in;text-align:justify;line-height:115%;
+direction:rtl;unicode-bidi:embed'><span lang=AR-JO style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'>&#1576;. </span><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1575;&#1604;&#1602;&#1591;&#1593;&#1577;
+&#1575;&#1604;&#1605;&#1587;&#1578;&#1602;&#1610;&#1605;&#1577; &#1575;&#1604;&#1608;&#1575;&#1589;&#1604;&#1577;
+&#1576;&#1610;&#1606; &#1605;&#1606;&#1578;&#1589;&#1601;&#1610;
+&#1590;&#1604;&#1593;&#1610;&#1606; &#1601;&#1610; &#1605;&#1579;&#1604;&#1579;
+&#1578;&#1608;&#1575;&#1586;&#1610; &#1575;&#1604;&#1590;&#1604;&#1593;
+&#1575;&#1604;&#1579;&#1575;&#1604;&#1579;&#1548; &#1608;&#1610;&#1603;&#1608;&#1606;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579;
+&#1575;&#1604;&#1606;&#1575;&#1578;&#1580; &#1605;&#1588;&#1575;&#1576;&#1607;&#1611;&#1575;
+&#1604;&#1604;&#1605;&#1579;&#1604;&#1579;
+&#1575;&#1604;&#1571;&#1589;&#1604;&#1610; (&#1575;&#1604;&#1588;&#1603;&#1604;
+11).</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><b><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>[&#1575;&#1604;&#1588;&#1603;&#1604;
+11]</span></b></p>
+
+<p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><b><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'> &#1575;&#1604;&#1602;&#1591;&#1593;&#1577;
+&#1575;&#1604;&#1605;&#1587;&#1578;&#1602;&#1610;&#1605;&#1577;
+&#1575;&#1604;&#1608;&#1575;&#1589;&#1604;&#1577; &#1576;&#1610;&#1606;
+&#1605;&#1606;&#1578;&#1589;&#1601;&#1610; &#1590;&#1604;&#1593;&#1610;&#1606;
+&#1601;&#1610; &#1605;&#1579;&#1604;&#1579; &#1578;&#1608;&#1575;&#1586;&#1610;
+&#1575;&#1604;&#1590;&#1604;&#1593; &#1575;&#1604;&#1579;&#1575;&#1604;&#1579;</span></b><b><span
+lang=AR-SA style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>
+&#1578;&#1588;&#1603;&#1604; &#1605;&#1579;&#1604;&#1579;&#1610;&#1606;
+&#1605;&#1578;&#1588;&#1575;&#1576;&#1607;&#1610;&#1606;</span></b></p>
+
+<p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><img
+width=411 height=298 id="Picture 36"
+src="&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;%20(&#1580;&#1575;&#1607;&#1586;&#1577;%20&#1604;&#1604;&#1606;&#1588;&#1585;)%20-%20Copy_converted_files/image024.png"></span></p>
+
+<p class=MsoListParagraph dir=RTL style='margin-top:0in;margin-right:40.5pt;
+margin-bottom:0in;margin-left:0in;text-align:justify;line-height:115%;
+direction:rtl;unicode-bidi:embed'><span lang=AR-JO style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'>&#1578;. </span><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1575;&#1604;&#1593;&#1605;&#1608;&#1583;
+&#1575;&#1604;&#1606;&#1575;&#1586;&#1604; &#1605;&#1606; &#1575;&#1604;&#1602;&#1575;&#1574;&#1605;&#1577;
+&#1593;&#1604;&#1609; &#1575;&#1604;&#1608;&#1578;&#1585; &#1601;&#1610; &#1575;&#1604;&#1605;&#1579;&#1604;&#1579;
+&#1602;&#1575;&#1574;&#1605; &#1575;&#1604;&#1586;&#1575;&#1608;&#1610;&#1577; &#1610;&#1602;&#1587;&#1605;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579; &#1575;&#1604;&#1602;&#1575;&#1574;&#1605;
+&#1573;&#1604;&#1609; &#1605;&#1579;&#1604;&#1579;&#1610;&#1606; &#1605;&#1578;&#1588;&#1575;&#1576;&#1607;&#1610;&#1606;&#1548;
+&#1608;&#1603;&#1604; &#1605;&#1606;&#1607;&#1605;&#1575; &#1610;&#1588;&#1576;&#1607;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579; &#1575;&#1604;&#1571;&#1589;&#1604;&#1610;
+(&#1575;&#1604;&#1588;&#1603;&#1604; 12)<a href="#_ftn11" name="_ftnref11"
+title=""><span class=MsoFootnoteReference><span dir=LTR><span
+class=MsoFootnoteReference><span style='font-size:14.0pt;line-height:107%;
+font-family:"Simplified Arabic",serif'>[11]</span></span></span></span></a>.</span><span
+dir=LTR></span><span lang=AR-JO dir=LTR style='font-size:14.0pt;line-height:
+115%;font-family:"Simplified Arabic",serif'><span dir=LTR></span> </span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><b><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>[&#1575;&#1604;&#1588;&#1603;&#1604;
+12]</span></b></p>
+
+<p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><b><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'> </span></b><b><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1575;&#1604;&#1593;&#1605;&#1608;&#1583;
+&#1575;&#1604;&#1606;&#1575;&#1586;&#1604; &#1605;&#1606; &#1575;&#1604;&#1602;&#1575;&#1574;&#1605;&#1577;
+&#1593;&#1604;&#1609; &#1575;&#1604;&#1608;&#1578;&#1585; &#1601;&#1610; &#1575;&#1604;&#1605;&#1579;&#1604;&#1579;
+&#1602;&#1575;&#1574;&#1605; &#1575;&#1604;&#1586;&#1575;&#1608;&#1610;&#1577; &#1610;&#1602;&#1587;&#1605;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579; &#1575;&#1604;&#1602;&#1575;&#1574;&#1605;
+&#1573;&#1604;&#1609; &#1605;&#1579;&#1604;&#1579;&#1610;&#1606; &#1605;&#1578;&#1588;&#1575;&#1576;&#1607;&#1610;&#1606;</span></b></p>
+
+<p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><img
+width=159 height=250 id="Picture 39"
+src="&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;%20(&#1580;&#1575;&#1607;&#1586;&#1577;%20&#1604;&#1604;&#1606;&#1588;&#1585;)%20-%20Copy_converted_files/image025.png"></span></p>
+
+<p class=MsoListParagraph dir=RTL style='margin-top:0in;margin-right:.5in;
+margin-bottom:0in;margin-left:0in;text-align:justify;text-indent:.5in;
+line-height:115%;direction:rtl;unicode-bidi:embed'><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1579;.
+&#1573;&#1584;&#1575; &#1578;&#1588;&#1575;&#1576;&#1607;
+&#1605;&#1579;&#1604;&#1579;&#1575;&#1606; &#1601;&#1573;&#1606;
+&#1575;&#1604;&#1606;&#1587;&#1576;&#1577; &#1576;&#1610;&#1606;
+&#1605;&#1587;&#1575;&#1581;&#1578;&#1610;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579;&#1610;&#1606;
+&#1578;&#1587;&#1575;&#1608;&#1610; &#1605;&#1585;&#1576;&#1593;
+&#1575;&#1604;&#1606;&#1587;&#1576;&#1577; &#1576;&#1610;&#1606; &#1575;&#1604;&#1571;&#1590;&#1604;&#1575;&#1593;
+(&#1605;&#1593;&#1575;&#1605;&#1604; &#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;)<a
+href="#_ftn12" name="_ftnref12" title=""><span class=MsoFootnoteReference><span
+dir=LTR><span class=MsoFootnoteReference><span style='font-size:14.0pt;
+line-height:107%;font-family:"Simplified Arabic",serif'>[12]</span></span></span></span></a>.</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1605;&#1579;&#1575;&#1604;
+&#1578;&#1591;&#1576;&#1610;&#1602;&#1610; &#1593;&#1604;&#1609;
+&#1578;&#1588;&#1575;&#1576;&#1607;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579;&#1575;&#1578;: &#1610;&#1602;&#1601;
+&#1585;&#1580;&#1604; &#1591;&#1608;&#1604;&#1607;  </span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(2.3
+m\)MATHENDINLINE</span><span dir=RTL></span><span style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'><span dir=RTL></span> <span
+lang=AR-JO>&#1593;&#1604;&#1609; &#1576;&#1593;&#1583; &#1605;&#1606;
+&#1593;&#1605;&#1608;&#1583; &#1573;&#1606;&#1575;&#1585;&#1577;&#1548; &#1573;&#1584;&#1575;
+&#1603;&#1575;&#1606; &#1591;&#1608;&#1604; &#1592;&#1604;
+&#1575;&#1604;&#1585;&#1580;&#1604; &#1593;&#1604;&#1609; &#1575;&#1604;&#1571;&#1585;&#1590;
+&#1610;&#1587;&#1575;&#1608;&#1610;  </span></span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(</span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Cambria Math",serif'>&#8710;</span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>AEC\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>&#1548; &#1601;&#1573;&#1606; &#1591;&#1608;&#1604;
+&#1593;&#1605;&#1608;&#1583; &#1575;&#1604;&#1573;&#1606;&#1575;&#1585;&#1577; &#1604;&#1571;&#1602;&#1585;&#1576;
+&#1580;&#1586;&#1569; &#1605;&#1606; &#1605;&#1574;&#1577; (&#1575;&#1604;&#1588;&#1603;&#1604;
+13).</span></span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><b><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>[&#1575;&#1604;&#1588;&#1603;&#1604;
+13]</span></b></p>
+
+<p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><b><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'> </span></b><b><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1585;&#1580;&#1604;
+&#1610;&#1602;&#1601; &#1593;&#1604;&#1609; &#1576;&#1593;&#1583; &#1605;&#1606;
+&#1593;&#1605;&#1608;&#1583; &#1573;&#1606;&#1575;&#1585;&#1577;</span></b></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-SA dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><img
+width=477 height=263 id="Picture 40"
+src="&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;%20(&#1580;&#1575;&#1607;&#1586;&#1577;%20&#1604;&#1604;&#1606;&#1588;&#1585;)%20-%20Copy_converted_files/image026.png"></span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1575;&#1604;&#1581;&#1604;:
+&#1593;&#1604;&#1609; &#1575;&#1593;&#1578;&#1576;&#1575;&#1585; &#1571;&#1606;
+&#1575;&#1604;&#1588;&#1582;&#1589; &#1610;&#1602;&#1601; &#1593;&#1605;&#1608;&#1583;&#1610;&#1611;&#1617;&#1575;
+&#1593;&#1604;&#1609; &#1587;&#1591;&#1581; &#1575;&#1604;&#1571;&#1585;&#1590;&#1548;
+&#1601;&#1610;&#1605;&#1603;&#1606; &#1578;&#1605;&#1579;&#1610;&#1604; &#1575;&#1604;&#1605;&#1587;&#1571;&#1604;&#1577;
+&#1576;&#1575;&#1587;&#1578;&#1582;&#1583;&#1575;&#1605; &#1575;&#1604;&#1605;&#1579;&#1604;&#1579;&#1575;&#1578;
+(&#1575;&#1604;&#1588;&#1603;&#1604; 14).</span></p>
+
+<p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><b><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>[&#1575;&#1604;&#1588;&#1603;&#1604;
+14]</span></b></p>
+
+<p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1578;&#1605;&#1579;&#1610;&#1604;
+&#1575;&#1604;&#1605;&#1587;&#1571;&#1604;&#1577; &#1576;&#1575;&#1587;&#1578;&#1582;&#1583;&#1575;&#1605;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579;&#1575;&#1578; &#1604;&#1585;&#1580;&#1604;
+&#1610;&#1602;&#1601; &#1593;&#1604;&#1609; &#1576;&#1593;&#1583; &#1605;&#1606;
+&#1593;&#1605;&#1608;&#1583; &#1573;&#1606;&#1575;&#1585;&#1577;</span></p>
+
+<p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+style='position:absolute;z-index:-1895809024;left:0px;margin-left:353px;
+margin-top:7439px;width:1252px;height:1px'><img width=501 height=0
+src="&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;%20(&#1580;&#1575;&#1607;&#1586;&#1577;%20&#1604;&#1604;&#1606;&#1588;&#1585;)%20-%20Copy_converted_files/image027.png"
+alt="Cartoon of a person standing on a line&#10;&#10;Description automatically generated"></span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>                                      
+</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1605;&#1606;
+&#1575;&#1604;&#1608;&#1575;&#1590;&#1581; &#1571;&#1606;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579;&#1610;&#1606;  </span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(</span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Cambria Math",serif'>&#8710;</span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>BDC\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>&#1548;  </span></span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(\angle
+ACE=\angle BCD\)MATHENDINLINE</span><span dir=RTL></span><span
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>&#1605;&#1579;&#1604;&#1579;&#1575;&#1606; &#1602;&#1575;&#1574;&#1605;&#1575;&#1606;.</span></span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1571;&#1610;&#1590;&#1611;&#1575;
+&#1575;&#1604;&#1586;&#1575;&#1608;&#1610;&#1577;  </span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(</span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Cambria Math",serif'>&#8710;</span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>AEC\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>&#1586;&#1575;&#1608;&#1610;&#1577;
+&#1605;&#1588;&#1578;&#1585;&#1603;&#1577;.</span></span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'> &#1605;&#1575;
+&#1610;&#1593;&#1606;&#1610; &#1571;&#1606;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579;  </span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(</span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Cambria Math",serif'>&#8710;</span><span
+dir=LTR style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>BDC\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>&#1610;&#1588;&#1576;&#1607;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579;  </span></span><span dir=LTR
+style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(\frac{AE}{BD}=\frac{EC}{DC}\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-JO>&#1548; &#1571;&#1610; &#1581;&#1575;&#1604;&#1577;
+&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;
+&#1576;&#1586;&#1575;&#1608;&#1610;&#1577; &#1581;&#1575;&#1583;&#1577;
+&#1604;&#1604;&#1605;&#1579;&#1604;&#1579;&#1575;&#1578;
+&#1575;&#1604;&#1602;&#1575;&#1574;&#1605;&#1577;&#1548; </span></span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1605;&#1575;
+&#1610;&#1593;&#1606;&#1610; &#1571;&#1606; &#1575;&#1604;&#1586;&#1608;&#1575;&#1610;&#1575;
+&#1575;&#1604;&#1605;&#1578;&#1606;&#1575;&#1592;&#1585;&#1577; &#1605;&#1578;&#1591;&#1575;&#1576;&#1602;&#1577;
+&#1608;&#1575;&#1604;&#1571;&#1590;&#1604;&#1575;&#1593; &#1575;&#1604;&#1605;&#1578;&#1606;&#1575;&#1592;&#1585;&#1577;
+&#1605;&#1578;&#1606;&#1575;&#1587;&#1576;&#1577;.</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1573;&#1584;&#1606;
+&#1601;&#1573;&#1606; </span></p>
+
+<p class=MsoNormal align=center style='margin-bottom:0in;text-align:center;
+text-indent:.5in;line-height:115%'><span dir=LTR></span><span style='font-size:
+14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span dir=LTR></span> MATHSTARTDISPLAY\[\frac{AE}{1.85}=\frac{5.9}{2.3}\]MATHENDDISPLAY
+,</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1571;&#1610;
+&#1573;&#1606;</span></p>
+
+<p class=MsoNormal align=center style='margin-bottom:0in;text-align:center;
+text-indent:.5in;line-height:115%'><span dir=LTR></span><span style='font-size:
+14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'><span dir=LTR></span> MATHSTARTINLINE\(AE\approx
+4.75 m\)MATHENDINLINE ,</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1608;&#1576;&#1581;&#1604;
+&#1575;&#1604;&#1578;&#1606;&#1575;&#1587;&#1576; &#1610;&#1603;&#1608;&#1606; &#1591;&#1608;&#1604;
+&#1593;&#1605;&#1608;&#1583; &#1575;&#1604;&#1573;&#1606;&#1575;&#1585;&#1577; &#1607;&#1608;
+</span><span
+style='font-size:11.0pt;line-height:107%;font-family:"Aptos",sans-serif;
+position:relative;top:4.5pt'><img width=103 height=24
+src="&#1575;&#1604;&#1578;&#1588;&#1575;&#1576;&#1607;%20(&#1580;&#1575;&#1607;&#1586;&#1577;%20&#1604;&#1604;&#1606;&#1588;&#1585;)%20-%20Copy_converted_files/image028.png"></span><span
+dir=RTL></span><span lang=AR-JO style='font-size:14.0pt;line-height:115%;
+font-family:"Simplified Arabic",serif'><span dir=RTL></span>.</span></p>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<h2 dir=RTL style='text-align:right;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-family:"Times New Roman",serif'>&#1575;&#1604;&#1605;&#1585;&#1575;&#1580;&#1593;
+</span></h2>
+
+<p class=MsoListParagraph dir=RTL style='margin-top:0in;margin-right:.5in;
+margin-bottom:0in;margin-left:0in;text-align:justify;line-height:115%;
+direction:rtl;unicode-bidi:embed'><b><span lang=AR-JO style='font-size:14.0pt;
+line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></b></p>
+
+<p class=MsoNormal align=center dir=RTL style='margin-bottom:0in;text-align:
+center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><b><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1575;&#1604;&#1593;&#1585;&#1576;&#1610;&#1577;</span></b></p>
+
+<p class=MsoListParagraph dir=RTL style='margin-top:0in;margin-right:.5in;
+margin-bottom:0in;margin-left:0in;text-align:justify;text-indent:-.5in;
+line-height:115%;direction:rtl;unicode-bidi:embed'><a name="_Hlk201521933"><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1571;&#1610;&#1585;&#1586;&#1548;
+&#1601;&#1585;&#1575;&#1606;&#1603; &#1608;&#1585;&#1608;&#1576;&#1585;&#1578;
+&#1605;&#1608;&#1610;&#1585;. <b>&#1581;&#1587;&#1575;&#1576;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579;&#1575;&#1578;</b>. &#1578;&#1581;&#1585;&#1610;&#1585;
+&#1580;&#1608;&#1585;&#1580; &#1580;.
+&#1607;&#1575;&#1583;&#1605;&#1610;&#1606;&#1608;&#1587;. &#1578;&#1585;&#1580;&#1605;&#1577;
+&#1587;&#1593;&#1610;&#1583; &#1601;&#1585;&#1581;
+&#1573;&#1587;&#1603;&#1606;&#1583;&#1585;. &#1605;&#1589;&#1585;: &#1575;&#1604;&#1583;&#1575;&#1585;
+&#1575;&#1604;&#1583;&#1608;&#1604;&#1610;&#1577;
+&#1604;&#1604;&#1575;&#1587;&#1578;&#1579;&#1605;&#1575;&#1585;&#1575;&#1578;
+&#1575;&#1604;&#1579;&#1602;&#1575;&#1601;&#1610;&#1577;&#1548; 2004.</span></a></p>
+
+<p class=MsoNormal dir=RTL style='margin-right:.5in;text-align:justify;
+text-indent:-.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&#1575;&#1604;&#1610;&#1606;&#1576;&#1593;&#1575;&#1608;&#1610;&#1548;
+&#1585;&#1590;&#1575; &#1576;&#1606; &#1594;&#1575;&#1606;&#1605;. <b>&#1575;&#1604;&#1605;&#1579;&#1604;&#1579;
+&#1608;&#1581;&#1587;&#1575;&#1576;&#1575;&#1578;&#1607;</b>.
+&#1587;&#1604;&#1587;&#1604;&#1577;
+&#1575;&#1604;&#1605;&#1593;&#1585;&#1601;&#1577;
+&#1575;&#1604;&#1578;&#1593;&#1604;&#1610;&#1605;&#1610;&#1577;
+&#1604;&#1604;&#1585;&#1610;&#1575;&#1590;&#1610;&#1575;&#1578; 1.
+&#1575;&#1604;&#1585;&#1610;&#1575;&#1590;: &#1605;&#1603;&#1578;&#1576;&#1577;
+&#1575;&#1604;&#1605;&#1604;&#1603; &#1601;&#1607;&#1583;
+&#1575;&#1604;&#1608;&#1591;&#1606;&#1610;&#1577;&#1548; 2007.</span></p>
+
+<p class=MsoListParagraphCxSpFirst dir=RTL style='margin:0in;text-align:justify;
+text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:embed'><span
+lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:"Simplified Arabic",serif'>&nbsp;</span></p>
+
+<p class=MsoListParagraphCxSpLast align=center dir=RTL style='margin:0in;
+text-align:center;text-indent:.5in;line-height:115%;direction:rtl;unicode-bidi:
+embed'><b><span lang=AR-JO style='font-size:14.0pt;line-height:115%;font-family:
+"Simplified Arabic",serif'>&#1575;&#1604;&#1571;&#1580;&#1606;&#1576;&#1610;&#1577;</span></b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;text-align:justify;text-indent:-.5in;line-height:115%'><a
+name="_Hlk189479416"></a><a name="_Hlk201522099"><span style='font-size:14.0pt;
+line-height:115%;font-family:"Times New Roman",serif'>Burger, Edward B. &amp; Michael
+Starbird. <i>The heart of mathematics: An invitation to effective thinking</i>.
+4<sup>th</sup> ed. [Hoboken]: Wiley, 2012.</span></a></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;text-align:justify;text-indent:-.5in;line-height:115%'><a
+name="_Hlk201522231"><span style='font-size:14.0pt;line-height:115%;font-family:
+"Times New Roman",serif'>Larson, Ron &amp; B. H. Edwards. <i>Calculus</i>. 11<sup>th</sup>
+ed. [Boston]: Cengage Learning, 2017.</span></a></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;text-align:justify;text-indent:-.5in;line-height:115%'><a
+name="_Hlk201522608"><span style='font-size:14.0pt;line-height:115%;font-family:
+"Times New Roman",serif'>Legendre, Adrien Marie. <i>Elements of trigonometry</i>.
+Philadelphia: A.S. Barnes &amp; Co, 1834.</span></a></p>
+
+</div>
+
+<div><br clear=all>
+
+<hr align=left size=1 width="33%">
+
+<div id=ftn1>
+
+<p class=MsoFootnoteText dir=RTL style='text-align:justify;direction:rtl;
+unicode-bidi:embed'><a href="#_ftnref1" name="_ftn1" title=""><span
+class=MsoFootnoteReference><span dir=LTR style='font-size:11.0pt;font-family:
+"Simplified Arabic",serif'><span class=MsoFootnoteReference><span
+style='font-size:11.0pt;line-height:107%;font-family:"Simplified Arabic",serif'>[1]</span></span></span></span></a><span
+dir=LTR style='font-size:11.0pt;font-family:"Simplified Arabic",serif'> </span><span
+lang=AR-SA style='font-size:11.0pt;font-family:"Simplified Arabic",serif'>&#1601;&#1585;&#1575;&#1606;&#1603;
+&#1571;&#1610;&#1585;&#1586; &#1608;&#1585;&#1608;&#1576;&#1585;&#1578;
+&#1605;&#1608;&#1610;&#1585;&#1548; <b>&#1581;&#1587;&#1575;&#1576;
+&#1575;&#1604;&#1605;&#1579;&#1604;&#1579;&#1575;&#1578;</b>&#1548; &#1578;&#1581;&#1585;&#1610;&#1585;
+&#1580;&#1608;&#1585;&#1580; &#1580;.
+&#1607;&#1575;&#1583;&#1605;&#1610;&#1606;&#1608;&#1587;&#1548;
+&#1578;&#1585;&#1580;&#1605;&#1577; &#1587;&#1593;&#1610;&#1583;
+&#1601;&#1585;&#1581; &#1573;&#1587;&#1603;&#1606;&#1583;&#1585; (&#1605;&#1589;&#1585;:
+&#1575;&#1604;&#1583;&#1575;&#1585;
+&#1575;&#1604;&#1583;&#1608;&#1604;&#1610;&#1577;
+&#1604;&#1604;&#1575;&#1587;&#1578;&#1579;&#1605;&#1575;&#1585;&#1575;&#1578;
+&#1575;&#1604;&#1579;&#1602;&#1575;&#1601;&#1610;&#1577;&#1548; 2004).</span></p>
+
+</div>
+
+<div id=ftn2>
+
+<p class=MsoFootnoteText><a href="#_ftnref2" name="_ftn2" title=""><span
+class=MsoFootnoteReference><span class=MsoFootnoteReference><span
+style='font-size:10.0pt;line-height:107%;font-family:"Calibri",sans-serif'>[2]</span></span></span></a>
+Edward B. Burger &amp; Michael Starbird, <i>The heart of mathematics: An
+invitation to effective thinking</i>, 4<sup>th</sup> ed. ([Hoboken]: Wiley,
+2012).</p>
+
+</div>
+
+<div id=ftn3>
+
+<p class=MsoFootnoteText><a href="#_ftnref3" name="_ftn3" title=""><span
+class=MsoFootnoteReference><span class=MsoFootnoteReference><span
+style='font-size:10.0pt;line-height:107%;font-family:"Calibri",sans-serif'>[3]</span></span></span></a>
+Ibid.</p>
+
+</div>
+
+<div id=ftn4>
+
+<p class=MsoFootnoteText><a href="#_ftnref4" name="_ftn4" title=""><span
+class=MsoFootnoteReference><span class=MsoFootnoteReference><span
+style='font-size:10.0pt;line-height:107%;font-family:"Calibri",sans-serif'>[4]</span></span></span></a>
+Ron Larson &amp; B. H. Edwards, <i>Calculus</i>. 11<sup>th</sup> ed. ([Boston]:
+Cengage Learning, 2017).</p>
+
+</div>
+
+<div id=ftn5>
+
+<p class=MsoFootnoteText dir=RTL style='text-align:right;direction:rtl;
+unicode-bidi:embed'><a href="#_ftnref5" name="_ftn5" title=""><span
+class=MsoFootnoteReference><span dir=LTR><span class=MsoFootnoteReference><span
+style='font-size:10.0pt;line-height:107%;font-family:"Calibri",sans-serif'>[5]</span></span></span></span></a><span
+dir=RTL></span><span lang=AR-SA style='font-family:"Arial",sans-serif'><span
+dir=RTL></span> &#1585;&#1590;&#1575; &#1576;&#1606;
+&#1594;&#1575;&#1606;&#1605;
+&#1575;&#1604;&#1610;&#1606;&#1576;&#1593;&#1575;&#1608;&#1610;</span><span
+lang=AR-JO style='font-family:"Arial",sans-serif'>&#1548;</span><span
+lang=AR-JO style='font-family:"Arial",sans-serif'> </span><b><span lang=AR-SA
+style='font-family:"Arial",sans-serif'>&#1575;&#1604;&#1605;&#1579;&#1604;&#1579;
+&#1608;&#1581;&#1587;&#1575;&#1576;&#1575;&#1578;&#1607;</span></b><span
+lang=AR-SA style='font-family:"Arial",sans-serif'>&#1548;
+&#1587;&#1604;&#1587;&#1604;&#1577;
+&#1575;&#1604;&#1605;&#1593;&#1585;&#1601;&#1577;
+&#1575;&#1604;&#1578;&#1593;&#1604;&#1610;&#1605;&#1610;&#1577;
+&#1604;&#1604;&#1585;&#1610;&#1575;&#1590;&#1610;&#1575;&#1578; 1 (&#1575;&#1604;&#1585;&#1610;&#1575;&#1590;:
+&#1605;&#1603;&#1578;&#1576;&#1577; &#1575;&#1604;&#1605;&#1604;&#1603;
+&#1601;&#1607;&#1583; &#1575;&#1604;&#1608;&#1591;&#1606;&#1610;&#1577;&#1548;
+2007).</span></p>
+
+</div>
+
+<div id=ftn6>
+
+<p class=MsoFootnoteText dir=RTL style='text-align:right;direction:rtl;
+unicode-bidi:embed'><a href="#_ftnref6" name="_ftn6" title=""><span
+class=MsoFootnoteReference><span dir=LTR><span class=MsoFootnoteReference><span
+style='font-size:10.0pt;line-height:107%;font-family:"Calibri",sans-serif'>[6]</span></span></span></span></a><span
+dir=LTR> </span><span lang=AR-JO style='font-family:"Arial",sans-serif'>&#1575;&#1604;&#1605;&#1585;&#1580;&#1593;
+&#1606;&#1601;&#1587;&#1607;.</span></p>
+
+</div>
+
+<div id=ftn7>
+
+<p class=MsoNormal dir=RTL style='margin-bottom:0in;text-align:justify;
+line-height:115%;direction:rtl;unicode-bidi:embed'><a href="#_ftnref7"
+name="_ftn7" title=""><span class=MsoFootnoteReference><span dir=LTR><span
+class=MsoFootnoteReference><span style='font-size:11.0pt;line-height:107%;
+font-family:"Calibri",sans-serif'>[7]</span></span></span></span></a><span
+dir=LTR> </span><span dir=RTL></span><span style='font-family:"Arial",sans-serif'><span
+dir=RTL></span> </span><span lang=AR-SA style='font-family:"Simplified Arabic",serif'>&#1575;&#1604;&#1585;&#1605;&#1586;
+ </span><span dir=LTR style='font-family:"Simplified Arabic",serif'>MATHSTARTINLINE\(a\)MATHENDINLINE</span><span
+dir=RTL></span><span style='font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-SA>&#1610;&#1615;&#1587;&#1578;&#1582;&#1583;&#1605;
+&#1604;&#1604;&#1583;&#1604;&#1575;&#1604;&#1577; &#1593;&#1604;&#1609;
+&#1608;&#1581;&#1583;&#1577; &#1575;&#1604;&#1602;&#1610;&#1575;&#1587;
+&#1587;&#1606;&#1578;&#1605;&#1578;&#1585; </span></span><span dir=LTR></span><span
+dir=LTR style='font-family:"Simplified Arabic",serif'><span dir=LTR></span>(</span><span
+dir=LTR style='font-family:"Times New Roman",serif'>centimeter</span><span
+dir=LTR style='font-family:"Simplified Arabic",serif'>)</span><span dir=RTL></span><span
+lang=AR-SA style='font-family:"Simplified Arabic",serif'><span dir=RTL></span>&#1548;
+&#1608;&#1607;&#1610; &#1608;&#1581;&#1583;&#1577; &#1602;&#1610;&#1575;&#1587;
+&#1604;&#1604;&#1591;&#1608;&#1604; &#1601;&#1610;
+&#1575;&#1604;&#1606;&#1592;&#1575;&#1605;
+&#1575;&#1604;&#1605;&#1578;&#1585;&#1610;</span><span lang=AR-AE
+style='font-family:"Simplified Arabic",serif'>&#1548; &#1573;&#1584; &#1573;&#1606;
+</span><span dir=LTR></span><span dir=LTR style='font-family:"Simplified Arabic",serif'><span
+dir=LTR></span>1</span><span dir=RTL></span><span style='font-family:"Simplified Arabic",serif'><span
+dir=RTL></span> <span lang=AR-SA>&#1587;&#1606;&#1578;&#1605;&#1578;&#1585;=
+0.01 &#1605;&#1578;&#1585;.</span></span></p>
+
+</div>
+
+<div id=ftn8>
+
+<p class=MsoFootnoteText><a href="#_ftnref8" name="_ftn8" title=""><span
+class=MsoFootnoteReference><span class=MsoFootnoteReference><span
+style='font-size:10.0pt;line-height:107%;font-family:"Calibri",sans-serif'>[8]</span></span></span></a>
+Adrien Marie Legendre, <i>Elements of Trigonometry</i> (Philadelphia: A.S.
+Barnes &amp; Co, 1834).</p>
+
+</div>
+
+<div id=ftn9>
+
+<p class=MsoNormal><a href="#_ftnref9" name="_ftn9" title=""><span
+class=MsoFootnoteReference><span class=MsoFootnoteReference><span
+style='font-size:11.0pt;line-height:107%;font-family:"Calibri",sans-serif'>[9]</span></span></span></a>
+<span style='font-family:"Times New Roman",serif'>Burger &amp; Starbird.</span></p>
+
+</div>
+
+<div id=ftn10>
+
+<p class=MsoFootnoteText dir=RTL style='text-align:right;direction:rtl;
+unicode-bidi:embed'><a href="#_ftnref10" name="_ftn10" title=""><span
+class=MsoFootnoteReference><span dir=LTR><span class=MsoFootnoteReference><span
+style='font-size:10.0pt;line-height:107%;font-family:"Calibri",sans-serif'>[10]</span></span></span></span></a><span
+dir=LTR> </span><span lang=AR-SA style='font-family:"Arial",sans-serif'>&#1571;&#1610;&#1585;&#1586;
+&#1608;&#1605;&#1608;&#1610;&#1585;.</span></p>
+
+</div>
+
+<div id=ftn11>
+
+<p class=MsoNormal><a href="#_ftnref11" name="_ftn11" title=""><span
+class=MsoFootnoteReference><span class=MsoFootnoteReference><span
+style='font-size:11.0pt;line-height:107%;font-family:"Calibri",sans-serif'>[11]</span></span></span></a>
+Larson &amp; Edwards.</p>
+
+</div>
+
+<div id=ftn12>
+
+<p class=MsoFootnoteText><a href="#_ftnref12" name="_ftn12" title=""><span
+class=MsoFootnoteReference><span class=MsoFootnoteReference><span
+style='font-size:10.0pt;line-height:107%;font-family:"Calibri",sans-serif'>[12]</span></span></span></a>
+Legendre.</p>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

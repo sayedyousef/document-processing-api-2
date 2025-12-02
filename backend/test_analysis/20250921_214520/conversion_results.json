@@ -1,0 +1,17 @@
+{
+  "test_id": "20250921_214520",
+  "input_file": "D:\\Development\\document-processing-api-2\\document-processing-api\\test docs\\التشابه (جاهزة للنشر) - Copy.docx",
+  "test_dir": "test_analysis\\20250921_214520",
+  "steps": {
+    "extract_original": {
+      "success": true,
+      "zip_path": "test_analysis\\20250921_214520\\التشابه (جاهزة للنشر) - Copy.zip",
+      "extract_path": "test_analysis\\20250921_214520\\التشابه (جاهزة للنشر) - Copy_original_extracted"
+    },
+    "conversion": {
+      "error": "[WinError 32] The process cannot access the file because it is being used by another process",
+      "traceback": "Traceback (most recent call last):\n  File \"D:\\Development\\document-processing-api-2\\backend\\test_converter.py\", line 127, in convert_with_word_com\n    shutil.copy2(html_src, html_dst)\n  File \"C:\\Python312\\Lib\\shutil.py\", line 460, in copy2\n    _winapi.CopyFile2(src_, dst_, flags)\nPermissionError: [WinError 32] The process cannot access the file because it is being used by another process\n",
+      "conversion_time": 14.84946346282959
+    }
+  }
+}
