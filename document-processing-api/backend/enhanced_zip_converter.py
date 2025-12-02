@@ -144,13 +144,11 @@ class EnhancedZipConverter:
 
         parent_tag = parent.tag.split('}')[-1] if '}' in parent.tag else parent.tag
 
-        # Determine if display or inline
-        is_display = len(latex_text) > 50
-
-        # Check if equation is in oMathPara (display equation)
+        # Determine if display or inline based on DOCUMENT STRUCTURE (not length!)
+        # Display equation: m:oMath is wrapped in m:oMathPara (block-level math)
+        # Inline equation: m:oMath is directly in w:r or w:p (inline math)
         omath_para = eq.xpath('ancestor::m:oMathPara', namespaces=self.namespaces)
-        if omath_para:
-            is_display = True
+        is_display = len(omath_para) > 0
 
         # Create replacement
         latex_run = self._create_latex_run(latex_text, is_display)

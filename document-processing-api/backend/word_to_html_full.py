@@ -561,9 +561,14 @@ class FullWordToHTMLConverter:
         style_id = p_elem.xpath('.//w:pStyle/@w:val', namespaces=ns)
         style_name = self.styles.get(style_id[0], '') if style_id else ''
 
+        # Also get the style ID itself (e.g., "Heading1")
+        actual_style_id = style_id[0] if style_id else ''
+
         heading_level = 0
-        if 'Heading' in style_name:
-            match = re.search(r'(\d+)', style_name)
+        # Check both style name (e.g., "heading 1") and style ID (e.g., "Heading1")
+        if 'heading' in style_name.lower() or 'Heading' in actual_style_id:
+            # Try to extract number from style name first, then style ID
+            match = re.search(r'(\d+)', style_name) or re.search(r'(\d+)', actual_style_id)
             if match:
                 heading_level = min(int(match.group(1)), 6)
 
