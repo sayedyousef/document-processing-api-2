@@ -3,9 +3,9 @@
 ## What You See
 
 ```
-    📄 Word File    ───────────>    🌐 HTML Page
+    📄 Word File    ───>    🌐 HTML Page
 
-    "Just convert it"
+    "Just convert it, how hard can it be?"
 ```
 
 ## What's Actually Happening
@@ -13,231 +13,251 @@
 ```
     📄 Word File
          │
-         │  A Word file is NOT a simple document.
-         │  It's an archive containing 10+ XML files,
-         │  images, styles, footnotes, and relationships.
+         │  Step 1: Open the box
          │
          ▼
     ┌─────────────────────────────────────────────┐
-    │                                             │
-    │   📦 Unpack the archive                     │
-    │                                             │
-    │   Inside we find:                           │
-    │   • The document text (as XML)              │
-    │   • Formatting rules                        │
-    │   • Images (as separate files)              │
-    │   • Footnotes (as separate file)            │
-    │   • Table structures                        │
-    │   • Mathematical equations                  │
-    │   • Shapes and drawings                     │
-    │   • Numbered list rules                     │
-    │   • Section & page layout settings          │
-    │                                             │
-    └──────────────────┬──────────────────────────┘
+    │                                              │
+    │   A Word file is actually an archive         │
+    │   containing 10+ separate files inside it.   │
+    │                                              │
+    │   Think of it like a box with:               │
+    │   • The actual text                          │
+    │   • The formatting rules                     │
+    │   • All the images (as separate files)       │
+    │   • All the footnotes (as a separate file)   │
+    │   • Table structures                         │
+    │   • Mathematical equations                   │
+    │   • Shapes and drawings                      │
+    │   • List numbering rules                     │
+    │   • Page layout settings                     │
+    │                                              │
+    │   Each of these needs to be read separately  │
+    │   and understood in relation to the others.  │
+    │                                              │
+    └──────────────────┬───────────────────────────┘
                        │
+                       │  Step 2: Find the equations
                        ▼
     ┌─────────────────────────────────────────────┐
-    │                                             │
-    │   🔍 Find ALL mathematical equations        │
-    │                                             │
-    │   Equations are NOT in one place.           │
-    │   They are scattered across:                │
-    │                                             │
-    │   • Normal paragraphs                       │
-    │   • Inside shapes and text boxes            │
-    │   • Inside legacy compatibility sections    │
-    │   • Inside drawing objects                  │
-    │   • Some are duplicated for compatibility   │
-    │                                             │
-    │   Each must be found and identified.        │
-    │                                             │
-    └──────────────────┬──────────────────────────┘
+    │                                              │
+    │   Equations are scattered across 5 different │
+    │   locations inside the file. Some are inside │
+    │   shapes, some are copies for compatibility  │
+    │   with older versions of Word.               │
+    │                                              │
+    │   A document with 150 equations might        │
+    │   actually contain 250+ equation fragments   │
+    │   when you count all the hidden copies.      │
+    │                                              │
+    │   Each one must be found and identified.     │
+    │                                              │
+    └──────────────────┬───────────────────────────┘
                        │
+                       │  Step 3: Translate every equation
                        ▼
     ┌─────────────────────────────────────────────┐
-    │                                             │
-    │   🧮 Convert EACH equation                  │
-    │                                             │
-    │   Every equation is a tree of nested        │
-    │   elements. A single equation can contain:  │
-    │                                             │
-    │   • Fractions (with numerator/denominator)  │
-    │   • Matrices (rows and columns of values)   │
-    │   • Integrals, sums, products               │
-    │   • Square roots (with optional degree)     │
-    │   • Superscripts and subscripts             │
-    │   • Greek letters and special symbols       │
-    │   • Brackets, parentheses, braces           │
-    │   • Accents (hat, bar, tilde, arrow)        │
-    │   • Limits and function names               │
-    │   • ALL of the above nested inside          │
-    │     each other in any combination           │
-    │                                             │
-    │   Each type needs dedicated handling.        │
-    │   There are 20+ different element types.    │
-    │                                             │
-    └──────────────────┬──────────────────────────┘
+    │                                              │
+    │   Each equation is a tree of nested pieces.  │
+    │   For example, one equation might contain:   │
+    │                                              │
+    │   "the integral from 0 to infinity of        │
+    │    a fraction whose numerator is the         │
+    │    square root of x-squared plus y-squared   │
+    │    and whose denominator is sigma times      │
+    │    the sine of theta"                        │
+    │                                              │
+    │   That's: an integral, containing a          │
+    │   fraction, containing a square root,        │
+    │   containing a superscript, plus Greek       │
+    │   letters, plus a function name — all        │
+    │   nested inside each other.                  │
+    │                                              │
+    │   There are 20+ different piece types.       │
+    │   Each needs its own translation rule.       │
+    │   Multiply that by 150 equations.            │
+    │                                              │
+    └──────────────────┬───────────────────────────┘
                        │
+                       │  Step 4: Convert everything else
                        ▼
     ┌─────────────────────────────────────────────┐
-    │                                             │
-    │   📝 Convert all document elements          │
-    │                                             │
-    │   Besides equations, we must handle:        │
-    │                                             │
-    │   • Headings (detect levels 1-6)            │
-    │   • Paragraphs (preserve formatting)        │
-    │   • Bold, italic, underline text            │
-    │   • Tables (widths, merged cells, nesting)  │
-    │   • Numbered and bullet lists               │
-    │   • Footnotes (with clickable links)        │
-    │   • Images (extract and reference)          │
-    │   • Shapes and drawings                     │
-    │   • Hyperlinks                              │
-    │   • Right-to-left Arabic text               │
-    │   • Section breaks                          │
-    │   • Empty paragraphs and spacing            │
-    │                                             │
-    └──────────────────┬──────────────────────────┘
+    │                                              │
+    │   Equations are only part of the job.        │
+    │   The system also handles:                   │
+    │                                              │
+    │   • Headings (6 levels)                      │
+    │   • Tables (merged cells, widths, nesting)   │
+    │   • Footnotes (with clickable links          │
+    │     that go both directions)                 │
+    │   • Images (extracted to a folder)           │
+    │   • Bold, italic, superscript text           │
+    │   • Numbered and bullet lists                │
+    │   • Shapes and drawings                      │
+    │   • Hyperlinks                               │
+    │   • Arabic right-to-left text                │
+    │   • Section breaks                           │
+    │                                              │
+    │   All of this must work together correctly.  │
+    │                                              │
+    └──────────────────┬───────────────────────────┘
                        │
+                       │  Step 5: Assemble the page
                        ▼
-    ┌─────────────────────────────────────────────┐
-    │                                             │
-    │   🏗️ Assemble the final HTML page           │
-    │                                             │
-    │   • Combine all converted elements          │
-    │   • Add proper document structure           │
-    │   • Link footnotes bidirectionally          │
-    │   • Reference extracted images              │
-    │   • Ensure right-to-left text works         │
-    │                                             │
-    └──────────────────┬──────────────────────────┘
-                       │
-                       ▼
-                 🌐 HTML Page
-                 + 📁 Images folder
+                  🌐 HTML Page + 📁 Images folder
 
 
-    This entire process was built TWICE:
+    ═══════════════════════════════════════════
 
-    ✅ First time: LaTeX output (requires JavaScript to display)
-    ✅ Second time: MathML output (works without JavaScript)
+    This was built ONCE for the current system.
 
-    Both share the document processing, but each requires
-    its own equation converter with 20+ element handlers.
+    The new change requires building the
+    equation translation engine A SECOND TIME
+    with completely different output rules.
+
+    ═══════════════════════════════════════════
 ```
 
+---
 
-## Why There's No "Just Use an Existing Tool"
+## Don't Existing Tools Already Do This?
 
-```
-    ┌─────────────────────────────────────────────┐
-    │                                             │
-    │   What existing tools CAN do:               │
-    │                                             │
-    │   ✓ Convert equations only (not full doc)   │
-    │   ✓ Convert simple documents (no equations) │
-    │   ✓ Convert with known bugs and limitations │
-    │                                             │
-    ├─────────────────────────────────────────────┤
-    │                                             │
-    │   What NO existing tool does:               │
-    │                                             │
-    │   ✗ Full document + equations + footnotes   │
-    │     + tables + images + RTL Arabic text     │
-    │     + shapes — all in one pipeline          │
-    │                                             │
-    │   ✗ Find equations in ALL 5 locations       │
-    │     inside Word's XML structure             │
-    │                                             │
-    │   ✗ Produce clean, copy-pasteable HTML      │
-    │     with no JavaScript dependency           │
-    │                                             │
-    │   ✗ Match specific output format            │
-    │     (wordhtml.com conventions)              │
-    │                                             │
-    │   ✗ Handle Arabic right-to-left text        │
-    │     alongside mathematical equations        │
-    │                                             │
-    └─────────────────────────────────────────────┘
+**Honest answer: partially, but none cover our full set of requirements.**
 
-
-    Here's what's available and why it's not enough:
-
-    ┌──────────────────┬──────────────────────────┐
-    │ Tool             │ What's missing            │
-    ├──────────────────┼──────────────────────────┤
-    │                  │                           │
-    │ Microsoft's XSLT │ Only converts equations.  │
-    │ (omml2mml.xsl)  │ Known bugs. Does not      │
-    │                  │ handle full documents.    │
-    │                  │                           │
-    ├──────────────────┼──────────────────────────┤
-    │                  │                           │
-    │ Pandoc           │ Documented issues with    │
-    │                  │ equation accuracy.         │
-    │                  │ Moves inline equations.   │
-    │                  │ Loses equation numbers.   │
-    │                  │ No custom HTML format.    │
-    │                  │                           │
-    ├──────────────────┼──────────────────────────┤
-    │                  │                           │
-    │ wordhtml.com     │ Strips all equations      │
-    │                  │ entirely. They disappear  │
-    │                  │ from the output.          │
-    │                  │                           │
-    ├──────────────────┼──────────────────────────┤
-    │                  │                           │
-    │ MathType         │ Manual one-by-one copy.   │
-    │                  │ Not automated. Not a      │
-    │                  │ pipeline. Costs $$.       │
-    │                  │                           │
-    ├──────────────────┼──────────────────────────┤
-    │                  │                           │
-    │ omml2mathml      │ Equation-only converter.  │
-    │ (open source)    │ No document handling.     │
-    │                  │ No footnotes, tables,     │
-    │                  │ images, or RTL support.   │
-    │                  │                           │
-    └──────────────────┴──────────────────────────┘
-
-    CONCLUSION: A custom solution is the only way
-    to meet all requirements together.
-```
-
-
-## The Scale of Work — Simple Numbers
+There are tools that handle PARTS of this problem. Here's what they can and cannot do:
 
 ```
-    WHAT WAS BUILT (existing system):
+    ┌────────────────────────────────────────────────────────────────┐
+    │                                                                │
+    │                   WHAT WE NEED (all together)                  │
+    │                                                                │
+    │   ✓ Convert equations (150+ per document)                     │
+    │   ✓ Convert full document structure (tables, footnotes, etc.) │
+    │   ✓ Arabic right-to-left text support                         │
+    │   ✓ Clean MathML output (no JavaScript)                       │
+    │   ✓ Specific HTML format (wordhtml.com conventions)           │
+    │   ✓ Automated batch processing                                │
+    │   ✓ Free / no per-seat licensing costs                        │
+    │                                                                │
+    └────────────────────────────────────────────────────────────────┘
+```
 
-    ┌─────────────────────────────────────────────┐
-    │                                             │
-    │   📁 10+ source code files                  │
-    │   📝 ~3,000 lines of code                   │
-    │   🧮 20+ equation element handlers          │
-    │   🔣 100+ mathematical symbol mappings      │
-    │   📋 3 processor types                      │
-    │   🖥️ Full web interface (upload/download)   │
-    │   🐳 Docker deployment configuration        │
-    │   ☁️ Google Cloud deployment pipeline       │
-    │                                             │
-    └─────────────────────────────────────────────┘
+### Tool 1: Pandoc (free, open source, code-callable)
+
+**The closest alternative.** Pandoc is a command-line tool that CAN convert Word to HTML with MathML equations. It can be called from code and handles batch processing.
+
+```
+    What Pandoc CAN do                What Pandoc CANNOT do well
+    ─────────────────────             ───────────────────────────
+    ✓ Convert equations to MathML     ✗ RTL + footnotes are broken
+    ✓ Handle basic tables               (footnote numbers appear in
+    ✓ Handle basic footnotes              wrong position in Arabic)
+    ✓ Handle images                   ✗ Equations get repositioned
+    ✓ Batch processing                  (moved to end of paragraph
+    ✓ Free                               instead of staying inline)
+                                      ✗ No wordhtml.com format
+                                      ✗ Table annotations lost
+                                      ✗ No control over HTML style
+```
+
+Pandoc's RTL + footnote bug and equation positioning issues are **documented and open** on their GitHub. For Arabic academic documents with 150 equations, these are not minor issues — they break the output.
+
+### Tool 2: Aspose.Words (commercial API, code-callable)
+
+**A commercial product** that can convert Word to HTML. It has a MathML output mode.
+
+```
+    What Aspose CAN do                What Aspose CANNOT do well
+    ─────────────────────             ───────────────────────────
+    ✓ Convert to HTML                 ✗ Costs $1,199+ per developer
+    ✓ MathML output mode              ✗ Had equation-to-image issues
+    ✓ Handle tables, footnotes           for years (logged 2016,
+    ✓ Professional support               described as "more complex
+                                         than initially estimated")
+                                      ✗ Some MathML rendering bugs
+                                        (special math fonts, notations)
+                                      ✗ No wordhtml.com format
+                                      ✗ Ongoing licensing cost
+```
+
+Aspose could work for some use cases, but it's expensive and has had its own documented struggles with equation conversion.
+
+### Tool 3: Equation-only converters (free, code-callable)
+
+Libraries like `omml2mathml` (Ruby), `scienceai/omml2mathml` (JavaScript), and Microsoft's XSLT stylesheet.
+
+```
+    What they CAN do                  What they CANNOT do
+    ─────────────────────             ───────────────────────────
+    ✓ Convert equations only          ✗ No document handling at all
+    ✓ Can be called from code         ✗ No footnotes, tables, images
+    ✓ Free                            ✗ No RTL support
+                                      ✗ No HTML generation
+                                      ✗ Microsoft's XSLT has known bugs
+                                      ✗ You still need to build
+                                        everything else around them
+```
+
+### Tool 4: wordhtml.com and similar online converters
+
+```
+    What they CAN do                  What they CANNOT do
+    ─────────────────────             ───────────────────────────
+    ✓ Convert basic documents         ✗ Equations are STRIPPED entirely
+    ✓ Nice HTML output                  (they disappear from output)
+    ✓ Easy to use                     ✗ Manual only (no API)
+                                      ✗ Cannot process 150 equations
+                                      ✗ Not automatable
+```
+
+---
+
+## Why Our Custom Solution Exists
+
+```
+    ┌────────────────────────────────────────────────────────────┐
+    │                                                            │
+    │  The problem is not that these tools are bad.              │
+    │  The problem is that NO SINGLE TOOL handles the            │
+    │  COMBINATION of all our requirements:                      │
+    │                                                            │
+    │    Accurate equations                                      │
+    │    + Full document structure                                │
+    │    + Arabic right-to-left text                              │
+    │    + Clean MathML (no JavaScript)                           │
+    │    + Specific output format                                 │
+    │    + Automated processing                                   │
+    │    + No licensing costs                                     │
+    │                                                            │
+    │  Pandoc comes closest but breaks on RTL + equations.        │
+    │  Aspose works but costs $1,199+ per developer.              │
+    │  Equation-only tools need an entire system built around     │
+    │  them — which is essentially what we built.                 │
+    │                                                            │
+    └────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## The Scale of Work
+
+```
+    WHAT WAS ALREADY BUILT:
+
+        10+ source code files
+        ~3,000 lines of code
+        20+ equation element handlers
+        100+ mathematical symbol mappings
+        Full web interface
+        Cloud deployment pipeline
 
 
     WHAT THE NEW CHANGE ADDS:
 
-    ┌─────────────────────────────────────────────┐
-    │                                             │
-    │   📄 1 new source file (equation converter) │
-    │   📝 ~735 new lines of code                 │
-    │   ✏️ ~65 modified lines in 4 existing files │
-    │   🧮 20+ NEW equation element handlers      │
-    │     (different output format = different    │
-    │      conversion logic for each one)         │
-    │   📋 1,080-line technical specification     │
-    │   🔀 Full backward compatibility            │
-    │     (nothing breaks, old mode still works)  │
-    │                                             │
-    └─────────────────────────────────────────────┘
+        1 new source file
+        ~735 new lines of code
+        20+ NEW equation handlers (different format)
+        4 existing files modified
+        1,080-line technical specification
+        All existing features still work
 ```
