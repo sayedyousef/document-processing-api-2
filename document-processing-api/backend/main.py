@@ -304,6 +304,7 @@ async def process_job(job_id: str, file_paths: List[Path], processor_type: str, 
     logger.info(f"Output directory: {output_dir}")
     logger.info(f"Equation processing mode: {'ZIP' if USE_ZIP_APPROACH else 'Word COM'}")
     logger.info(f"Conversion config: {config_dict}")
+    logger.info(f"DEBUG output_format in config: {config_dict.get('output_format', 'NOT FOUND') if config_dict else 'NO CONFIG'}")
 
     if USE_ZIP_APPROACH:
         from doc_processor.zip_equation_replacer import ZipEquationReplacer
@@ -321,7 +322,7 @@ async def process_job(job_id: str, file_paths: List[Path], processor_type: str, 
                 # Use new full converter with config
                 from word_to_html_full import FullWordToHTMLConverter, ConversionConfig
 
-                # Create config from dict (defaults: shapes OFF, no equation markers)
+                # Create config from dict (defaults: shapes OFF, MathML mode)
                 conv_config = ConversionConfig(
                     convert_shapes_to_svg=config_dict.get('convert_shapes_to_svg', False) if config_dict else False,
                     include_images=config_dict.get('include_images', True) if config_dict else True,
@@ -330,7 +331,8 @@ async def process_job(job_id: str, file_paths: List[Path], processor_type: str, 
                     display_prefix=config_dict.get('display_prefix', '') if config_dict else '',
                     display_suffix=config_dict.get('display_suffix', '') if config_dict else '',
                     include_mathjax=config_dict.get('include_mathjax', True) if config_dict else True,
-                    rtl_direction=config_dict.get('rtl_direction', True) if config_dict else True
+                    rtl_direction=config_dict.get('rtl_direction', True) if config_dict else True,
+                    output_format=config_dict.get('output_format', 'mathml_html') if config_dict else 'mathml_html'
                 )
 
                 converter = FullWordToHTMLConverter(conv_config)
@@ -370,7 +372,7 @@ async def process_job(job_id: str, file_paths: List[Path], processor_type: str, 
                 # Use new full converter with config
                 from word_to_html_full import FullWordToHTMLConverter, ConversionConfig
 
-                # Create config from dict (defaults: shapes OFF, no equation markers)
+                # Create config from dict (defaults: shapes OFF, MathML mode)
                 conv_config = ConversionConfig(
                     convert_shapes_to_svg=config_dict.get('convert_shapes_to_svg', False) if config_dict else False,
                     include_images=config_dict.get('include_images', True) if config_dict else True,
@@ -379,7 +381,8 @@ async def process_job(job_id: str, file_paths: List[Path], processor_type: str, 
                     display_prefix=config_dict.get('display_prefix', '') if config_dict else '',
                     display_suffix=config_dict.get('display_suffix', '') if config_dict else '',
                     include_mathjax=config_dict.get('include_mathjax', True) if config_dict else True,
-                    rtl_direction=config_dict.get('rtl_direction', True) if config_dict else True
+                    rtl_direction=config_dict.get('rtl_direction', True) if config_dict else True,
+                    output_format=config_dict.get('output_format', 'mathml_html') if config_dict else 'mathml_html'
                 )
 
                 converter = FullWordToHTMLConverter(conv_config)

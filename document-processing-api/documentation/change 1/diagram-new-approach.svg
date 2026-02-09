@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 540" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow2" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1e8449"/>
+    </marker>
+    <filter id="shadow2">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <!-- Title -->
+  <text x="280" y="35" text-anchor="middle" font-size="22" font-weight="bold" fill="#1e8449">New Approach: MathML (Single Step)</text>
+
+  <!-- Header -->
+  <rect x="80" y="60" width="400" height="36" rx="6" fill="#1e8449"/>
+  <text x="280" y="84" text-anchor="middle" font-size="15" font-weight="bold" fill="white">Direct Conversion — No Pre-Processing</text>
+
+  <!-- Word File Input -->
+  <rect x="155" y="115" width="250" height="55" rx="10" fill="#eafaf1" stroke="#27ae60" stroke-width="2" filter="url(#shadow2)"/>
+  <text x="280" y="140" text-anchor="middle" font-size="14" fill="#2c3e50">📄 Original Word File (.docx)</text>
+  <text x="280" y="157" text-anchor="middle" font-size="10" fill="#7f8c8d">No modification needed</text>
+
+  <!-- Arrow -->
+  <line x1="280" y1="170" x2="280" y2="200" stroke="#1e8449" stroke-width="2" marker-end="url(#arrow2)"/>
+
+  <!-- Load Resources -->
+  <rect x="130" y="205" width="300" height="50" rx="8" fill="#eafaf1" stroke="#27ae60" stroke-width="1.5" filter="url(#shadow2)"/>
+  <text x="280" y="227" text-anchor="middle" font-size="13" fill="#2c3e50">Load Resources</text>
+  <text x="280" y="244" text-anchor="middle" font-size="10" fill="#7f8c8d">styles, footnotes, images, numbering</text>
+
+  <!-- Arrow -->
+  <line x1="280" y1="255" x2="280" y2="285" stroke="#1e8449" stroke-width="2" marker-end="url(#arrow2)"/>
+
+  <!-- Convert Body -->
+  <rect x="100" y="290" width="360" height="80" rx="8" fill="#d5f5e3" stroke="#1e8449" stroke-width="2" filter="url(#shadow2)"/>
+  <text x="280" y="315" text-anchor="middle" font-size="13" font-weight="bold" fill="#1e8449">Convert Document to HTML</text>
+  <text x="280" y="335" text-anchor="middle" font-size="11" fill="#2c3e50">Headings, tables, lists, images, footnotes</text>
+  <text x="280" y="355" text-anchor="middle" font-size="11" fill="#1e8449" font-weight="bold">Equations → MathML (native browser format)</text>
+
+  <!-- Arrow -->
+  <line x1="280" y1="370" x2="280" y2="400" stroke="#1e8449" stroke-width="2" marker-end="url(#arrow2)"/>
+
+  <!-- Output -->
+  <rect x="130" y="405" width="300" height="55" rx="10" fill="#d5f5e3" stroke="#1e8449" stroke-width="2.5" filter="url(#shadow2)"/>
+  <text x="280" y="430" text-anchor="middle" font-size="14" fill="#2c3e50">📄 Clean HTML + 📁 images/</text>
+  <text x="280" y="448" text-anchor="middle" font-size="11" fill="#1e8449" font-weight="bold">✓ No JavaScript  ✓ Copy-pasteable  ✓ Native rendering</text>
+
+  <!-- Benefits bar -->
+  <rect x="50" y="485" width="460" height="40" rx="8" fill="#1e8449" opacity="0.1"/>
+  <text x="280" y="510" text-anchor="middle" font-size="12" fill="#1e8449" font-weight="bold">Simpler  •  Faster  •  Cleaner  •  All features preserved</text>
+</svg>

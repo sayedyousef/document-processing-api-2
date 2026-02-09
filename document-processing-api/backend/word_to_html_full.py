@@ -65,6 +65,9 @@ class ConversionConfig:
     font_family: str = "'Segoe UI', Arial, sans-serif"
     max_width: str = "900px"
 
+    # Output format: "mathml_html" (MathML, no JS) or "latex_html" (LaTeX + MathJax)
+    output_format: str = "mathml_html"
+
 
 class ShapeToSVGConverter:
     """Converts Word shapes to SVG"""
@@ -301,6 +304,13 @@ class FullWordToHTMLConverter:
         self.config = config or ConversionConfig()
         self.svg_converter = ShapeToSVGConverter()
 
+        # Strategy: select equation converter based on output_format
+        if self.config.output_format == "mathml_html":
+            from doc_processor.omml_to_mathml import OmmlToMathMLConverter
+            self.equation_converter = OmmlToMathMLConverter()
+        else:
+            self.equation_converter = None  # LaTeX mode uses pre-processed DOCX
+
         self.namespaces = {
             'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main',
             'm': 'http://schemas.openxmlformats.org/officeDocument/2006/math',
@@ -323,7 +333,7 @@ class FullWordToHTMLConverter:
         self.svg_counter = 0  # Counter for generated SVG files
 
     def convert(self, input_path, output_path=None, output_dir=None):
-        """Main conversion method"""
+        """Main conversion method - branches based on output_format"""
 
         input_path = Path(input_path).absolute()
 
@@ -341,8 +351,24 @@ class FullWordToHTMLConverter:
         print(f"{'='*70}")
         print(f"Input:  {input_path}")
         print(f"Output: {output_path}")
+        print(f"Mode:   {self.config.output_format}")
         print(f"Config: SVG={self.config.convert_shapes_to_svg}, MathJax={self.config.include_mathjax}")
         print(f"{'='*70}")
+
+        # Debug: Show exact output_format value
+        print(f"DEBUG: output_format = '{self.config.output_format}' (type: {type(self.config.output_format).__name__})")
+        print(f"DEBUG: output_format == 'mathml_html': {self.config.output_format == 'mathml_html'}")
+        print(f"DEBUG: output_format == 'latex_html': {self.config.output_format == 'latex_html'}")
+
+        if self.config.output_format == "mathml_html":
+            print("DEBUG: Using MathML mode")
+            return self._convert_mathml_mode(input_path, output_path, output_dir)
+        else:
+            print("DEBUG: Using LaTeX mode")
+            return self._convert_latex_mode(input_path, output_path, output_dir)
+
+    def _convert_latex_mode(self, input_path, output_path, output_dir):
+        """Existing two-step conversion: equation pre-processing + HTML generation"""
 
         temp_dir = Path(f"temp_full_{datetime.now().strftime('%Y%m%d_%H%M%S')}")
 
@@ -425,6 +451,63 @@ class FullWordToHTMLConverter:
             if temp_dir.exists():
                 shutil.rmtree(temp_dir)
 
+    def _convert_mathml_mode(self, input_path, output_path, output_dir):
+        """Direct DOCX to HTML with MathML - no intermediate Word file"""
+
+        temp_dir = Path(f"temp_mathml_{datetime.now().strftime('%Y%m%d_%H%M%S')}")
+
+        try:
+            # Step 1: Extract ORIGINAL DOCX directly (no pre-processing)
+            print("\n[1] Extracting original document (MathML mode)...")
+            extract_dir = temp_dir / "extracted"
+            temp_dir.mkdir(exist_ok=True)
+            with zipfile.ZipFile(input_path, 'r') as z:
+                z.extractall(extract_dir)
+
+            # Step 2: Load resources
+            print("\n[2] Loading resources...")
+            self.output_dir = output_dir
+            self._load_relationships(extract_dir)
+            self._load_styles(extract_dir)
+            self._load_numbering(extract_dir)
+            self._load_footnotes_wordhtml(extract_dir)
+            self._extract_images(extract_dir, output_dir)
+
+            # Step 3: Convert document (OMML equations converted inline to MathML)
+            print("\n[3] Converting document with inline MathML...")
+            doc_xml = extract_dir / "word" / "document.xml"
+            with open(doc_xml, 'rb') as f:
+                doc_root = etree.fromstring(f.read())
+
+            html_content = self._convert_body(doc_root)
+
+            # Step 4: Generate clean HTML (no MathJax, wordhtml.com format)
+            print("\n[4] Generating HTML (wordhtml.com format, no JavaScript)...")
+            full_html = self._generate_html_wordhtml(html_content, input_path.stem)
+
+            with open(output_path, 'w', encoding='utf-8') as f:
+                f.write(full_html)
+
+            print(f"\n{'='*70}")
+            print("CONVERSION COMPLETE (MathML mode)!")
+            print(f"HTML Output: {output_path}")
+            print(f"{'='*70}")
+
+            return {
+                'success': True,
+                'output_path': str(output_path)
+            }
+
+        except Exception as e:
+            print(f"ERROR: {e}")
+            import traceback
+            traceback.print_exc()
+            return {'success': False, 'error': str(e)}
+
+        finally:
+            if temp_dir.exists():
+                shutil.rmtree(temp_dir)
+
     def _load_relationships(self, extract_dir):
         rels_path = extract_dir / "word" / "_rels" / "document.xml.rels"
         if not rels_path.exists():
@@ -486,6 +569,45 @@ class FullWordToHTMLConverter:
                 if fn_id and fn_id not in ['0', '-1']:
                     self.footnotes[fn_id] = self._extract_text(fn)
 
+    def _load_footnotes_wordhtml(self, extract_dir):
+        """Load footnotes with full formatting for wordhtml.com style output"""
+        fn_path = extract_dir / "word" / "footnotes.xml"
+        if not fn_path.exists():
+            return
+        with open(fn_path, 'rb') as f:
+            root = etree.fromstring(f.read())
+        ns = {'w': self.namespaces['w']}
+        for fn in root.xpath('//w:footnote', namespaces=ns):
+            fn_id = fn.get(f'{{{ns["w"]}}}id')
+            if fn_id and fn_id not in ['0', '-1']:
+                self.footnotes[fn_id] = self._convert_footnote_content(fn)
+
+    def _convert_footnote_content(self, fn_elem):
+        """Convert footnote content with formatting preserved"""
+        ns = self.namespaces
+        parts = []
+        for p in fn_elem.xpath('.//w:p', namespaces=ns):
+            p_parts = []
+            for child in p:
+                tag = child.tag.split('}')[-1]
+                if tag == 'r':
+                    # Skip footnote reference marker inside footnote itself
+                    if child.xpath('.//w:footnoteRef', namespaces=ns):
+                        continue
+                    p_parts.append(self._convert_run(child))
+                elif tag == 'hyperlink':
+                    p_parts.append(self._convert_hyperlink(child))
+                elif tag == 'oMath' and self.equation_converter:
+                    p_parts.append(self.equation_converter.convert(child, is_display=False))
+                elif tag == 'oMathPara' and self.equation_converter:
+                    omath = child.find('m:oMath', namespaces=ns)
+                    if omath is not None:
+                        p_parts.append(self.equation_converter.convert(omath, is_display=True))
+            content = ''.join(p_parts)
+            if content.strip():
+                parts.append(content)
+        return ' '.join(parts)
+
     def _extract_images(self, extract_dir, output_dir):
         media_dir = extract_dir / "word" / "media"
         if not media_dir.exists():
@@ -502,63 +624,106 @@ class FullWordToHTMLConverter:
     def _convert_body(self, doc_root):
         ns = self.namespaces
         body = doc_root.xpath('//w:body', namespaces=ns)[0]
+        is_mathml = self.config.output_format == "mathml_html"
 
         parts = []
         list_items = []
         current_list = None
+        current_num_id = None  # Track numId to continue lists after interruptions
+        list_counters = {}  # Track count for each numId to use <ol start="N">
 
         for child in body:
             tag = child.tag.split('}')[-1]
 
             if tag == 'p':
+                # Check for section break inside paragraph
+                sect_pr = child.find('.//w:pPr/w:sectPr', namespaces=ns) if is_mathml else None
+
                 num_pr = child.xpath('.//w:numPr', namespaces=ns)
                 if num_pr:
                     num_id = child.xpath('.//w:numId/@w:val', namespaces=ns)
+                    num_id_val = num_id[0] if num_id else None
                     ilvl = child.xpath('.//w:ilvl/@w:val', namespaces=ns)
 
                     list_type = 'ul'
-                    if num_id and num_id[0] in self.numbering:
+                    if num_id_val and num_id_val in self.numbering:
                         lvl = ilvl[0] if ilvl else '0'
-                        fmt = self.numbering[num_id[0]].get(lvl, 'bullet')
+                        fmt = self.numbering[num_id_val].get(lvl, 'bullet')
                         if fmt in ['decimal', 'lowerLetter', 'upperLetter']:
                             list_type = 'ol'
 
-                    if current_list != list_type:
+                    # Check if we're continuing a different list or starting fresh
+                    if current_list != list_type or current_num_id != num_id_val:
                         if list_items:
-                            parts.append(self._wrap_list(list_items, current_list))
+                            parts.append(self._wrap_list(list_items, current_list, current_num_id, list_counters))
                             list_items = []
                         current_list = list_type
+                        current_num_id = num_id_val
 
                     content = self._convert_paragraph_content(child)
                     if content.strip():
                         list_items.append(content)
+                        # Track count for this numId
+                        if num_id_val:
+                            list_counters[num_id_val] = list_counters.get(num_id_val, 0) + 1
                 else:
                     if list_items:
-                        parts.append(self._wrap_list(list_items, current_list))
+                        parts.append(self._wrap_list(list_items, current_list, current_num_id, list_counters))
                         list_items = []
                         current_list = None
+                        # Don't reset current_num_id - we might continue the list later
                     parts.append(self._convert_paragraph(child))
+
+                # Add section break separator if present
+                if sect_pr is not None:
+                    parts.append('<hr>')
 
             elif tag == 'tbl':
                 if list_items:
-                    parts.append(self._wrap_list(list_items, current_list))
+                    parts.append(self._wrap_list(list_items, current_list, current_num_id, list_counters))
                     list_items = []
                     current_list = None
                 parts.append(self._convert_table(child))
 
             elif tag == 'sectPr':
+                # Final section properties - safe to skip
                 continue
 
+            else:
+                # Process any other element type to avoid content loss
+                text = self._extract_text(child)
+                if text.strip():
+                    parts.append(f'<p>{self._escape(text)}</p>')
+
         if list_items:
-            parts.append(self._wrap_list(list_items, current_list))
+            parts.append(self._wrap_list(list_items, current_list, current_num_id, list_counters))
 
         return '\n'.join(filter(None, parts))
 
-    def _wrap_list(self, items, list_type):
+    def _wrap_list(self, items, list_type, num_id=None, counters=None):
+        """Wrap list items in <ol> or <ul> with proper numbering continuation.
+
+        Args:
+            items: List of HTML content for each list item
+            list_type: 'ol' or 'ul'
+            num_id: Word's numId for this list (used to track continuation)
+            counters: Dict tracking total count for each numId
+        """
         if not items:
             return ''
+
         html = '\n'.join(f'  <li>{item}</li>' for item in items)
-        return f'<{list_type or "ul"}>\n{html}\n</{list_type or "ul"}>'
+        tag = list_type or 'ul'
+
+        # For ordered lists, calculate start number to continue from previous items
+        if tag == 'ol' and num_id and counters:
+            total_count = counters.get(num_id, len(items))
+            start_num = total_count - len(items) + 1
+            if start_num > 1:
+                # Continue numbering from where we left off
+                return f'<ol start="{start_num}">\n{html}\n</ol>'
+
+        return f'<{tag}>\n{html}\n</{tag}>'
 
     def _convert_paragraph_content(self, p_elem):
         ns = self.namespaces
@@ -573,6 +738,16 @@ class FullWordToHTMLConverter:
                 parts.append(self._convert_hyperlink(child))
             elif tag == 'drawing':
                 parts.append(self._convert_drawing(child))
+            elif tag == 'oMath' and self.equation_converter:
+                # MathML mode: convert equation inline
+                parts.append(self.equation_converter.convert(child, is_display=False))
+            elif tag == 'oMathPara' and self.equation_converter:
+                # MathML mode: convert display equation
+                omath = child.find('m:oMath', namespaces=ns)
+                if omath is not None:
+                    parts.append(self.equation_converter.convert(omath, is_display=True))
+                else:
+                    parts.append(self.equation_converter.convert(child, is_display=True))
             elif tag in ['pPr', 'bookmarkStart', 'bookmarkEnd']:
                 continue
             else:
@@ -601,6 +776,9 @@ class FullWordToHTMLConverter:
 
         content = self._convert_paragraph_content(p_elem)
         if not content.strip():
+            # wordhtml.com preserves empty paragraphs as spacing
+            if self.config.output_format == "mathml_html":
+                return '<p>&nbsp;</p>'
             return ''
 
         if heading_level:
@@ -613,6 +791,8 @@ class FullWordToHTMLConverter:
 
         bold = bool(r_elem.xpath('.//w:b[not(@w:val="false")]', namespaces=ns))
         italic = bool(r_elem.xpath('.//w:i[not(@w:val="false")]', namespaces=ns))
+        superscript = bool(r_elem.xpath('.//w:vertAlign[@w:val="superscript"]', namespaces=ns))
+        subscript_text = bool(r_elem.xpath('.//w:vertAlign[@w:val="subscript"]', namespaces=ns))
 
         for child in r_elem:
             tag = child.tag.split('}')[-1]
@@ -624,7 +804,14 @@ class FullWordToHTMLConverter:
             elif tag == 'pict':
                 parts.append(self._convert_pict(child))
             elif tag == 'AlternateContent':
-                # Handle mc:AlternateContent - shapes are inside mc:Choice/w:drawing
+                # Handle mc:AlternateContent - shapes, equations in textboxes
+                # In MathML mode, also look for equations inside textboxes
+                if self.equation_converter:
+                    omath_elems = child.xpath('.//m:oMath', namespaces=ns)
+                    if omath_elems:
+                        for omath in omath_elems:
+                            parts.append(self.equation_converter.convert(omath, is_display=False))
+                        continue
                 drawing = child.xpath('.//w:drawing', namespaces=ns)
                 pict = child.xpath('.//w:pict', namespaces=ns)
                 if drawing:
@@ -633,8 +820,8 @@ class FullWordToHTMLConverter:
                     parts.append(self._convert_pict(pict[0]))
             elif tag == 'footnoteReference':
                 fn_id = child.get(f'{{{ns["w"]}}}id')
-                # Bidirectional linking: reference links to footnote, footnote links back
-                parts.append(f'<sup><a id="fnref{fn_id}" href="#fn{fn_id}">[{fn_id}]</a></sup>')
+                # wordhtml.com format for both modes: <a href="#_ftn1" name="_ftnref1">[1]</a>
+                parts.append(f'<a href="#_ftn{fn_id}" name="_ftnref{fn_id}">[{fn_id}]</a>')
             elif tag == 'br':
                 parts.append('<br>')
 
@@ -643,6 +830,10 @@ class FullWordToHTMLConverter:
             content = f'<em>{content}</em>'
         if bold:
             content = f'<strong>{content}</strong>'
+        if superscript:
+            content = f'<sup>{content}</sup>'
+        if subscript_text:
+            content = f'<sub>{content}</sub>'
 
         return content
 
@@ -654,28 +845,56 @@ class FullWordToHTMLConverter:
         return f'<a href="{href}">{content}</a>'
 
     def _convert_table(self, tbl_elem):
+        """Convert table to wordhtml.com format with tbody, width, and colspan."""
         ns = self.namespaces
         rows = []
 
         for tr in tbl_elem.xpath('./w:tr', namespaces=ns):
             cells = []
             for tc in tr.xpath('./w:tc', namespaces=ns):
+                # Get cell properties for wordhtml.com format (both modes)
+                width_attr = ''
+                colspan_attr = ''
+
+                tc_pr = tc.find('w:tcPr', namespaces=ns)
+                if tc_pr is not None:
+                    # Width: convert twips to pixels
+                    tc_w = tc_pr.find('w:tcW', namespaces=ns)
+                    if tc_w is not None:
+                        w_val = tc_w.get(f'{{{ns["w"]}}}w', '')
+                        w_type = tc_w.get(f'{{{ns["w"]}}}type', 'dxa')
+                        if w_val and w_type == 'dxa':
+                            px = int(int(w_val) * 96 / 1440)
+                            width_attr = f' width="{px}"'
+
+                    # Colspan (gridSpan)
+                    grid_span = tc_pr.find('w:gridSpan', namespaces=ns)
+                    if grid_span is not None:
+                        span_val = grid_span.get(f'{{{ns["w"]}}}val', '')
+                        if span_val and int(span_val) > 1:
+                            colspan_attr = f' colspan="{span_val}"'
+
+                # Convert cell content
                 content = []
                 for p in tc.xpath('./w:p', namespaces=ns):
                     p_content = self._convert_paragraph_content(p)
                     if p_content.strip():
                         content.append(p_content)
-                cells.append('<br>'.join(content))
+
+                cell_html = '<br>'.join(content) if content else '&nbsp;'
+                cells.append((cell_html, width_attr, colspan_attr))
             rows.append(cells)
 
-        html = ['<table>']
-        for i, row in enumerate(rows):
-            html.append('  <tr>')
-            tag = 'th' if i == 0 else 'td'
-            for cell in row:
-                html.append(f'    <{tag}>{cell}</{tag}>')
-            html.append('  </tr>')
+        # wordhtml.com format for both modes: <table><tbody><tr><td width="..." colspan="...">
+        html = ['<table>', '<tbody>']
+        for row in rows:
+            html.append('<tr>')
+            for cell_html, width_attr, colspan_attr in row:
+                html.append(f'<td{colspan_attr}{width_attr}>{cell_html}</td>')
+            html.append('</tr>')
+        html.append('</tbody>')
         html.append('</table>')
+
         return '\n'.join(html)
 
     def _convert_drawing(self, drawing_elem):
@@ -760,7 +979,64 @@ class FullWordToHTMLConverter:
         # Don't escape text containing math markers (they contain LaTeX)
         if '\\(' in text or '\\[' in text:
             return text
+        # Don't escape MathML content
+        if '<math ' in text or '<math>' in text:
+            return text
         return text.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+
+    def _generate_html_wordhtml(self, content, title):
+        """Generate HTML in wordhtml.com format - clean, no JavaScript"""
+
+        config = self.config
+        direction = 'rtl' if config.rtl_direction else 'ltr'
+
+        # Minimal styles for readability (optional)
+        styles = ''
+        if config.include_styles:
+            styles = '''
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px 40px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1em 0;
+        }
+        td, th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        img {
+            max-width: 100%;
+        }
+    </style>'''
+
+        # Footnotes HTML with wordhtml.com naming (_ftn/_ftnref)
+        footnotes_html = ''
+        if self.footnotes:
+            footnotes_parts = []
+            for fn_id, fn_content in self.footnotes.items():
+                footnotes_parts.append(
+                    f'<p><a href="#_ftnref{fn_id}" name="_ftn{fn_id}">[{fn_id}]</a> {fn_content}</p>'
+                )
+            footnotes_html = '\n'.join(footnotes_parts)
+
+        return f'''<!DOCTYPE html>
+<html dir="{direction}">
+<head>
+<meta charset="UTF-8">
+<title>{title}</title>{styles}
+</head>
+<body>
+{content}
+{footnotes_html}
+</body>
+</html>'''
 
     def _generate_html(self, content, title):
         """Generate clean HTML output - NO config panel (settings applied during conversion)"""
@@ -941,12 +1217,13 @@ class FullWordToHTMLConverter:
 ''' if config.include_styles else ''
 
         # Footnotes HTML with bidirectional linking
+        # Footnotes HTML with wordhtml.com naming (_ftn/_ftnref) for both modes
         footnotes_html = ''
         if self.footnotes:
             footnotes_html = '<div class="footnotes"><h3>الحواشي</h3>'
             for fn_id, fn_content in self.footnotes.items():
-                # Back link: clicking the footnote number goes back to the reference in text
-                footnotes_html += f'<p id="fn{fn_id}"><sup><a href="#fnref{fn_id}">{fn_id}</a></sup> {fn_content}</p>'
+                # wordhtml.com format: <a href="#_ftnref1" name="_ftn1">[1]</a>
+                footnotes_html += f'<p><a href="#_ftnref{fn_id}" name="_ftn{fn_id}">[{fn_id}]</a> {fn_content}</p>'
             footnotes_html += '</div>'
 
         return f'''<!DOCTYPE html>
