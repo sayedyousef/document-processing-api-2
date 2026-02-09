@@ -16,49 +16,6 @@
            class="max-w-xl mx-auto mb-6 p-4 bg-white rounded-lg shadow-sm border border-gray-200">
         <h3 class="text-lg font-semibold mb-4 text-gray-800">Conversion Settings</h3>
 
-        <!-- Equation Marker Style -->
-        <div class="mb-4">
-          <label class="block text-sm font-medium text-gray-700 mb-2">Equation Marker Style</label>
-          <div class="flex space-x-2">
-            <button
-              @click="setMarkerPreset('none')"
-              :class="['px-3 py-2 text-sm rounded-md border', markerPreset === 'none' ? 'bg-blue-500 text-white border-blue-500' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50']"
-            >None</button>
-            <button
-              @click="setMarkerPreset('markers')"
-              :class="['px-3 py-2 text-sm rounded-md border', markerPreset === 'markers' ? 'bg-blue-500 text-white border-blue-500' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50']"
-            >MATHSTART/END</button>
-            <button
-              @click="setMarkerPreset('custom')"
-              :class="['px-3 py-2 text-sm rounded-md border', markerPreset === 'custom' ? 'bg-blue-500 text-white border-blue-500' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50']"
-            >Custom</button>
-          </div>
-        </div>
-
-        <!-- Custom Prefix/Suffix (shown when custom is selected) -->
-        <div v-if="markerPreset === 'custom'" class="mb-4 grid grid-cols-2 gap-4">
-          <div>
-            <label class="block text-sm text-gray-600 mb-1">Inline Prefix</label>
-            <input v-model="conversionConfig.inline_prefix" type="text"
-                   class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm">
-          </div>
-          <div>
-            <label class="block text-sm text-gray-600 mb-1">Inline Suffix</label>
-            <input v-model="conversionConfig.inline_suffix" type="text"
-                   class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm">
-          </div>
-          <div>
-            <label class="block text-sm text-gray-600 mb-1">Display Prefix</label>
-            <input v-model="conversionConfig.display_prefix" type="text"
-                   class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm">
-          </div>
-          <div>
-            <label class="block text-sm text-gray-600 mb-1">Display Suffix</label>
-            <input v-model="conversionConfig.display_suffix" type="text"
-                   class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm">
-          </div>
-        </div>
-
         <!-- Checkboxes -->
         <div class="space-y-3">
           <label class="flex items-center space-x-3 cursor-pointer">
