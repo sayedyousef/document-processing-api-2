@@ -1220,7 +1220,7 @@ class FullWordToHTMLConverter:
         # Footnotes HTML with wordhtml.com naming (_ftn/_ftnref) for both modes
         footnotes_html = ''
         if self.footnotes:
-            footnotes_html = '<div class="footnotes"><h3>الحواشي</h3>'
+            footnotes_html = '<div class="footnotes">'
             for fn_id, fn_content in self.footnotes.items():
                 # wordhtml.com format: <a href="#_ftnref1" name="_ftn1">[1]</a>
                 footnotes_html += f'<p><a href="#_ftnref{fn_id}" name="_ftn{fn_id}">[{fn_id}]</a> {fn_content}</p>'
