@@ -163,7 +163,7 @@ export default {
       }
     }
 
-    // Download with refresh check
+    // Download with refresh check - auto-reset after download
     const downloadFileWithRefresh = async (index) => {
       try {
         // First check if job still exists
@@ -189,6 +189,11 @@ export default {
         document.body.appendChild(link)
         link.click()
         document.body.removeChild(link)
+
+        // Auto-reset after successful download so user can process new files
+        setTimeout(() => {
+          emit('reset')
+        }, 1500)
       } catch (error) {
         console.error('[ResultDownload] Download failed:', error)
         if (error.response?.status === 404) {
@@ -219,6 +224,11 @@ export default {
         document.body.appendChild(link)
         link.click()
         document.body.removeChild(link)
+
+        // Auto-reset after successful download so user can process new files
+        setTimeout(() => {
+          emit('reset')
+        }, 1500)
       } catch (error) {
         console.error('[ResultDownload] Download all failed:', error)
         if (error.response?.status === 404) {

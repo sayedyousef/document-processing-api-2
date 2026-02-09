@@ -16,29 +16,8 @@
            class="max-w-xl mx-auto mb-6 p-4 bg-white rounded-lg shadow-sm border border-gray-200">
         <h3 class="text-lg font-semibold mb-4 text-gray-800">Conversion Settings</h3>
 
-        <!-- Output Format -->
+        <!-- Equation Marker Style -->
         <div class="mb-4">
-          <label class="block text-sm font-medium text-gray-700 mb-2">Output Format</label>
-          <div class="flex space-x-2">
-            <button
-              @click="conversionConfig.output_format = 'mathml_html'"
-              :class="['px-3 py-2 text-sm rounded-md border', conversionConfig.output_format === 'mathml_html' ? 'bg-blue-500 text-white border-blue-500' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50']"
-            >MathML (No JS)</button>
-            <button
-              @click="conversionConfig.output_format = 'latex_html'"
-              :class="['px-3 py-2 text-sm rounded-md border', conversionConfig.output_format === 'latex_html' ? 'bg-blue-500 text-white border-blue-500' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50']"
-            >LaTeX + MathJax</button>
-          </div>
-          <p class="text-xs text-gray-500 mt-1" v-if="conversionConfig.output_format === 'mathml_html'">
-            Native browser rendering. No JavaScript needed. Copy-pasteable equations.
-          </p>
-          <p class="text-xs text-gray-500 mt-1" v-else>
-            Requires MathJax JavaScript library for equation rendering.
-          </p>
-        </div>
-
-        <!-- Equation Marker Style (only for LaTeX mode) -->
-        <div v-if="conversionConfig.output_format === 'latex_html'" class="mb-4">
           <label class="block text-sm font-medium text-gray-700 mb-2">Equation Marker Style</label>
           <div class="flex space-x-2">
             <button
@@ -56,8 +35,8 @@
           </div>
         </div>
 
-        <!-- Custom Prefix/Suffix (shown when custom is selected in LaTeX mode) -->
-        <div v-if="conversionConfig.output_format === 'latex_html' && markerPreset === 'custom'" class="mb-4 grid grid-cols-2 gap-4">
+        <!-- Custom Prefix/Suffix (shown when custom is selected) -->
+        <div v-if="markerPreset === 'custom'" class="mb-4 grid grid-cols-2 gap-4">
           <div>
             <label class="block text-sm text-gray-600 mb-1">Inline Prefix</label>
             <input v-model="conversionConfig.inline_prefix" type="text"
@@ -94,7 +73,7 @@
             <span class="text-sm text-gray-700">Include images in HTML</span>
           </label>
 
-          <label v-if="conversionConfig.output_format === 'latex_html'" class="flex items-center space-x-3 cursor-pointer">
+          <label class="flex items-center space-x-3 cursor-pointer">
             <input type="checkbox" v-model="conversionConfig.include_mathjax"
                    class="w-4 h-4 text-blue-500 rounded">
             <span class="text-sm text-gray-700">Include MathJax library</span>
@@ -157,7 +136,7 @@ export default {
 
     // Conversion configuration
     const conversionConfig = reactive({
-      output_format: 'mathml_html',  // Default: MathML (no JS, native rendering)
+      output_format: 'latex_html',  // Default: LaTeX + MathJax
       inline_prefix: '',
       inline_suffix: '',
       display_prefix: '',

@@ -1,11 +1,11 @@
 steps:
   # Build the Docker image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/document-processing-api:$COMMIT_SHA', '.']
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/document-processing-api:latest', '.']
 
   # Push the image to Container Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/document-processing-api:$COMMIT_SHA']
+    args: ['push', 'gcr.io/$PROJECT_ID/document-processing-api:latest']
 
   # Deploy to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -15,7 +15,7 @@ steps:
       - 'deploy'
       - 'document-processing-api'
       - '--image'
-      - 'gcr.io/$PROJECT_ID/document-processing-api:$COMMIT_SHA'
+      - 'gcr.io/$PROJECT_ID/document-processing-api:latest'
       - '--region'
       - 'us-central1'
       - '--platform'
@@ -31,7 +31,7 @@ steps:
       - '10'
 
 images:
-  - 'gcr.io/$PROJECT_ID/document-processing-api:$COMMIT_SHA'
+  - 'gcr.io/$PROJECT_ID/document-processing-api:latest'
 
 options:
   logging: CLOUD_LOGGING_ONLY
