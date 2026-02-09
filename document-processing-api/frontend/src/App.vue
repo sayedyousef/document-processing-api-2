@@ -82,7 +82,7 @@
           <label class="flex items-center space-x-3 cursor-pointer">
             <input type="checkbox" v-model="conversionConfig.rtl_direction"
                    class="w-4 h-4 text-blue-500 rounded">
-            <span class="text-sm text-gray-700">RTL direction (Arabic/Hebrew)</span>
+            <span class="text-sm text-gray-700">RTL direction</span>
           </label>
         </div>
       </div>
