@@ -567,7 +567,9 @@ class FullWordToHTMLConverter:
             for fn in root.xpath('//w:footnote', namespaces=ns):
                 fn_id = fn.get(f'{{{ns["w"]}}}id')
                 if fn_id and fn_id not in ['0', '-1']:
-                    self.footnotes[fn_id] = self._extract_text(fn)
+                    # Escape HTML entities in footnote text for safe output
+                    raw_text = self._extract_text(fn)
+                    self.footnotes[fn_id] = self._escape(raw_text)
 
     def _load_footnotes_wordhtml(self, extract_dir):
         """Load footnotes with full formatting for wordhtml.com style output"""
@@ -826,10 +828,9 @@ class FullWordToHTMLConverter:
                 parts.append('<br>')
 
         content = ''.join(parts)
-        if italic:
-            content = f'<em>{content}</em>'
-        if bold:
-            content = f'<strong>{content}</strong>'
+        # Note: Removed <i> and <b> tags for SharePoint compatibility
+        # MathJax handles math formatting, and these tags caused issues
+        # in SharePoint's source editor (tags were escaped to text)
         if superscript:
             content = f'<sup>{content}</sup>'
         if subscript_text:
