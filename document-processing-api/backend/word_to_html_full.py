@@ -828,9 +828,10 @@ class FullWordToHTMLConverter:
                 parts.append('<br>')
 
         content = ''.join(parts)
-        # Note: Removed <i> and <b> tags for SharePoint compatibility
-        # MathJax handles math formatting, and these tags caused issues
-        # in SharePoint's source editor (tags were escaped to text)
+        if italic:
+            content = f'<i>{content}</i>'
+        if bold:
+            content = f'<b>{content}</b>'
         if superscript:
             content = f'<sup>{content}</sup>'
         if subscript_text:
@@ -1034,8 +1035,10 @@ class FullWordToHTMLConverter:
 <title>{title}</title>{styles}
 </head>
 <body>
+<div id="mathjax-content">
 {content}
 {footnotes_html}
+</div>
 </body>
 </html>'''
 
@@ -1089,15 +1092,53 @@ class FullWordToHTMLConverter:
 '''
             mathjax = f'''
     <script>
-        window.MathJax = {{
-            tex: {{
-                inlineMath: [['\\\\(', '\\\\)']],
-                displayMath: [['\\\\[', '\\\\]']]
-            }},
-            svg: {{ fontCache: 'global' }}
-        }};
+        // SharePoint edit mode detection - skip MathJax if page is being edited
+        (function() {{
+            // Detect SharePoint edit mode
+            var isEditMode = (
+                window.location.search.indexOf('Mode=Edit') !== -1 ||
+                window.location.search.indexOf('mode=edit') !== -1 ||
+                document.querySelector('.sp-pageLayout-editMode') !== null ||
+                document.querySelector('#spPageCanvasContent [contenteditable="true"]') !== null
+            );
+            if (isEditMode) return;
+
+            window.MathJax = {{
+                tex: {{
+                    inlineMath: [['\\\\(', '\\\\)']],
+                    displayMath: [['\\\\[', '\\\\]']]
+                }},
+                options: {{
+                    // CRITICAL: Only scan our content div, not SharePoint's editor
+                    elements: ['#mathjax-content']
+                }},
+                svg: {{ fontCache: 'global' }},
+                startup: {{
+                    ready: function() {{
+                        // Extra safety: abort if content is inside a contenteditable
+                        var el = document.getElementById('mathjax-content');
+                        if (el) {{
+                            var parent = el.parentElement;
+                            while (parent) {{
+                                if (parent.getAttribute && parent.getAttribute('contenteditable') === 'true') {{
+                                    console.log('MathJax: skipping - inside contenteditable');
+                                    return;
+                                }}
+                                parent = parent.parentElement;
+                            }}
+                        }}
+                        MathJax.startup.defaultReady();
+                    }}
+                }}
+            }};
+
+            // Dynamically load MathJax
+            var script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js';
+            script.async = true;
+            document.head.appendChild(script);
+        }})();
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
 {marker_script}'''
 
         # CSS
@@ -1237,8 +1278,10 @@ class FullWordToHTMLConverter:
 {styles}
 </head>
 <body>
+<div id="mathjax-content">
 {content}
 {footnotes_html}
+</div>
 </body>
 </html>'''
 

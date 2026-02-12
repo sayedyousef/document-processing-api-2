@@ -104,15 +104,51 @@ export default {
 
     // MathJax script for rendering equations
     const mathjaxScript = `<script>
-  window.MathJax = {
-    tex: {
-      inlineMath: [['\\\\(', '\\\\)']],
-      displayMath: [['\\\\[', '\\\\]']]
-    },
-    svg: { fontCache: 'global' }
-  };
-<\/script>
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async><\/script>`
+  // SharePoint-safe MathJax loader
+  (function() {
+    // Skip MathJax in SharePoint edit mode
+    var isEditMode = (
+      window.location.search.indexOf('Mode=Edit') !== -1 ||
+      window.location.search.indexOf('mode=edit') !== -1 ||
+      document.querySelector('.sp-pageLayout-editMode') !== null ||
+      document.querySelector('#spPageCanvasContent [contenteditable="true"]') !== null
+    );
+    if (isEditMode) return;
+
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\\\(', '\\\\)']],
+        displayMath: [['\\\\[', '\\\\]']]
+      },
+      options: {
+        // Only scan content div, not SharePoint editor
+        elements: ['#mathjax-content']
+      },
+      svg: { fontCache: 'global' },
+      startup: {
+        ready: function() {
+          var el = document.getElementById('mathjax-content');
+          if (el) {
+            var parent = el.parentElement;
+            while (parent) {
+              if (parent.getAttribute && parent.getAttribute('contenteditable') === 'true') {
+                console.log('MathJax: skipping - inside contenteditable');
+                return;
+              }
+              parent = parent.parentElement;
+            }
+          }
+          MathJax.startup.defaultReady();
+        }
+      }
+    };
+
+    var s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js';
+    s.async = true;
+    document.head.appendChild(s);
+  })();
+<\/script>`
 
     const hasErrors = computed(() => {
       return currentResults.value.some(r => r.error)
