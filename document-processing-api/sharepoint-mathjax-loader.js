@@ -28,12 +28,12 @@
         // SharePoint Online modern page edit indicators
         document.querySelector('.sp-pageLayout-editMode') !== null ||
         document.querySelector('#spPageCanvasContent [contenteditable="true"]') !== null ||
-        // Classic SharePoint edit mode
-        document.querySelector('#MSOLayout_InDesignMode') !== null ||
+        // Classic SharePoint edit mode (check value, not just existence — these elements exist in both modes)
+        (function () { var el = document.querySelector('#MSOLayout_InDesignMode'); return el && el.value === '1'; })() ||
         (typeof window._spPageContextInfo !== 'undefined' &&
             window._spPageContextInfo.isEditMode === true) ||
-        // SharePoint designer
-        document.getElementById('MSOSPWebPartManager_DisplayModeName') !== null
+        // SharePoint designer (check value — element exists in both modes)
+        (function () { var el = document.getElementById('MSOSPWebPartManager_DisplayModeName'); return el && el.value === 'Design'; })()
     );
 
     if (isEditMode) {
@@ -85,7 +85,6 @@
                 ignoreHtmlClass: 'sp-.*|ms-.*|od-.*|canvasTextArea',
                 processHtmlClass: 'mathjax-content'
             },
-            svg: { fontCache: 'global' },
             startup: {
                 ready: function () {
                     console.log('[MathJax Loader] MathJax ready — rendering equations.');

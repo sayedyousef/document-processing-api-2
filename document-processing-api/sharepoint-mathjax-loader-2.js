@@ -11,9 +11,11 @@
     if (qs.indexOf('mode=edit') > -1 || h.indexOf('mode=edit') > -1) return;
     if (document.querySelector('.sp-pageLayout-editMode')) return;
     if (document.querySelector('#spPageCanvasContent [contenteditable="true"]')) return;
-    if (document.querySelector('#MSOLayout_InDesignMode')) return;
+    var mso = document.querySelector('#MSOLayout_InDesignMode');
+    if (mso && mso.value === '1') return;
     if (window._spPageContextInfo && window._spPageContextInfo.isEditMode) return;
-    if (document.getElementById('MSOSPWebPartManager_DisplayModeName')) return;
+    var dm = document.getElementById('MSOSPWebPartManager_DisplayModeName');
+    if (dm && dm.value === 'Design') return;
 
     function go() {
         var wrap = document.getElementById('mathjax-content');
@@ -44,7 +46,6 @@
                 ignoreHtmlClass: 'sp-.*|ms-.*|od-.*|canvasTextArea',
                 processHtmlClass: 'mathjax-content'
             },
-            svg: { fontCache: 'global' },
             startup: {
                 ready: function () {
                     MathJax.startup.defaultReady();
