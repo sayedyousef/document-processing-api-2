@@ -429,15 +429,23 @@ class FullWordToHTMLConverter:
             with open(output_path, 'w', encoding='utf-8') as f:
                 f.write(full_html)
 
+            # Generate body-only file for SharePoint pasting
+            body_output_path = output_dir / f"{input_path.stem}_body.txt"
+            body_html = self._generate_body_html(html_content)
+            with open(body_output_path, 'w', encoding='utf-8') as f:
+                f.write(body_html)
+
             print(f"\n{'='*70}")
             print("CONVERSION COMPLETE!")
             print(f"HTML Output: {output_path}")
+            print(f"Body Output: {body_output_path}")
             print(f"Word Output: {word_output_path}")
             print(f"{'='*70}")
 
             return {
                 'success': True,
                 'output_path': str(output_path),
+                'body_output_path': str(body_output_path),
                 'word_output_path': str(word_output_path)
             }
 
@@ -488,14 +496,22 @@ class FullWordToHTMLConverter:
             with open(output_path, 'w', encoding='utf-8') as f:
                 f.write(full_html)
 
+            # Generate body-only file for SharePoint pasting
+            body_output_path = output_dir / f"{input_path.stem}_body.txt"
+            body_html = self._generate_body_html(html_content)
+            with open(body_output_path, 'w', encoding='utf-8') as f:
+                f.write(body_html)
+
             print(f"\n{'='*70}")
             print("CONVERSION COMPLETE (MathML mode)!")
             print(f"HTML Output: {output_path}")
+            print(f"Body Output: {body_output_path}")
             print(f"{'='*70}")
 
             return {
                 'success': True,
-                'output_path': str(output_path)
+                'output_path': str(output_path),
+                'body_output_path': str(body_output_path)
             }
 
         except Exception as e:
@@ -986,6 +1002,32 @@ class FullWordToHTMLConverter:
             return text
         return text.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
 
+    def _generate_body_html(self, content):
+        """Generate body-only HTML for SharePoint pasting.
+
+        Contains just the <div id="mathjax-content"> wrapper with content and
+        footnotes. No DOCTYPE, html, head, style, script, or body tags.
+        """
+        footnotes_html = ''
+        if self.footnotes:
+            if self.config.output_format == "mathml_html":
+                footnotes_parts = []
+                for fn_id, fn_content in self.footnotes.items():
+                    footnotes_parts.append(
+                        f'<p><a href="#_ftnref{fn_id}" name="_ftn{fn_id}">[{fn_id}]</a> {fn_content}</p>'
+                    )
+                footnotes_html = '\n'.join(footnotes_parts)
+            else:
+                footnotes_html = '<div class="footnotes">'
+                for fn_id, fn_content in self.footnotes.items():
+                    footnotes_html += f'<p><a href="#_ftnref{fn_id}" name="_ftn{fn_id}">[{fn_id}]</a> {fn_content}</p>'
+                footnotes_html += '</div>'
+
+        return f'''<div id="mathjax-content">
+{content}
+{footnotes_html}
+</div>'''
+
     def _generate_html_wordhtml(self, content, title):
         """Generate HTML in wordhtml.com format - clean, no JavaScript"""
 
@@ -1109,11 +1151,12 @@ class FullWordToHTMLConverter:
                     displayMath: [['\\\\[', '\\\\]']]
                 }},
                 options: {{
-                    // CRITICAL: Only scan our content div, not SharePoint's editor
-                    elements: ['#mathjax-content']
+                    enableMenu: false
                 }},
                 svg: {{ fontCache: 'global' }},
                 startup: {{
+                    // Only scan our content div, not SharePoint's editor
+                    elements: ['#mathjax-content'],
                     ready: function() {{
                         // Extra safety: abort if content is inside a contenteditable
                         var el = document.getElementById('mathjax-content');
@@ -1268,6 +1311,16 @@ class FullWordToHTMLConverter:
                 footnotes_html += f'<p><a href="#_ftnref{fn_id}" name="_ftn{fn_id}">[{fn_id}]</a> {fn_content}</p>'
             footnotes_html += '</div>'
 
+        # Equation copy menu script (inline) - read from external JS file
+        copy_menu_script = ''
+        if config.include_mathjax:
+            copy_menu_js = Path(__file__).resolve().parent.parent / 'mathjax-copy-menu.js'
+            try:
+                js_content = copy_menu_js.read_text(encoding='utf-8')
+                copy_menu_script = f'\n    <script>\n{js_content}\n    </script>'
+            except FileNotFoundError:
+                print(f"    Warning: {copy_menu_js} not found, skipping copy menu")
+
         return f'''<!DOCTYPE html>
 <html lang="ar" dir="{direction}">
 <head>
@@ -1282,6 +1335,7 @@ class FullWordToHTMLConverter:
 {content}
 {footnotes_html}
 </div>
+{copy_menu_script}
 </body>
 </html>'''
 

@@ -1,11 +1,6 @@
-/*
- * mathjax loader - handles equation rendering on SP pages
- * put this in Site Assets, add via Script Editor / Content Editor web part
- * content needs to be inside <div id="mathjax-content">...</div>
- */
 (function () {
 
-    // bail out if we're in edit mode - mathjax messes up the SP editor
+    // handed SP edit mode 
     var qs = window.location.search.toLowerCase();
     var h = window.location.hash.toLowerCase();
     if (qs.indexOf('mode=edit') > -1 || h.indexOf('mode=edit') > -1) return;
@@ -21,13 +16,13 @@
         var wrap = document.getElementById('mathjax-content');
         var target = wrap ? '#mathjax-content' : null;
 
-        // no wrapper div? check if there's even any latex on the page
+        // if no wrapper div, look for latex 
         if (!target) {
             var html = document.body ? document.body.innerHTML : '';
             if (html.indexOf('\\(') === -1 && html.indexOf('\\[') === -1) return;
         }
 
-        // don't run inside contenteditable (SP puts content there when editing)
+        // don't run inside sp content editable 
         if (wrap) {
             var p = wrap.parentElement;
             while (p) {
@@ -42,11 +37,12 @@
                 displayMath: [['\\[', '\\]']]
             },
             options: {
-                elements: target ? [target] : null,
                 ignoreHtmlClass: 'sp-.*|ms-.*|od-.*|canvasTextArea',
-                processHtmlClass: 'mathjax-content'
+                processHtmlClass: 'mathjax-content',
+                enableMenu: false
             },
             startup: {
+                elements: target ? [target] : null,
                 ready: function () {
                     MathJax.startup.defaultReady();
                 }
