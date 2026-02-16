@@ -688,6 +688,9 @@ class DirectOmmlToLatex:
         
         # Other functions
         if fname and arg:
+            # Don't add extra () if arg already has \left...\right delimiters
+            if arg.startswith('\\left'):
+                return f'{fname}{arg}'
             return f'{fname}({arg})'
         elif fname:
             return fname
