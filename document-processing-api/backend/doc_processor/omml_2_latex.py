@@ -709,17 +709,21 @@ class DirectOmmlToLatex:
         """Limit lower - for limits with subscripts"""
         base_elem = elem.find('m:e', self.ns)
         lim_elem = elem.find('m:lim', self.ns)
-        
+
         base = self.parse(base_elem) if base_elem is not None else ''
         lim = self.parse(lim_elem) if lim_elem is not None else ''
-        
+
         # Convert lim to LaTeX if needed
         if base == 'lim':
             base = '\\lim'
         elif not base.startswith('\\'):
             base = self.convert_function_names(base)
-        
-        #return f'{base}_{{{lim}}}'
+
+        # If base contains \lim followed by more content (e.g. \lim \frac{...}{...}),
+        # the subscript should attach to \lim, not to the end of the whole expression
+        if '\\lim ' in base:
+            return base.replace('\\lim ', '\\lim_{' + lim + '} ', 1)
+
         return base + '_{' + lim + '}'
 
     
