@@ -6,7 +6,7 @@
  *   - LaTeX: copies the TeX source wrapped in \(...\) or \[...\] delimiters
  *   - MathML: copies the MathML markup via MathJax's internal serializer
  *
- * Compatible with MathJax 3.x (tex-chtml.js / tex-svg.js).
+ * Compatible with MathJax 3.x/4.x (native MathML output via startup.js).
  * Automatically skips initialization in SharePoint edit mode.
  *
  * Usage:
@@ -189,38 +189,21 @@
     }
 
     /* ------------------------------------------------------------------ */
-    /*  MathML serialization (multiple fallback methods)                   */
+    /*  MathML extraction                                                  */
     /* ------------------------------------------------------------------ */
     function toMathML(item) {
-        if (!item || !item.root) return '';
+        if (!item) return '';
 
-        // Method 1: SerializedMmlVisitor — standard MathJax 3 core API
-        try {
-            var mod = MathJax._.core.MmlTree.SerializedMmlVisitor;
-            var V = mod.SerializedMmlVisitor || mod.default;
-            if (V) {
-                var result = new V().visitTree(item.root);
-                if (result) return result;
-            }
-        } catch (e) {}
+        // With native MathML output, the <math> element is in the DOM
+        if (item.typesetRoot) {
+            var mathEl = item.typesetRoot.querySelector('math');
+            if (mathEl) return mathEl.outerHTML;
+        }
 
-        // Method 2: enumerate the module exports for any usable visitor
+        // Fallback: MathJax serializer
         try {
-            var mod2 = MathJax._.core.MmlTree.SerializedMmlVisitor;
-            for (var key in mod2) {
-                if (typeof mod2[key] === 'function') {
-                    try {
-                        var r = new mod2[key]().visitTree(item.root);
-                        if (r) return r;
-                    } catch (ignore) {}
-                }
-            }
-        } catch (e) {}
-
-        // Method 3: MathJax.startup.toMML helper (if available)
-        try {
-            var r3 = MathJax.startup.toMML(item.root);
-            if (r3) return r3;
+            var r = MathJax.startup.toMML(item.root);
+            if (r) return r;
         } catch (e) {}
 
         return '';
