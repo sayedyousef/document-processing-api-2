@@ -1007,7 +1007,21 @@ class FullWordToHTMLConverter:
 
         Contains just the <div id="mathjax-content"> wrapper with content and
         footnotes. No DOCTYPE, html, head, style, script, or body tags.
+        Equation markers are replaced with semantic HTML wrappers:
+          inline  -> <span class="inline-math">...</span>
+          display -> <p class="display-math">...</p>
         """
+        # Replace equation markers with semantic HTML wrappers
+        body = content
+        if self.config.inline_prefix:
+            body = body.replace(self.config.inline_prefix, '<span class="inline-math">')
+        if self.config.inline_suffix:
+            body = body.replace(self.config.inline_suffix, '</span>')
+        if self.config.display_prefix:
+            body = body.replace(self.config.display_prefix, '<p class="display-math">')
+        if self.config.display_suffix:
+            body = body.replace(self.config.display_suffix, '</p>')
+
         footnotes_html = ''
         if self.footnotes:
             if self.config.output_format == "mathml_html":
@@ -1024,7 +1038,7 @@ class FullWordToHTMLConverter:
                 footnotes_html += '</div>'
 
         return f'''<div id="mathjax-content">
-{content}
+{body}
 {footnotes_html}
 </div>'''
 
@@ -1102,30 +1116,21 @@ class FullWordToHTMLConverter:
             if inline_pre or inline_suf or display_pre or display_suf:
                 marker_script = f'''
     <script>
-        // Remove equation markers (configured during conversion)
-        // Markers: inline=[{inline_pre}...{inline_suf}], display=[{display_pre}...{display_suf}]
+        // Replace equation markers with semantic HTML wrappers
+        // inline  -> <span class="inline-math">...</span>
+        // display -> <p class="display-math">...</p>
         document.addEventListener('DOMContentLoaded', function() {{
             const body = document.body;
             let html = body.innerHTML;
 
-            // Configured markers to remove
-            const markers = [
-                '{inline_pre}',
-                '{inline_suf}',
-                '{display_pre}',
-                '{display_suf}'
-            ];
-
-            // Remove each non-empty marker
-            markers.forEach(function(marker) {{
-                if (marker && marker.length > 0) {{
-                    html = html.split(marker).join('');
-                }}
-            }});
+            if ('{inline_pre}') html = html.split('{inline_pre}').join('<span class="inline-math">');
+            if ('{inline_suf}') html = html.split('{inline_suf}').join('</span>');
+            if ('{display_pre}') html = html.split('{display_pre}').join('<p class="display-math">');
+            if ('{display_suf}') html = html.split('{display_suf}').join('</p>');
 
             body.innerHTML = html;
 
-            // Re-trigger MathJax after marker removal
+            // Re-trigger MathJax after marker replacement
             if (window.MathJax && window.MathJax.typesetPromise) {{
                 window.MathJax.typesetPromise();
             }}
