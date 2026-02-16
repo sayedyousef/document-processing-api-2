@@ -671,13 +671,9 @@ class DirectOmmlToLatex:
             if limlower is not None:
                 fname_parsed = self.parse(fname_elem)
                 arg_parsed = self.parse(arg_elem) if arg_elem is not None else ''
-                
-                # If argument is just the expression after limit
-                if arg_parsed and not ('\\lim' in arg_parsed):
+                if arg_parsed:
                     return f'{fname_parsed} {arg_parsed}'
-                else:
-                    # Argument might be empty or contain limit already
-                    return fname_parsed
+                return fname_parsed
         
         # Regular functions
         fname = self.parse(fname_elem) if fname_elem is not None else ''

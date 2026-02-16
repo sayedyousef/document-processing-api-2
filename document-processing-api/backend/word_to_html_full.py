@@ -1138,10 +1138,13 @@ class FullWordToHTMLConverter:
     </script>
 '''
             mathjax = f'''
+    <style>
+        mjx-container {{ display: inline; }}
+        mjx-container[display="block"] {{ display: block; text-align: center; margin: 1em 0; }}
+    </style>
     <script>
         // SharePoint edit mode detection - skip MathJax if page is being edited
         (function() {{
-            // Detect SharePoint edit mode
             var isEditMode = (
                 window.location.search.indexOf('Mode=Edit') !== -1 ||
                 window.location.search.indexOf('mode=edit') !== -1 ||
@@ -1151,19 +1154,23 @@ class FullWordToHTMLConverter:
             if (isEditMode) return;
 
             window.MathJax = {{
+                loader: {{load: ['input/tex']}},
                 tex: {{
                     inlineMath: [['\\\\(', '\\\\)']],
                     displayMath: [['\\\\[', '\\\\]']]
                 }},
                 options: {{
-                    enableMenu: false
+                    renderActions: {{
+                        assistiveMml: [],
+                        typeset: [150,
+                            function(doc) {{ for (var math of doc.math) MathJax.config.renderMathML(math, doc); }},
+                            function(math, doc) {{ MathJax.config.renderMathML(math, doc); }}
+                        ]
+                    }}
                 }},
-                svg: {{ fontCache: 'global' }},
                 startup: {{
-                    // Only scan our content div, not SharePoint's editor
                     elements: ['#mathjax-content'],
                     ready: function() {{
-                        // Extra safety: abort if content is inside a contenteditable
                         var el = document.getElementById('mathjax-content');
                         if (el) {{
                             var parent = el.parentElement;
@@ -1177,12 +1184,17 @@ class FullWordToHTMLConverter:
                         }}
                         MathJax.startup.defaultReady();
                     }}
+                }},
+                renderMathML: function(math, doc) {{
+                    math.typesetRoot = document.createElement('mjx-container');
+                    math.typesetRoot.innerHTML = MathJax.startup.toMML(math.root);
+                    if (math.display) math.typesetRoot.setAttribute('display', 'block');
                 }}
             }};
 
-            // Dynamically load MathJax
+            // Dynamically load MathJax 4 (native MathML output)
             var script = document.createElement('script');
-            script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js';
+            script.src = 'https://cdn.jsdelivr.net/npm/mathjax@4/startup.js';
             script.async = true;
             document.head.appendChild(script);
         }})();
