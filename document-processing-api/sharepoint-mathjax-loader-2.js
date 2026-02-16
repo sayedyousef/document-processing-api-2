@@ -55,8 +55,8 @@
             },
             startup: {
                 elements: target ? [target] : null,
-                ready: function () {
-                    MathJax.startup.defaultReady();
+                pageReady: function() {
+                    return MathJax.startup.document.render();
                 }
             },
             renderMathML: function(math, doc) {
@@ -66,7 +66,7 @@
             }
         };
 
-        // Load MathJax 4 (native MathML output via startup.js)
+        // Load MathJax 4 (native MathML output)
         var s = document.createElement('script');
         s.src = 'https://cdn.jsdelivr.net/npm/mathjax@4/startup.js';
         s.async = true;

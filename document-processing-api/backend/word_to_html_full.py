@@ -1143,7 +1143,7 @@ class FullWordToHTMLConverter:
         mjx-container[display="block"] {{ display: block; text-align: center; margin: 1em 0; }}
     </style>
     <script>
-        // SharePoint edit mode detection - skip MathJax if page is being edited
+        // SharePoint edit mode detection - skip MathJax in edit mode
         (function() {{
             var isEditMode = (
                 window.location.search.indexOf('Mode=Edit') !== -1 ||
@@ -1152,6 +1152,16 @@ class FullWordToHTMLConverter:
                 document.querySelector('#spPageCanvasContent [contenteditable="true"]') !== null
             );
             if (isEditMode) return;
+
+            // Check contenteditable ancestor of mathjax-content
+            var el = document.getElementById('mathjax-content');
+            if (el) {{
+                var parent = el.parentElement;
+                while (parent) {{
+                    if (parent.getAttribute && parent.getAttribute('contenteditable') === 'true') return;
+                    parent = parent.parentElement;
+                }}
+            }}
 
             window.MathJax = {{
                 loader: {{load: ['input/tex']}},
@@ -1170,19 +1180,8 @@ class FullWordToHTMLConverter:
                 }},
                 startup: {{
                     elements: ['#mathjax-content'],
-                    ready: function() {{
-                        var el = document.getElementById('mathjax-content');
-                        if (el) {{
-                            var parent = el.parentElement;
-                            while (parent) {{
-                                if (parent.getAttribute && parent.getAttribute('contenteditable') === 'true') {{
-                                    console.log('MathJax: skipping - inside contenteditable');
-                                    return;
-                                }}
-                                parent = parent.parentElement;
-                            }}
-                        }}
-                        MathJax.startup.defaultReady();
+                    pageReady: function() {{
+                        return MathJax.startup.document.render();
                     }}
                 }},
                 renderMathML: function(math, doc) {{
@@ -1191,14 +1190,9 @@ class FullWordToHTMLConverter:
                     if (math.display) math.typesetRoot.setAttribute('display', 'block');
                 }}
             }};
-
-            // Dynamically load MathJax 4 (native MathML output)
-            var script = document.createElement('script');
-            script.src = 'https://cdn.jsdelivr.net/npm/mathjax@4/startup.js';
-            script.async = true;
-            document.head.appendChild(script);
         }})();
     </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@4/startup.js"></script>
 {marker_script}'''
 
         # CSS
