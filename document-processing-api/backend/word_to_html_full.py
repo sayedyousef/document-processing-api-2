@@ -1007,12 +1007,14 @@ class FullWordToHTMLConverter:
 
         Contains just the <div id="mathjax-content"> wrapper with content and
         footnotes. No DOCTYPE, html, head, style, script, or body tags.
+        Image tags are removed (SharePoint team inserts images manually).
         Equation markers are replaced with semantic HTML wrappers:
           inline  -> <span class="inline-math">...</span>
           display -> <p class="display-math">...</p>
         """
-        # Replace equation markers with semantic HTML wrappers
-        body = content
+        import re
+        # Remove image tags - SharePoint team inserts images manually
+        body = re.sub(r'<img\s[^>]*>', '', content)
         if self.config.inline_prefix:
             body = body.replace(self.config.inline_prefix, '<span class="inline-math">')
         if self.config.inline_suffix:
@@ -1044,8 +1046,12 @@ class FullWordToHTMLConverter:
 
     def _generate_html_wordhtml(self, content, title):
         """Generate HTML in wordhtml.com format - clean, no JavaScript"""
+        import re
 
         config = self.config
+
+        # Remove image tags - images are not included in output
+        content = re.sub(r'<img\s[^>]*>', '', content)
         direction = 'rtl' if config.rtl_direction else 'ltr'
 
         # Minimal styles for readability (optional)
@@ -1100,8 +1106,12 @@ class FullWordToHTMLConverter:
 
     def _generate_html(self, content, title):
         """Generate clean HTML output - NO config panel (settings applied during conversion)"""
+        import re
 
         config = self.config
+
+        # Remove image tags - images are not included in output
+        content = re.sub(r'<img\s[^>]*>', '', content)
 
         # MathJax and marker removal script
         mathjax = ''
