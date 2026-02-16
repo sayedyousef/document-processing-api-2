@@ -243,9 +243,16 @@ class DirectOmmlToLatex:
         """Convert function names to LaTeX"""
         if text.startswith('\\'):
             return text
-        for func, latex_func in FUNCTION_NAMES.items():
-            text = re.sub(r'\b' + re.escape(func) + r'(?=\s|\(|$)', 
-                         lambda m: latex_func, text)
+        # Strip U+2061 FUNCTION APPLICATION (invisible char inserted by Word)
+        text = text.replace('\u2061', '')
+        # Sort by length (longest first) so 'arcsin' matches before 'sin', etc.
+        sorted_funcs = sorted(FUNCTION_NAMES.items(), key=lambda x: len(x[0]), reverse=True)
+        for func, latex_func in sorted_funcs:
+            # Match function name at word boundary, NOT followed by more lowercase letters
+            # that form a longer known word (e.g. 'inf' should not match inside 'infty')
+            # But DO match 'sin' before variable like 'sinx' → '\sin x'
+            text = re.sub(r'\b' + re.escape(func) + r'(?![a-z]{2,})',
+                         lambda m, lf=latex_func: lf, text)
         return text
 
 
@@ -688,8 +695,9 @@ class DirectOmmlToLatex:
         
         # Other functions
         if fname and arg:
-            # Don't add extra () if arg already has \left...\right delimiters
-            if arg.startswith('\\left'):
+            # Don't add extra () if arg already has delimiters from parse_d
+            stripped = arg.strip()
+            if stripped.startswith('\\left') or stripped.startswith('(') or stripped.startswith('['):
                 return f'{fname}{arg}'
             return f'{fname}({arg})'
         elif fname:
@@ -801,6 +809,10 @@ class DirectOmmlToLatex:
 
     def apply_post_processing(self, latex):
         """Apply all post-processing fixes"""
+        # Strip invisible Unicode characters inserted by Word
+        latex = latex.replace('\u2061', '')  # FUNCTION APPLICATION
+        latex = latex.replace('\u2062', '')  # INVISIBLE TIMES
+        latex = latex.replace('\u2063', '')  # INVISIBLE SEPARATOR
         # All the fixes from process_word_document
         latex = re.sub(r'\\binom([a-zA-Z])([a-zA-Z])', r'\\binom{\1}{\2}', latex)
         latex = re.sub(r'(e\^{[^}]+}[a-z]+)(.*?)\1', r'\1\2', latex)
