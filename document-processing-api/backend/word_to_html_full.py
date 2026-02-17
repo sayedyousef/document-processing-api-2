@@ -1008,21 +1008,23 @@ class FullWordToHTMLConverter:
         Contains just the <div id="mathjax-content"> wrapper with content and
         footnotes. No DOCTYPE, html, head, style, script, or body tags.
         Image tags are removed (SharePoint team inserts images manually).
-        Equation markers are replaced with semantic HTML wrappers:
-          inline  -> <span class="inline-math">...</span>
-          display -> <p class="display-math">...</p>
+        Equations are wrapped with semantic HTML classes:
+          inline  -> <span class="inline-math">\(...\)</span>
+          display -> <p class="display-math">\[...\]</p>
         """
         import re
         # Remove image tags - SharePoint team inserts images manually
         body = re.sub(r'<img\s[^>]*>', '', content)
-        if self.config.inline_prefix:
-            body = body.replace(self.config.inline_prefix, '<span class="inline-math">')
-        if self.config.inline_suffix:
-            body = body.replace(self.config.inline_suffix, '</span>')
-        if self.config.display_prefix:
-            body = body.replace(self.config.display_prefix, '<p class="display-math">')
-        if self.config.display_suffix:
-            body = body.replace(self.config.display_suffix, '</p>')
+
+        # Strip any remaining equation markers (legacy)
+        for marker in [self.config.inline_prefix, self.config.inline_suffix,
+                       self.config.display_prefix, self.config.display_suffix]:
+            if marker:
+                body = body.replace(marker, '')
+
+        # Wrap equations with semantic HTML classes
+        body = re.sub(r'(\\\(.+?\\\))', r'<span class="inline-math">\1</span>', body)
+        body = re.sub(r'(\\\[.+?\\\])', r'<p class="display-math">\1</p>', body, flags=re.DOTALL)
 
         footnotes_html = ''
         if self.footnotes:
@@ -1052,6 +1054,16 @@ class FullWordToHTMLConverter:
 
         # Remove image tags - images are not included in output
         content = re.sub(r'<img\s[^>]*>', '', content)
+
+        # Strip any remaining equation markers (legacy)
+        for marker in [config.inline_prefix, config.inline_suffix, config.display_prefix, config.display_suffix]:
+            if marker:
+                content = content.replace(marker, '')
+
+        # Wrap equations with semantic HTML classes
+        content = re.sub(r'(\\\(.+?\\\))', r'<span class="inline-math">\1</span>', content)
+        content = re.sub(r'(\\\[.+?\\\])', r'<p class="display-math">\1</p>', content, flags=re.DOTALL)
+
         direction = 'rtl' if config.rtl_direction else 'ltr'
 
         # Minimal styles for readability (optional)
@@ -1113,40 +1125,20 @@ class FullWordToHTMLConverter:
         # Remove image tags - images are not included in output
         content = re.sub(r'<img\s[^>]*>', '', content)
 
-        # MathJax and marker removal script
+        # Strip any remaining equation markers (legacy)
+        for marker in [config.inline_prefix, config.inline_suffix, config.display_prefix, config.display_suffix]:
+            if marker:
+                content = content.replace(marker, '')
+
+        # Wrap equations with semantic HTML classes
+        # inline  \(...\) -> <span class="inline-math">\(...\)</span>
+        # display \[...\] -> <p class="display-math">\[...\]</p>
+        content = re.sub(r'(\\\(.+?\\\))', r'<span class="inline-math">\1</span>', content)
+        content = re.sub(r'(\\\[.+?\\\])', r'<p class="display-math">\1</p>', content, flags=re.DOTALL)
+
+        # MathJax script
         mathjax = ''
         if config.include_mathjax:
-            # Build marker removal script only if markers are configured
-            marker_script = ''
-            inline_pre = config.inline_prefix or ''
-            inline_suf = config.inline_suffix or ''
-            display_pre = config.display_prefix or ''
-            display_suf = config.display_suffix or ''
-
-            if inline_pre or inline_suf or display_pre or display_suf:
-                marker_script = f'''
-    <script>
-        // Replace equation markers with semantic HTML wrappers
-        // inline  -> <span class="inline-math">...</span>
-        // display -> <p class="display-math">...</p>
-        document.addEventListener('DOMContentLoaded', function() {{
-            const body = document.body;
-            let html = body.innerHTML;
-
-            if ('{inline_pre}') html = html.split('{inline_pre}').join('<span class="inline-math">');
-            if ('{inline_suf}') html = html.split('{inline_suf}').join('</span>');
-            if ('{display_pre}') html = html.split('{display_pre}').join('<p class="display-math">');
-            if ('{display_suf}') html = html.split('{display_suf}').join('</p>');
-
-            body.innerHTML = html;
-
-            // Re-trigger MathJax after marker replacement
-            if (window.MathJax && window.MathJax.typesetPromise) {{
-                window.MathJax.typesetPromise();
-            }}
-        }});
-    </script>
-'''
             mathjax = f'''
     <style>
         mjx-container {{ display: inline; }}
@@ -1205,7 +1197,7 @@ class FullWordToHTMLConverter:
         }})();
     </script>
     <script defer src="https://cdn.jsdelivr.net/npm/mathjax@4/startup.js"></script>
-{marker_script}'''
+'''
 
         # CSS
         direction = 'rtl' if config.rtl_direction else 'ltr'
