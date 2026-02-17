@@ -1022,6 +1022,9 @@ class FullWordToHTMLConverter:
             if marker:
                 body = body.replace(marker, '')
 
+        # Collapse double spaces in equations (prevents invisible Unicode in MathML)
+        body = re.sub(r'  +', ' ', body)
+
         # Wrap equations with semantic HTML classes
         body = re.sub(r'(\\\(.+?\\\))', r'<span class="inline-math">\1</span>', body)
         body = re.sub(r'(\\\[.+?\\\])', r'<span class="display-math">\1</span>', body, flags=re.DOTALL)
@@ -1059,6 +1062,9 @@ class FullWordToHTMLConverter:
         for marker in [config.inline_prefix, config.inline_suffix, config.display_prefix, config.display_suffix]:
             if marker:
                 content = content.replace(marker, '')
+
+        # Collapse double spaces in equations (prevents invisible Unicode in MathML)
+        content = re.sub(r'  +', ' ', content)
 
         # Wrap equations with semantic HTML classes
         content = re.sub(r'(\\\(.+?\\\))', r'<span class="inline-math">\1</span>', content)
@@ -1129,6 +1135,9 @@ class FullWordToHTMLConverter:
         for marker in [config.inline_prefix, config.inline_suffix, config.display_prefix, config.display_suffix]:
             if marker:
                 content = content.replace(marker, '')
+
+        # Collapse double spaces in equations (prevents invisible Unicode in MathML)
+        content = re.sub(r'  +', ' ', content)
 
         # Wrap equations with semantic HTML classes
         # inline  \(...\) -> <span class="inline-math">\(...\)</span>
