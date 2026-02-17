@@ -1198,8 +1198,10 @@ class FullWordToHTMLConverter:
                 renderMathML: function(math, doc) {{
                     math.typesetRoot = document.createElement('mjx-container');
                     var mml = MathJax.startup.toMML(math.root);
-                    mml = mml.replace(/<mo[^>]*>[\\u2061-\\u2063]<\\/mo>/g, '');
+                    // Strip invisible Unicode operators (entity and literal forms)
+                    mml = mml.replace(/&#x206[1-3];/gi, '');
                     mml = mml.replace(/[\\u2061-\\u2063]/g, '');
+                    mml = mml.replace(/<mo[^>]*>\\s*<\\/mo>/g, '');
                     math.typesetRoot.innerHTML = mml;
                     if (math.display) math.typesetRoot.setAttribute('display', 'block');
                 }}
