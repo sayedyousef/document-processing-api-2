@@ -1031,18 +1031,12 @@ class FullWordToHTMLConverter:
 
         footnotes_html = ''
         if self.footnotes:
-            if self.config.output_format == "mathml_html":
-                footnotes_parts = []
-                for fn_id, fn_content in self.footnotes.items():
-                    footnotes_parts.append(
-                        f'<p><a href="#_ftnref{fn_id}" name="_ftn{fn_id}">[{fn_id}]</a> {fn_content}</p>'
-                    )
-                footnotes_html = '\n'.join(footnotes_parts)
-            else:
-                footnotes_html = '<div class="footnotes">'
-                for fn_id, fn_content in self.footnotes.items():
-                    footnotes_html += f'<p><a href="#_ftnref{fn_id}" name="_ftn{fn_id}">[{fn_id}]</a> {fn_content}</p>'
-                footnotes_html += '</div>'
+            footnotes_parts = []
+            for fn_id, fn_content in self.footnotes.items():
+                footnotes_parts.append(
+                    f'<p><a href="#_ftnref{fn_id}" name="_ftn{fn_id}">[{fn_id}]</a> {fn_content}</p>'
+                )
+            footnotes_html = '\n'.join(footnotes_parts)
 
         return f'''<div id="mathjax-content">
 {body}
@@ -1316,24 +1310,6 @@ class FullWordToHTMLConverter:
             border-right: 4px solid #3182ce;
         }}
 
-        /* Footnotes with bidirectional links */
-        .footnotes {{
-            margin-top: 3em;
-            padding-top: 1em;
-            border-top: 2px solid #e2e8f0;
-            font-size: 0.9em;
-        }}
-        .footnotes p {{
-            margin: 0.5em 0;
-        }}
-        .footnotes a {{
-            color: #3182ce;
-            text-decoration: none;
-        }}
-        .footnotes a:hover {{
-            text-decoration: underline;
-        }}
-
         /* Footnote references in text */
         sup a {{
             color: #3182ce;
@@ -1351,15 +1327,15 @@ class FullWordToHTMLConverter:
     </style>
 ''' if config.include_styles else ''
 
-        # Footnotes HTML with bidirectional linking
-        # Footnotes HTML with wordhtml.com naming (_ftn/_ftnref) for both modes
+        # Footnotes HTML with wordhtml.com naming (_ftn/_ftnref)
         footnotes_html = ''
         if self.footnotes:
-            footnotes_html = '<div class="footnotes">'
+            footnotes_parts = []
             for fn_id, fn_content in self.footnotes.items():
-                # wordhtml.com format: <a href="#_ftnref1" name="_ftn1">[1]</a>
-                footnotes_html += f'<p><a href="#_ftnref{fn_id}" name="_ftn{fn_id}">[{fn_id}]</a> {fn_content}</p>'
-            footnotes_html += '</div>'
+                footnotes_parts.append(
+                    f'<p><a href="#_ftnref{fn_id}" name="_ftn{fn_id}">[{fn_id}]</a> {fn_content}</p>'
+                )
+            footnotes_html = '\n'.join(footnotes_parts)
 
         # Equation copy menu script (inline) - read from external JS file
         copy_menu_script = ''
