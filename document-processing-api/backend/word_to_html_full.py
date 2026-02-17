@@ -1010,7 +1010,7 @@ class FullWordToHTMLConverter:
         Image tags are removed (SharePoint team inserts images manually).
         Equations are wrapped with semantic HTML classes:
           inline  -> <span class="inline-math">\(...\)</span>
-          display -> <p class="display-math">\[...\]</p>
+          display -> <span class="display-math">\[...\]</span>
         """
         import re
         # Remove image tags - SharePoint team inserts images manually
@@ -1024,7 +1024,7 @@ class FullWordToHTMLConverter:
 
         # Wrap equations with semantic HTML classes
         body = re.sub(r'(\\\(.+?\\\))', r'<span class="inline-math">\1</span>', body)
-        body = re.sub(r'(\\\[.+?\\\])', r'<p class="display-math">\1</p>', body, flags=re.DOTALL)
+        body = re.sub(r'(\\\[.+?\\\])', r'<span class="display-math">\1</span>', body, flags=re.DOTALL)
 
         footnotes_html = ''
         if self.footnotes:
@@ -1062,7 +1062,7 @@ class FullWordToHTMLConverter:
 
         # Wrap equations with semantic HTML classes
         content = re.sub(r'(\\\(.+?\\\))', r'<span class="inline-math">\1</span>', content)
-        content = re.sub(r'(\\\[.+?\\\])', r'<p class="display-math">\1</p>', content, flags=re.DOTALL)
+        content = re.sub(r'(\\\[.+?\\\])', r'<span class="display-math">\1</span>', content, flags=re.DOTALL)
 
         direction = 'rtl' if config.rtl_direction else 'ltr'
 
@@ -1132,9 +1132,9 @@ class FullWordToHTMLConverter:
 
         # Wrap equations with semantic HTML classes
         # inline  \(...\) -> <span class="inline-math">\(...\)</span>
-        # display \[...\] -> <p class="display-math">\[...\]</p>
+        # display \[...\] -> <span class="display-math">\[...\]</span>
         content = re.sub(r'(\\\(.+?\\\))', r'<span class="inline-math">\1</span>', content)
-        content = re.sub(r'(\\\[.+?\\\])', r'<p class="display-math">\1</p>', content, flags=re.DOTALL)
+        content = re.sub(r'(\\\[.+?\\\])', r'<span class="display-math">\1</span>', content, flags=re.DOTALL)
 
         # MathJax script
         mathjax = ''
