@@ -787,16 +787,24 @@ class DirectOmmlToLatex:
         return ' \\\\ '.join(formatted_parts)
 
     def parse_groupChr(self, elem):
-        """Group character - underbrace, overbrace, etc."""
-        # Get the grouping character and position
+        """Group character - underbrace, overbrace, arrows, brackets, etc.
+
+        m:groupChr places a stretchy character above or below content.
+        Common characters:
+          ⏟ U+23DF  bottom curly bracket (underbrace)
+          ⏞ U+23DE  top curly bracket (overbrace)
+          { }       curly braces (same as underbrace/overbrace)
+          ⎵ U+23B5  bottom square bracket
+          ⎴ U+23B4  top square bracket
+          → ← ↔    arrows (horizontal)
+        """
         chr_elem = elem.find('.//m:groupChrPr/m:chr', self.ns)
         pos_elem = elem.find('.//m:groupChrPr/m:pos', self.ns)
         base_elem = elem.find('m:e', self.ns)
 
         base = self.parse(base_elem) if base_elem is not None else ''
 
-        # Default: bottom curly bracket (underbrace)
-        group_char = '\u23DF'
+        group_char = '\u23DF'  # default: bottom curly bracket
         if chr_elem is not None:
             group_char = chr_elem.get(f'{{{self.ns["m"]}}}val', '\u23DF')
 
@@ -804,25 +812,32 @@ class DirectOmmlToLatex:
         if pos_elem is not None:
             pos = pos_elem.get(f'{{{self.ns["m"]}}}val', 'bot')
 
-        # Map group characters to LaTeX commands
-        if group_char in ('\u23DF', '\u23DE', '{'):
-            # Bottom curly bracket → underbrace, top → overbrace
+        # Curly braces → underbrace/overbrace
+        curly = {'\u23DF', '\u23DE', '{', '}'}
+        # Arrows
+        arrows = {
+            '\u2192': r'\rightarrow',   # →
+            '\u2190': r'\leftarrow',    # ←
+            '\u2194': r'\leftrightarrow',  # ↔
+            '\u21D2': r'\Rightarrow',   # ⇒
+            '\u21D0': r'\Leftarrow',    # ⇐
+            '\u21D4': r'\Leftrightarrow',  # ⇔
+        }
+
+        if group_char in curly:
             if pos == 'top':
                 return f'\\overbrace{{{base}}}'
-            else:
-                return f'\\underbrace{{{base}}}'
-        elif group_char in ('\u23B5', '\u23B4'):
-            # Bottom/top square bracket
+            return f'\\underbrace{{{base}}}'
+        elif group_char in arrows:
+            arrow = arrows[group_char]
             if pos == 'top':
-                return f'\\overbracket{{{base}}}'
-            else:
-                return f'\\underbracket{{{base}}}'
+                return f'\\overset{{{arrow}}}{{{base}}}'
+            return f'\\underset{{{arrow}}}{{{base}}}'
         else:
-            # Generic: use underbrace/overbrace as fallback
+            # Generic: use xoverline/xunderline style with the char
             if pos == 'top':
-                return f'\\overbrace{{{base}}}'
-            else:
-                return f'\\underbrace{{{base}}}'
+                return f'\\overset{{{group_char}}}{{{base}}}'
+            return f'\\underset{{{group_char}}}{{{base}}}'
 
     def parse_default(self, elem):
         """Default handler - process children sequentially"""
