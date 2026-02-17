@@ -682,7 +682,9 @@ class DirectOmmlToLatex:
         # Convert function names
         if fname and not fname.startswith('\\'):
             fname = self.convert_function_names(fname)
-        
+        # Strip trailing space from FUNCTION_NAMES to prevent double spaces
+        fname = fname.rstrip()
+
         # Limits don't get parentheses
         if fname and 'lim' in fname.lower():
             if arg:

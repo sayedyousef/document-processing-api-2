@@ -61,7 +61,9 @@
             },
             renderMathML: function(math, doc) {
                 math.typesetRoot = document.createElement('mjx-container');
-                math.typesetRoot.innerHTML = MathJax.startup.toMML(math.root);
+                var mml = MathJax.startup.toMML(math.root);
+                mml = mml.replace(/<mo[^>]*>[\u2061\u2062\u2063]<\/mo>/g, '');
+                math.typesetRoot.innerHTML = mml;
                 if (math.display) math.typesetRoot.setAttribute('display', 'block');
             }
         };
