@@ -704,12 +704,16 @@ class DirectOmmlToLatex:
             return arg or ''
     
     def parse_limLow(self, elem):
-        """Limit lower - for limits with subscripts"""
+        """Limit lower - for limits with subscripts, also underbrace labels"""
         base_elem = elem.find('m:e', self.ns)
         lim_elem = elem.find('m:lim', self.ns)
 
         base = self.parse(base_elem) if base_elem is not None else ''
         lim = self.parse(lim_elem) if lim_elem is not None else ''
+
+        # underbrace/overbrace: label goes in _{text}
+        if '\\underbrace' in base or '\\overbrace' in base:
+            return base + '_{\\text{' + lim + '}}'
 
         # Convert lim to LaTeX if needed
         if base == 'lim':
@@ -781,7 +785,45 @@ class DirectOmmlToLatex:
                 formatted_parts.append(part)
         
         return ' \\\\ '.join(formatted_parts)
-    
+
+    def parse_groupChr(self, elem):
+        """Group character - underbrace, overbrace, etc."""
+        # Get the grouping character and position
+        chr_elem = elem.find('.//m:groupChrPr/m:chr', self.ns)
+        pos_elem = elem.find('.//m:groupChrPr/m:pos', self.ns)
+        base_elem = elem.find('m:e', self.ns)
+
+        base = self.parse(base_elem) if base_elem is not None else ''
+
+        # Default: bottom curly bracket (underbrace)
+        group_char = '\u23DF'
+        if chr_elem is not None:
+            group_char = chr_elem.get(f'{{{self.ns["m"]}}}val', '\u23DF')
+
+        pos = 'bot'
+        if pos_elem is not None:
+            pos = pos_elem.get(f'{{{self.ns["m"]}}}val', 'bot')
+
+        # Map group characters to LaTeX commands
+        if group_char in ('\u23DF', '\u23DE', '{'):
+            # Bottom curly bracket → underbrace, top → overbrace
+            if pos == 'top':
+                return f'\\overbrace{{{base}}}'
+            else:
+                return f'\\underbrace{{{base}}}'
+        elif group_char in ('\u23B5', '\u23B4'):
+            # Bottom/top square bracket
+            if pos == 'top':
+                return f'\\overbracket{{{base}}}'
+            else:
+                return f'\\underbracket{{{base}}}'
+        else:
+            # Generic: use underbrace/overbrace as fallback
+            if pos == 'top':
+                return f'\\overbrace{{{base}}}'
+            else:
+                return f'\\underbrace{{{base}}}'
+
     def parse_default(self, elem):
         """Default handler - process children sequentially"""
         results = []
@@ -805,7 +847,19 @@ class DirectOmmlToLatex:
     parse_sub = parse_default
     parse_sup = parse_default
     parse_lim = parse_default
-    parse_limUpp = parse_limLow
+    def parse_limUpp(self, elem):
+        """Limit upper - for superscripts, also overbrace labels"""
+        base_elem = elem.find('m:e', self.ns)
+        lim_elem = elem.find('m:lim', self.ns)
+
+        base = self.parse(base_elem) if base_elem is not None else ''
+        lim = self.parse(lim_elem) if lim_elem is not None else ''
+
+        # overbrace/underbrace: label goes in ^{text}
+        if '\\overbrace' in base or '\\underbrace' in base:
+            return base + '^{\\text{' + lim + '}}'
+
+        return base + '^{' + lim + '}'
     parse_mr = parse_default
 
 
