@@ -380,11 +380,79 @@ axios
 
 ---
 
-## 12. Version History
+## 12. MathJax 4 Native MathML Output
+
+### 12.1 Architecture
+
+The LaTeX mode uses MathJax 4 (`startup.js`) with a custom `renderActions` pipeline:
+
+```javascript
+window.MathJax = {
+    loader: {load: ['input/tex']},          // Only load TeX input (no CHTML/SVG output)
+    options: {
+        renderActions: {
+            assistiveMml: [],                // Disable assistive MathML
+            typeset: [150, renderMathML]     // Custom typeset at priority 150
+        }
+    },
+    renderMathML: function(math, doc) {
+        math.typesetRoot = document.createElement('mjx-container');
+        var mml = MathJax.startup.toMML(math.root);  // Serialize to MathML string
+        // ... cleanup regexes ...
+        math.typesetRoot.innerHTML = mml;             // Browser renders native <math>
+    }
+};
+```
+
+CDN: `https://cdn.jsdelivr.net/npm/mathjax@4/startup.js`
+
+### 12.2 MathML Cleanup Pipeline
+
+The `renderMathML` function applies these regex cleanups in order:
+
+1. **Strip invisible operators (literal):** `/[\u2060-\u2064\u200B-\u200F\u061C\u202A-\u202C\u2066-\u2069\uFEFF]/g`
+2. **Strip invisible operators (HTML entities):** `/&#x(206[0-9a-f]|200[b-f]|061c|202[a-c]|feff);/gi`
+3. **Remove empty `<mo>` elements:** `/<mo[^>]*>\s*<\/mo>/g`
+4. **Strip `data-*` attributes:** `/ data-[a-z-]+="[^"]*"/g`
+5. **Collapse empty-base primes:** `/<msup>\s*<mi\s*\/?>\s*(<\/mi>)?\s*(<mo[^>]*>[^<]*<\/mo>)\s*<\/msup>/g` → `$2`
+
+### 12.3 Clipboard Copy Interceptor
+
+A `copy` event listener detects when the selection includes `<mjx-container>` or `<math>` elements and:
+- Strips invisible Unicode chars from `text/plain` clipboard data
+- Strips invisible Unicode chars from `text/html` clipboard data
+- Calls `e.preventDefault()` to override the browser's default (which includes browser-added invisible operators)
+
+This is necessary because the browser's native MathML renderer re-adds invisible operators (U+2061 Function Application, U+2062 Invisible Times, etc.) at render time, even though they're not in the DOM.
+
+### 12.4 Equation CSS Classes
+
+```html
+<!-- Inline equation -->
+<span class="inline-math">\(x^2 + y^2 = r^2\)</span>
+
+<!-- Display equation -->
+<span class="display-math">\[\frac{a}{b}\]</span>
+```
+
+### 12.5 SharePoint Scripts
+
+| Script | Purpose |
+|--------|---------|
+| `sharepoint-mathjax-loader.js` | Loads MathJax 4 with native MathML, edit-mode detection, clipboard cleaning |
+| `mathjax-copy-menu.js` | Hover copy buttons for equations (LaTeX and MathML formats) |
+
+Both have `.txt` copies for email sharing (`.js` blocked by email filters).
+
+---
+
+## 13. Version History
 
 | Version | Date | Changes |
 |---------|------|---------|
 | 1.0 | Initial | LaTeX + MathJax conversion |
 | 1.1 | Update | Added MathML mode |
 | 1.2 | Update | Fixed list continuation, table formatting |
-| 1.3 | Current | Simplified UI, footnote improvements |
+| 1.3 | Update | Simplified UI, footnote improvements |
+| 1.4 | Update | MathJax 4 native MathML output, equation copy menu |
+| 1.5 | Current | Comprehensive invisible Unicode stripping, clipboard copy interceptor, empty-base prime fix, equation CSS classes |

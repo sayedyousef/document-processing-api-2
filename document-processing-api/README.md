@@ -42,3 +42,26 @@ The scripts use MathJax 4 (`startup.js`) configured to render LaTeX as native br
 - Users can select and copy equation text naturally (Ctrl+A, Ctrl+C)
 - When pasted into Word, equations are converted to Word's native equation format
 - No custom fonts or CSS required — the browser handles rendering
+
+### Invisible Unicode Cleanup
+
+The `renderMathML` function cleans MathML output from `MathJax.startup.toMML()`:
+
+| Cleanup | What it does |
+|---------|-------------|
+| Invisible math operators | Strips U+2060-2064 (Word Joiner, Function Application, Invisible Times, Invisible Separator, Invisible Plus) |
+| Zero-width chars | Strips U+200B-200F (ZW Space, ZW Non-Joiner, ZW Joiner, LTR/RTL Mark) |
+| Bidi marks | Strips U+061C, U+202A-202C, U+2066-2069 (directional embedding/isolates) |
+| BOM | Strips U+FEFF |
+| HTML entities | Same chars matched as `&#x2061;` etc. (from `toMML()`) |
+| Empty `<mo>` | Removes `<mo></mo>` leftover elements |
+| MathJax metadata | Removes `data-latex`, `data-mjx-texclass`, etc. attributes |
+| Empty-base primes | Collapses `<msup><mi></mi><mo>′</mo></msup>` → `<mo>′</mo>` (fixes f-prime invisible char bug) |
+
+Additionally, a **copy event interceptor** strips invisible chars from the clipboard when the user selects and copies text that includes math elements (the browser's native MathML renderer re-adds invisible operators at render time).
+
+### Equation CSS Classes
+
+Generated HTML wraps equations with semantic classes:
+- `<span class="inline-math">\(...\)</span>` — inline equations
+- `<span class="display-math">\[...\]</span>` — display (block) equations

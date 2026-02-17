@@ -171,20 +171,30 @@ When processing completes, you receive:
 
 The HTML includes MathJax script for rendering LaTeX equations. Simply open the HTML file in any modern browser.
 
-### MathJax Script (for custom HTML)
+### MathJax 4 Native MathML Rendering
 
-```html
-<script>
-  window.MathJax = {
-    tex: {
-      inlineMath: [['\\(', '\\)']],
-      displayMath: [['\\[', '\\]']]
-    },
-    svg: { fontCache: 'global' }
-  };
-</script>
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
-```
+Equations are rendered using **MathJax 4** with native browser MathML output (not CHTML). This means:
+- Equations render as native `<math>` elements — text-selectable, copy-pasteable
+- No custom fonts or CSS required — the browser handles rendering
+- A copy event interceptor strips invisible Unicode operators from the clipboard
+
+The `renderMathML` function in each script cleans MathML output by:
+- Stripping invisible math operators (U+2060-2064), zero-width chars, bidi marks
+- Removing MathJax `data-*` attributes
+- Collapsing empty-base superscript patterns (`<msup><mi></mi><mo>...</mo></msup>`)
+
+### Equation CSS Classes
+
+Generated HTML wraps equations with semantic classes:
+- `<span class="inline-math">\(...\)</span>` for inline equations
+- `<span class="display-math">\[...\]</span>` for display (block) equations
+
+### SharePoint Scripts
+
+| File | Purpose |
+|------|---------|
+| `sharepoint-mathjax-loader.js` (`.txt` copy) | MathJax 4 loader with edit-mode detection, native MathML output, clipboard cleaning |
+| `mathjax-copy-menu.js` (`.txt` copy) | Hover-to-copy buttons for equations (LaTeX + MathML formats) |
 
 ---
 
@@ -213,8 +223,16 @@ The HTML includes MathJax script for rendering LaTeX equations. Simply open the 
 ### Equations Not Rendering
 
 - Ensure MathJax script is included in HTML
-- Check browser console for JavaScript errors
+- Check browser console for JavaScript errors (look for `[MathCopy] N equations ready`)
 - Verify LaTeX syntax in output
+- Use `python -B` when regenerating to avoid stale `__pycache__`
+
+### Invisible Characters When Pasting to Word
+
+- The `renderMathML` function strips invisible Unicode operators from MathML markup
+- A `copy` event interceptor cleans the clipboard when selecting math content
+- The empty-base superscript fix prevents `f'` prime notation from triggering browser-added invisible chars
+- If issues persist, check browser console for JavaScript errors
 
 ---
 
