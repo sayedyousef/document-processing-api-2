@@ -1198,14 +1198,37 @@ class FullWordToHTMLConverter:
                 renderMathML: function(math, doc) {{
                     math.typesetRoot = document.createElement('mjx-container');
                     var mml = MathJax.startup.toMML(math.root);
-                    // Strip invisible Unicode operators (entity and literal forms)
-                    mml = mml.replace(/&#x206[1-3];/gi, '');
-                    mml = mml.replace(/[\\u2061-\\u2063]/g, '');
+                    // Strip invisible operators, zero-width chars, bidi marks, BOM
+                    mml = mml.replace(/[\\u2060-\\u2064\\u200B-\\u200F\\u061C\\u202A-\\u202C\\u2066-\\u2069\\uFEFF]/g, '');
+                    mml = mml.replace(/&#x(206[0-9a-f]|200[b-f]|061c|202[a-c]|feff);/gi, '');
                     mml = mml.replace(/<mo[^>]*>\\s*<\\/mo>/g, '');
+                    mml = mml.replace(/ data-[a-z-]+="[^"]*"/g, '');
+                    // Collapse <msup><mi></mi><mo>X</mo></msup> → <mo>X</mo>
+                    mml = mml.replace(/<msup>\\s*<mi\\s*\\/?>\\s*(<\\/mi>)?\\s*(<mo[^>]*>[^<]*<\\/mo>)\\s*<\\/msup>/g, '$2');
                     math.typesetRoot.innerHTML = mml;
                     if (math.display) math.typesetRoot.setAttribute('display', 'block');
                 }}
             }};
+        }})();
+        // Clean clipboard: browser native MathML adds invisible chars on copy
+        (function() {{
+            var R = /[\\u2060-\\u2064\\u200B-\\u200F\\u061C\\u202A-\\u202C\\u2066-\\u2069\\uFEFF]/g;
+            document.addEventListener('copy', function(e) {{
+                var sel = window.getSelection();
+                if (!sel || !sel.rangeCount || !sel.toString()) return;
+                var range = sel.getRangeAt(0);
+                var els = document.querySelectorAll('mjx-container, math');
+                var hit = false;
+                for (var i = 0; i < els.length; i++) {{
+                    if (range.intersectsNode(els[i])) {{ hit = true; break; }}
+                }}
+                if (!hit) return;
+                e.clipboardData.setData('text/plain', sel.toString().replace(R, ''));
+                var d = document.createElement('div');
+                d.appendChild(range.cloneContents());
+                e.clipboardData.setData('text/html', d.innerHTML.replace(R, ''));
+                e.preventDefault();
+            }});
         }})();
     </script>
     <script defer src="https://cdn.jsdelivr.net/npm/mathjax@4/startup.js"></script>

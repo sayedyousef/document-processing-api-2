@@ -63,9 +63,14 @@
                 math.typesetRoot = document.createElement('mjx-container');
                 var mml = MathJax.startup.toMML(math.root);
                 // Strip invisible Unicode operators (entity and literal forms)
-                mml = mml.replace(/&#x206[1-3];/gi, '');
-                mml = mml.replace(/[\u2061-\u2063]/g, '');
+                // Strip invisible operators, zero-width chars, bidi marks, BOM
+                mml = mml.replace(/[\u2060-\u2064\u200B-\u200F\u061C\u202A-\u202C\u2066-\u2069\uFEFF]/g, '');
+                mml = mml.replace(/&#x(206[0-9a-f]|200[b-f]|061c|202[a-c]|feff);/gi, '');
                 mml = mml.replace(/<mo[^>]*>\s*<\/mo>/g, '');
+                mml = mml.replace(/ data-[a-z-]+="[^"]*"/g, '');
+                // Collapse <msup><mi></mi><mo>X</mo></msup> → <mo>X</mo>
+                // MathJax empty-base prime pattern causes browser to insert invisible chars
+                mml = mml.replace(/<msup>\s*<mi\s*\/?\s*>\s*(<\/mi>)?\s*(<mo[^>]*>[^<]*<\/mo>)\s*<\/msup>/g, '$2');
                 math.typesetRoot.innerHTML = mml;
                 if (math.display) math.typesetRoot.setAttribute('display', 'block');
             }
@@ -77,6 +82,28 @@
         s.async = true;
         document.head.appendChild(s);
     }
+
+    // Clean clipboard: browser's native MathML renderer adds invisible
+    // Unicode operators during rendering; strip them on Ctrl+C / copy
+    var INVISIBLE_RE = /[\u2060-\u2064\u200B-\u200F\u061C\u202A-\u202C\u2066-\u2069\uFEFF]/g;
+    document.addEventListener('copy', function(e) {
+        var sel = window.getSelection();
+        if (!sel || !sel.rangeCount || !sel.toString()) return;
+        var range = sel.getRangeAt(0);
+        var mathEls = document.querySelectorAll('mjx-container, math');
+        var touchesMath = false;
+        for (var i = 0; i < mathEls.length; i++) {
+            if (range.intersectsNode(mathEls[i])) { touchesMath = true; break; }
+        }
+        if (!touchesMath) return;
+        var text = sel.toString().replace(INVISIBLE_RE, '');
+        e.clipboardData.setData('text/plain', text);
+        var div = document.createElement('div');
+        div.appendChild(range.cloneContents());
+        var html = div.innerHTML.replace(INVISIBLE_RE, '');
+        e.clipboardData.setData('text/html', html);
+        e.preventDefault();
+    });
 
     if (document.readyState === 'loading')
         document.addEventListener('DOMContentLoaded', go);
