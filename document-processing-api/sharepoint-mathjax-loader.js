@@ -1,117 +1,81 @@
-/**
- * MathJax Loader for SharePoint
- *
- * Upload this file to SharePoint (e.g., Site Assets library) and reference it
- * via a Script Editor web part, Content Editor web part, or SPFx extension.
- *
- * What it does:
- *   1. Detects if the page is in edit mode — if so, skips MathJax entirely
- *   2. Scopes MathJax to only scan elements with id="mathjax-content"
- *   3. Extra safety: won't run if content is inside a contenteditable area
- *   4. Renders LaTeX equations: \(...\) for inline, \[...\] for display math
- *
- * Usage:
- *   - Wrap your HTML content in: <div id="mathjax-content">...</div>
- *   - Add this script to the page via Script Editor or Content Editor web part
- */
 (function () {
-    'use strict';
 
-    // ── 1. Detect SharePoint edit mode ──────────────────────────────
-    var search = window.location.search.toLowerCase();
-    var hash = window.location.hash.toLowerCase();
+    // Skip in SharePoint edit mode
+    var qs = window.location.search.toLowerCase();
+    var h = window.location.hash.toLowerCase();
+    if (qs.indexOf('mode=edit') > -1 || h.indexOf('mode=edit') > -1) return;
+    if (document.querySelector('.sp-pageLayout-editMode')) return;
+    if (document.querySelector('#spPageCanvasContent [contenteditable="true"]')) return;
+    var mso = document.querySelector('#MSOLayout_InDesignMode');
+    if (mso && mso.value === '1') return;
+    if (window._spPageContextInfo && window._spPageContextInfo.isEditMode) return;
+    var dm = document.getElementById('MSOSPWebPartManager_DisplayModeName');
+    if (dm && dm.value === 'Design') return;
 
-    var isEditMode = (
-        // SharePoint Online modern pages
-        search.indexOf('mode=edit') !== -1 ||
-        hash.indexOf('mode=edit') !== -1 ||
-        // SharePoint Online modern page edit indicators
-        document.querySelector('.sp-pageLayout-editMode') !== null ||
-        document.querySelector('#spPageCanvasContent [contenteditable="true"]') !== null ||
-        // Classic SharePoint edit mode (check value, not just existence — these elements exist in both modes)
-        (function () { var el = document.querySelector('#MSOLayout_InDesignMode'); return el && el.value === '1'; })() ||
-        (typeof window._spPageContextInfo !== 'undefined' &&
-            window._spPageContextInfo.isEditMode === true) ||
-        // SharePoint designer (check value — element exists in both modes)
-        (function () { var el = document.getElementById('MSOSPWebPartManager_DisplayModeName'); return el && el.value === 'Design'; })()
-    );
+    function go() {
+        var wrap = document.getElementById('mathjax-content');
+        var target = wrap ? '#mathjax-content' : null;
 
-    if (isEditMode) {
-        console.log('[MathJax Loader] Edit mode detected — MathJax will NOT load.');
-        return;
-    }
-
-    // ── 2. Wait for content to be ready ─────────────────────────────
-    function initMathJax() {
-        var contentEl = document.getElementById('mathjax-content');
-
-        // If no mathjax-content wrapper found, try to find any content with LaTeX
-        var targetSelector = contentEl ? '#mathjax-content' : null;
-
-        if (!targetSelector) {
-            // Fallback: look for LaTeX delimiters anywhere in the page body
-            var bodyText = document.body ? document.body.innerHTML : '';
-            if (bodyText.indexOf('\\(') === -1 && bodyText.indexOf('\\[') === -1) {
-                console.log('[MathJax Loader] No LaTeX content found — skipping.');
-                return;
-            }
-            // If LaTeX exists but no wrapper, use body but log a warning
-            console.warn('[MathJax Loader] No #mathjax-content div found. Scanning document body. ' +
-                'For best results, wrap content in <div id="mathjax-content">...</div>');
+        // if no wrapper div, look for latex
+        if (!target) {
+            var html = document.body ? document.body.innerHTML : '';
+            if (html.indexOf('\\(') === -1 && html.indexOf('\\[') === -1) return;
         }
 
-        // ── 3. Extra safety: skip if inside contenteditable ─────────
-        if (contentEl) {
-            var parent = contentEl.parentElement;
-            while (parent) {
-                if (parent.getAttribute && parent.getAttribute('contenteditable') === 'true') {
-                    console.log('[MathJax Loader] Content is inside contenteditable — skipping.');
-                    return;
-                }
-                parent = parent.parentElement;
+        // don't run inside sp content editable
+        if (wrap) {
+            var p = wrap.parentElement;
+            while (p) {
+                if (p.getAttribute && p.getAttribute('contenteditable') === 'true') return;
+                p = p.parentElement;
             }
         }
 
-        // ── 4. Configure MathJax ────────────────────────────────────
+        // Inject styles for mjx-container (native MathML output)
+        var style = document.createElement('style');
+        style.textContent = 'mjx-container{display:inline}mjx-container[display="block"]{display:block;text-align:center;margin:1em 0}';
+        document.head.appendChild(style);
+
         window.MathJax = {
+            loader: {load: ['input/tex']},
             tex: {
                 inlineMath: [['\\(', '\\)']],
                 displayMath: [['\\[', '\\]']]
             },
             options: {
-                // Only scan our content div (not SharePoint's UI)
-                elements: targetSelector ? [targetSelector] : null,
-                // Skip elements that SharePoint uses for editing
-                ignoreHtmlClass: 'sp-.*|ms-.*|od-.*|canvasTextArea',
-                processHtmlClass: 'mathjax-content'
+                ignoreHtmlClass: 'sp-.*|od-.*|canvasTextArea',
+                processHtmlClass: 'mathjax-content',
+                renderActions: {
+                    assistiveMml: [],
+                    typeset: [150,
+                        function(doc) { for (var math of doc.math) MathJax.config.renderMathML(math, doc); },
+                        function(math, doc) { MathJax.config.renderMathML(math, doc); }
+                    ]
+                }
             },
             startup: {
-                ready: function () {
-                    console.log('[MathJax Loader] MathJax ready — rendering equations.');
-                    MathJax.startup.defaultReady();
+                elements: target ? [target] : null,
+                pageReady: function() {
+                    return MathJax.startup.document.render();
                 }
+            },
+            renderMathML: function(math, doc) {
+                math.typesetRoot = document.createElement('mjx-container');
+                math.typesetRoot.innerHTML = MathJax.startup.toMML(math.root);
+                if (math.display) math.typesetRoot.setAttribute('display', 'block');
             }
         };
 
-        // ── 5. Load MathJax from CDN ────────────────────────────────
-        var script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js';
-        script.async = true;
-        script.onload = function () {
-            console.log('[MathJax Loader] MathJax loaded successfully.');
-        };
-        script.onerror = function () {
-            console.error('[MathJax Loader] Failed to load MathJax from CDN.');
-        };
-        document.head.appendChild(script);
+        // Load MathJax 4 (native MathML output)
+        var s = document.createElement('script');
+        s.src = 'https://cdn.jsdelivr.net/npm/mathjax@4/startup.js';
+        s.async = true;
+        document.head.appendChild(s);
     }
 
-    // ── 6. Run when DOM is ready ────────────────────────────────────
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initMathJax);
-    } else {
-        // DOM already loaded (script loaded async or deferred)
-        initMathJax();
-    }
+    if (document.readyState === 'loading')
+        document.addEventListener('DOMContentLoaded', go);
+    else
+        go();
 
 })();

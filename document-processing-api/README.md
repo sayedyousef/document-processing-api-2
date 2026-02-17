@@ -4,48 +4,41 @@ Converts Word (.docx) files to HTML with support for equations, tables, images, 
 
 ## Output Formats
 
-- **LaTeX + MathJax** (`latex_html`): Equations rendered as LaTeX with MathJax JavaScript
-- **MathML** (`mathml_html`): Equations rendered as native MathML, no JavaScript required
+- **LaTeX + MathJax** (`latex_html`): Equations converted to LaTeX, rendered as native MathML via MathJax 4
+- **MathML** (`mathml_html`): Equations converted directly to MathML at the backend, no JavaScript required
 
 ## Output Files
 
 Each conversion produces:
-- `{filename}.html` — Full standalone HTML file with `<html>`, `<head>`, styles, and scripts
-- `{filename}_body.txt` — Body-only HTML containing just the `<div id="mathjax-content">` wrapper with content and footnotes. Uses `.txt` extension for easy copy-pasting into SharePoint or other CMS pages.
+- `{filename}.html` — Full standalone HTML file with styles and MathJax script (no images — team inserts manually)
+- `{filename}_body.txt` — Body-only HTML containing just the `<div id="mathjax-content">` wrapper with content and footnotes. No images, no scripts. Uses `.txt` extension for easy pasting into SharePoint.
 - `{filename}_equations.docx` — (LaTeX mode only) Intermediate Word file with converted equations
 
-## SharePoint MathJax Loader Scripts
+## SharePoint Scripts
 
-When using the LaTeX + MathJax output format in SharePoint, the `_body.txt` file provides the content without any `<script>` tags. MathJax rendering is handled separately by uploading one of the loader scripts to SharePoint:
+For SharePoint, the `_body.txt` provides content and these scripts handle rendering:
 
-- `sharepoint-mathjax-loader.js` — Original loader script
-- `sharepoint-mathjax-loader-2.js` — Compact variant with improved SharePoint edit-mode detection (checks `MSOLayout_InDesignMode`, `DisplayModeName`, URL params, and `contenteditable` ancestors)
+### `sharepoint-mathjax-loader.js` (.txt copy for email)
+MathJax 4 loader with native MathML output. Upload to SharePoint as a Script Editor or Content Editor web part.
 
-These scripts detect SharePoint edit mode and skip MathJax initialization when the page is being edited, preventing interference with the SharePoint editor. They scope MathJax processing to the `#mathjax-content` div and ignore SharePoint UI classes (`sp-*`, `ms-*`, `od-*`).
+- Detects SharePoint edit mode (URL params, `contenteditable`, `MSOLayout_InDesignMode`, `DisplayModeName`) and skips MathJax when editing
+- Scopes processing to `#mathjax-content` div
+- Ignores SharePoint UI classes: `sp-*`, `od-*`, `canvasTextArea`
+- **Note:** `ms-*` classes are NOT ignored because SharePoint wraps article content in `<div class="ms-rtestate-field">` which must be processed
+- Uses MathJax 4 `startup.js` with custom `renderActions` to output native `<math>` elements (text-selectable, copy-pasteable)
 
-### MathJax Configuration Notes
+### `mathjax-copy-menu.js` (.txt copy for email)
+Hover-to-copy buttons for equations. Hover over any equation to see:
 
-- `startup.elements` must be under `startup` (not `options`) in MathJax 3 — placing it under `options` causes an "Invalid option" error.
-- `options.enableMenu: false` disables MathJax's built-in right-click context menu.
+- **نسخ LaTeX** — Copies the original TeX source with `\(...\)` or `\[...\]` delimiters
+- **نسخ MathML** — Copies the MathML markup directly from the DOM `<math>` element
 
-## Equation Copy Menu
+The script is automatically embedded inline in generated HTML files. Also works as a standalone script after MathJax loads.
 
-`mathjax-copy-menu.js` — Adds hover-to-copy buttons to MathJax-rendered equations. Hover over any equation to see a popup with two copy modes:
+### MathJax 4 Native MathML
 
-- **LaTeX** (`نسخ LaTeX`) — Copies the original TeX source with `\(...\)` or `\[...\]` delimiters
-- **MathML** (`نسخ MathML`) — Copies the MathML markup via MathJax's internal serializer
-
-The script is automatically embedded inline in generated HTML files (LaTeX mode). It can also be included as a standalone file after MathJax loads:
-```html
-<script src="mathjax-copy-menu.js"></script>
-```
-
-### How it works
-
-1. Waits for MathJax to finish typesetting (retries up to 30 seconds)
-2. Attaches hover handlers to all `mjx-container` elements
-3. On hover, shows a floating button bar above the equation
-4. On click, copies the equation in the selected format to the clipboard
-5. Shows Arabic feedback: "تم النسخ!" (Copied!) on success
-
-The script skips initialization in SharePoint edit mode and uses `Array.from()` on MathJax's iterable math list for compatibility with different MathJax 3.x builds.
+The scripts use MathJax 4 (`startup.js`) configured to render LaTeX as native browser MathML instead of the old CHTML format. This means:
+- Equations are rendered as native `<math>` elements
+- Users can select and copy equation text naturally (Ctrl+A, Ctrl+C)
+- When pasted into Word, equations are converted to Word's native equation format
+- No custom fonts or CSS required — the browser handles rendering
