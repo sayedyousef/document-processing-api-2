@@ -764,7 +764,21 @@ class FullWordToHTMLConverter:
                 if text:
                     parts.append(self._escape(text))
 
-        return ''.join(parts)
+        result = ''.join(parts)
+
+        # Post-process: consolidate adjacent identical formatting tags
+        # Word splits runs at special chars (e.g. ڤ in Arabic), producing
+        # <b>X</b><b>Y</b> instead of <b>XY</b>
+        for tag in ['b', 'i', 'sub', 'sup']:
+            # Merge adjacent: </b><b> → nothing
+            result = re.sub(rf'</{tag}><{tag}>', '', result)
+        # Remove empty tags: <b></b>, <i></i>, etc.
+        for tag in ['b', 'i', 'sub', 'sup']:
+            result = re.sub(rf'<{tag}>\s*</{tag}>', '', result)
+        # Strip zero-width spaces (U+200B) that Word inserts for bidi
+        result = result.replace('\u200b', '')
+
+        return result
 
     def _convert_paragraph(self, p_elem):
         ns = self.namespaces
