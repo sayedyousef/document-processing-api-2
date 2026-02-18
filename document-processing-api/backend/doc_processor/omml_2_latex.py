@@ -597,12 +597,16 @@ class DirectOmmlToLatex:
                     matrix_type = 'vmatrix'
                 return self.parse_matrix(grandchild, matrix_type)
             elif grandchild.tag.endswith('eqArr'):
-                # Piecewise
                 content = self.parse(grandchild)
                 if open_d == '{' and (not close_d or close_d == ''):
-                    #return f'\\begin{{cases}} {content} \\end{{cases}}'
                     return '\\begin{cases} ' + content + ' \\end{cases}'
-
+                # eqArr inside bracket delimiters = column vector
+                elif open_d == '[' and close_d == ']':
+                    return '\\begin{bmatrix} ' + content + ' \\end{bmatrix}'
+                elif open_d == '(' and close_d == ')':
+                    return '\\begin{pmatrix} ' + content + ' \\end{pmatrix}'
+                elif open_d == '|' and close_d == '|':
+                    return '\\begin{vmatrix} ' + content + ' \\end{vmatrix}'
                 return content
         
         # Parse the content

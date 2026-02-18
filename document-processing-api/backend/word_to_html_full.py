@@ -50,11 +50,11 @@ class ConversionConfig:
     # Image settings
     include_images: bool = True  # Include images in output (always extracted to subfolder)
 
-    # Equation settings - prefix/suffix applied during conversion
-    inline_prefix: str = 'MATHSTARTINLINE'  # Prefix for inline equations
-    inline_suffix: str = 'MATHENDINLINE'    # Suffix for inline equations
-    display_prefix: str = 'MATHSTARTDISPLAY'  # Prefix for display equations
-    display_suffix: str = 'MATHENDDISPLAY'    # Suffix for display equations
+    # Equation markers (empty = no markers, just \(...\) and \[...\] delimiters)
+    inline_prefix: str = ''
+    inline_suffix: str = ''
+    display_prefix: str = ''
+    display_suffix: str = ''
 
     # Output settings
     include_styles: bool = True
@@ -389,14 +389,7 @@ class FullWordToHTMLConverter:
 
             eq_result = eq_converter.process_document(input_path, eq_converted)
 
-            # Save converted Word document to output folder (user requested this)
-            word_output_path = output_dir / f"{input_path.stem}_equations.docx"
-            if eq_result.get('success') and eq_converted.exists():
-                shutil.copy2(eq_converted, word_output_path)
-                print(f"    Word document with equations saved: {word_output_path}")
-            else:
-                # Copy original if conversion failed
-                shutil.copy2(input_path, word_output_path)
+            if not (eq_result.get('success') and eq_converted.exists()):
                 eq_converted = input_path
 
             # Step 2: Extract document
@@ -439,14 +432,12 @@ class FullWordToHTMLConverter:
             print("CONVERSION COMPLETE!")
             print(f"HTML Output: {output_path}")
             print(f"Body Output: {body_output_path}")
-            print(f"Word Output: {word_output_path}")
             print(f"{'='*70}")
 
             return {
                 'success': True,
                 'output_path': str(output_path),
                 'body_output_path': str(body_output_path),
-                'word_output_path': str(word_output_path)
             }
 
         except Exception as e:
@@ -1199,6 +1190,16 @@ class FullWordToHTMLConverter:
                     mml = mml.replace(/ data-[a-z-]+="[^"]*"/g, '');
                     // Collapse <msup><mi></mi><mo>X</mo></msup> → <mo>X</mo>
                     mml = mml.replace(/<msup>\\s*<mi\\s*\\/?>\\s*(<\\/mi>)?\\s*(<mo[^>]*>[^<]*<\\/mo>)\\s*<\\/msup>/g, '$2');
+                    // Underbrace/overbrace Word paste compatibility
+                    mml = mml.replace(/<mo([^>]*)>([⏟⏞])<\\/mo>/g, function(m, a, c) {{
+                        a = a.replace(/\\s*stretchy="[^"]*"/, '');
+                        return '<mo' + a + ' stretchy="true" style="math-depth:0;">'+c+'</mo>';
+                    }});
+                    // Unwrap <mrow> around nested <munder>/<mover> for Word groupChr recognition
+                    mml = mml.replace(/<munder([^>]*)>\\s*<mrow>\\s*(<munder[\\s\\S]*?<\\/munder>)\\s*<\\/mrow>\\s*<mrow>\\s*(<mtext>[\\s\\S]*?<\\/mtext>)\\s*<\\/mrow>\\s*<\\/munder>/g,
+                        '<munder$1>$2$3</munder>');
+                    mml = mml.replace(/<mover([^>]*)>\\s*<mrow>\\s*(<mover[\\s\\S]*?<\\/mover>)\\s*<\\/mrow>\\s*<mrow>\\s*(<mtext>[\\s\\S]*?<\\/mtext>)\\s*<\\/mrow>\\s*<\\/mover>/g,
+                        '<mover$1>$2$3</mover>');
                     math.typesetRoot.innerHTML = mml;
                     if (math.display) math.typesetRoot.setAttribute('display', 'block');
                 }}
@@ -1373,10 +1374,6 @@ def test_full_converter():
         convert_shapes_to_svg=True,
         include_images=True,
         include_mathjax=True,
-        inline_prefix='MATHSTARTINLINE',
-        inline_suffix='MATHENDINLINE',
-        display_prefix='MATHSTARTDISPLAY',
-        display_suffix='MATHENDDISPLAY'
     )
 
     converter = FullWordToHTMLConverter(config)

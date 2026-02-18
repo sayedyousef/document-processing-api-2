@@ -71,6 +71,16 @@
                 // Collapse <msup><mi></mi><mo>X</mo></msup> → <mo>X</mo>
                 // MathJax empty-base prime pattern causes browser to insert invisible chars
                 mml = mml.replace(/<msup>\s*<mi\s*\/?\s*>\s*(<\/mi>)?\s*(<mo[^>]*>[^<]*<\/mo>)\s*<\/msup>/g, '$2');
+                // Underbrace/overbrace Word paste compatibility
+                mml = mml.replace(/<mo([^>]*)>([⏟⏞])<\/mo>/g, function(m, a, c) {
+                    a = a.replace(/\s*stretchy="[^"]*"/, '');
+                    return '<mo' + a + ' stretchy="true" style="math-depth:0;">'+c+'</mo>';
+                });
+                // Unwrap <mrow> around nested <munder>/<mover> for Word groupChr recognition
+                mml = mml.replace(/<munder([^>]*)>\s*<mrow>\s*(<munder[\s\S]*?<\/munder>)\s*<\/mrow>\s*<mrow>\s*(<mtext>[\s\S]*?<\/mtext>)\s*<\/mrow>\s*<\/munder>/g,
+                    '<munder$1>$2$3</munder>');
+                mml = mml.replace(/<mover([^>]*)>\s*<mrow>\s*(<mover[\s\S]*?<\/mover>)\s*<\/mrow>\s*<mrow>\s*(<mtext>[\s\S]*?<\/mtext>)\s*<\/mrow>\s*<\/mover>/g,
+                    '<mover$1>$2$3</mover>');
                 math.typesetRoot.innerHTML = mml;
                 if (math.display) math.typesetRoot.setAttribute('display', 'block');
             }
