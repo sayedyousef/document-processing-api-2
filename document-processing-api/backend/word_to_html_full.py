@@ -934,6 +934,16 @@ class FullWordToHTMLConverter:
         ns = self.namespaces
         rows = []
 
+        # Detect table direction from w:bidiVisual in w:tblPr
+        # Present = RTL column order, absent = LTR column order
+        tbl_pr = tbl_elem.find('w:tblPr', namespaces=ns)
+        is_bidi = False
+        if tbl_pr is not None:
+            bidi_visual = tbl_pr.find('w:bidiVisual', namespaces=ns)
+            if bidi_visual is not None:
+                w_val = bidi_visual.get(f'{{{ns["w"]}}}val')
+                is_bidi = (w_val != '0')  # val="0" explicitly disables
+
         for tr in tbl_elem.xpath('./w:tr', namespaces=ns):
             cells = []
             for tc in tr.xpath('./w:tc', namespaces=ns):
@@ -970,8 +980,9 @@ class FullWordToHTMLConverter:
                 cells.append((cell_html, width_attr, colspan_attr))
             rows.append(cells)
 
-        # wordhtml.com format for both modes: <table><tbody><tr><td width="..." colspan="...">
-        html = ['<table>', '<tbody>']
+        # wordhtml.com format for both modes: <table dir="..."><tbody><tr><td>
+        dir_attr = ' dir="rtl"' if is_bidi else ' dir="ltr"'
+        html = [f'<table{dir_attr}>', '<tbody>']
         for row in rows:
             html.append('<tr>')
             for cell_html, width_attr, colspan_attr in row:
