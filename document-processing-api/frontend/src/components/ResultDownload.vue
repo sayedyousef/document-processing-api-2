@@ -16,6 +16,31 @@
       Refresh Results
     </button>
 
+    <!-- Single file: Body HTML textarea for copy-paste -->
+    <div v-if="!jobExpired && isSingleFile && bodyContent !== null" class="mb-4">
+      <div class="flex items-center justify-between mb-2">
+        <h4 class="text-sm font-semibold text-gray-700">Body HTML (copy to SharePoint):</h4>
+        <button
+          @click="copyBodyContent"
+          class="px-3 py-1 bg-green-600 text-white text-sm rounded hover:bg-green-700 transition-colors font-semibold"
+        >
+          {{ bodyCopySuccess ? 'Copied!' : 'Copy to Clipboard' }}
+        </button>
+      </div>
+      <textarea
+        ref="bodyTextarea"
+        :value="bodyContent"
+        class="w-full h-96 p-3 border border-gray-300 rounded-md font-mono text-xs bg-gray-50 resize-y"
+        dir="ltr"
+        readonly
+      ></textarea>
+    </div>
+
+    <!-- Loading body content -->
+    <div v-if="!jobExpired && isSingleFile && bodyContent === null && bodyLoading" class="mb-4 text-sm text-gray-500">
+      Loading body content...
+    </div>
+
     <div v-if="!jobExpired" class="space-y-3">
       <div
         v-for="(result, index) in currentResults"
@@ -99,8 +124,18 @@ export default {
     // Use local state for results that can be refreshed
     const currentResults = ref(props.results)
     const copySuccess = ref(false)
+    const bodyCopySuccess = ref(false)
     const mathjaxTextarea = ref(null)
+    const bodyTextarea = ref(null)
     const jobExpired = ref(false)
+    const bodyContent = ref(null)
+    const bodyLoading = ref(false)
+
+    // Single file = exactly 1 successful result that is not a ZIP
+    const isSingleFile = computed(() => {
+      const successful = currentResults.value.filter(r => !r.error)
+      return successful.length === 1 && successful[0].type !== 'application/zip'
+    })
 
     // MathJax script for rendering equations
     const mathjaxScript = `<script>
@@ -161,6 +196,40 @@ export default {
       const sizes = ['Bytes', 'KB', 'MB', 'GB']
       const i = Math.floor(Math.log(bytes) / Math.log(k))
       return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i]
+    }
+
+    // Fetch body content for single-file results
+    const fetchBodyContent = async () => {
+      if (!isSingleFile.value) return
+      bodyLoading.value = true
+      try {
+        const response = await axios.get(`${API_BASE_URL}/api/body/${props.jobId}/0`)
+        bodyContent.value = response.data
+      } catch (error) {
+        console.log('[ResultDownload] No body content available:', error.response?.status)
+        // Not an error — body may not exist for non-HTML conversions
+        bodyContent.value = null
+      } finally {
+        bodyLoading.value = false
+      }
+    }
+
+    // Copy body content to clipboard
+    const copyBodyContent = async () => {
+      if (!bodyContent.value) return
+      try {
+        await navigator.clipboard.writeText(bodyContent.value)
+        bodyCopySuccess.value = true
+        setTimeout(() => { bodyCopySuccess.value = false }, 2000)
+      } catch (error) {
+        // Fallback
+        if (bodyTextarea.value) {
+          bodyTextarea.value.select()
+          document.execCommand('copy')
+          bodyCopySuccess.value = true
+          setTimeout(() => { bodyCopySuccess.value = false }, 2000)
+        }
+      }
     }
 
     // Refresh results from backend
@@ -276,10 +345,11 @@ export default {
       }
     }
 
-    // Auto-refresh on mount
-    onMounted(() => {
+    // Auto-refresh on mount, then fetch body content
+    onMounted(async () => {
       console.log('[ResultDownload] Component mounted, auto-refreshing results...')
-      setTimeout(refreshResults, 1000)
+      await refreshResults()
+      await fetchBodyContent()
     })
 
     return {
@@ -291,9 +361,15 @@ export default {
       currentResults,
       mathjaxScript,
       mathjaxTextarea,
+      bodyTextarea,
       copySuccess,
+      bodyCopySuccess,
       copyMathjaxScript,
-      jobExpired
+      copyBodyContent,
+      jobExpired,
+      bodyContent,
+      bodyLoading,
+      isSingleFile
     }
   }
 }

@@ -4,7 +4,7 @@ FIXED main.py - Works with your existing WordCOMEquationReplacer
 
 from fastapi import FastAPI, File, UploadFile, BackgroundTasks, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, JSONResponse, HTMLResponse
+from fastapi.responses import FileResponse, JSONResponse, HTMLResponse, PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 import uuid
 from pathlib import Path
@@ -250,6 +250,32 @@ async def download_single_result(job_id: str, index: int):
         media_type=media_type  
     )
 
+@app.get("/api/body/{job_id}/{index}")
+async def get_body_content(job_id: str, index: int):
+    """Return _body.txt content as plain text for copy-paste"""
+    if job_id not in jobs:
+        raise HTTPException(status_code=404, detail="Job not found")
+
+    job = jobs[job_id]
+    if job["status"] != "completed":
+        raise HTTPException(status_code=400, detail="Job not completed")
+
+    successful_results = [r for r in job["results"] if "error" not in r]
+    if index >= len(successful_results):
+        raise HTTPException(status_code=404, detail="Invalid file index")
+
+    result = successful_results[index]
+    body_path = result.get("body_path")
+    if not body_path:
+        raise HTTPException(status_code=404, detail="No body content available")
+
+    body_file = Path(body_path)
+    if not body_file.exists():
+        raise HTTPException(status_code=404, detail="Body file not found")
+
+    content = body_file.read_text(encoding="utf-8")
+    return PlainTextResponse(content)
+
 def should_zip_output(output_dir):
     """
     Determine if output should be zipped
@@ -317,6 +343,7 @@ async def process_job(job_id: str, file_paths: List[Path], processor_type: str, 
     for i, file_path in enumerate(file_paths):
         try:
             logger.info(f"Processing file {i+1}/{len(file_paths)}: {file_path.name}")
+            body_output_path = None
 
             if processor_type == "word_to_html":
                 # Use new full converter with config
@@ -340,6 +367,7 @@ async def process_job(job_id: str, file_paths: List[Path], processor_type: str, 
 
                 if result.get('success'):
                     output_file = Path(result['output_path'])
+                    body_output_path = result.get('body_output_path')
                 else:
                     raise Exception(result.get('error', 'Conversion failed'))
 
@@ -390,9 +418,10 @@ async def process_job(job_id: str, file_paths: List[Path], processor_type: str, 
 
                 if result.get('success'):
                     output_file = Path(result['output_path'])
+                    body_output_path = result.get('body_output_path')
                 else:
                     raise Exception(result.get('error', 'Conversion failed'))
-            
+
             else:  # scan_verify
                 output_file = await scan_and_verify(file_path, output_dir)
             
@@ -403,6 +432,8 @@ async def process_job(job_id: str, file_paths: List[Path], processor_type: str, 
                 "index": i,
                 "success": True
             }
+            if body_output_path:
+                result["body_path"] = str(body_output_path)
             
             temp_results.append(result)
             jobs[job_id]["completed"] += 1
