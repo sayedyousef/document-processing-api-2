@@ -516,17 +516,20 @@ class FullWordToHTMLConverter:
                 shutil.rmtree(temp_dir)
 
     def _load_relationships(self, extract_dir):
-        rels_path = extract_dir / "word" / "_rels" / "document.xml.rels"
-        if not rels_path.exists():
-            return
-        with open(rels_path, 'rb') as f:
-            root = etree.fromstring(f.read())
-        ns = {'r': 'http://schemas.openxmlformats.org/package/2006/relationships'}
-        for rel in root.xpath('//r:Relationship', namespaces=ns):
-            self.relationships[rel.get('Id')] = {
-                'target': rel.get('Target'),
-                'type': rel.get('Type', '').split('/')[-1]
-            }
+        rels_dir = extract_dir / "word" / "_rels"
+        # Load relationships from both document.xml.rels and footnotes.xml.rels
+        for rels_file in ['document.xml.rels', 'footnotes.xml.rels']:
+            rels_path = rels_dir / rels_file
+            if not rels_path.exists():
+                continue
+            with open(rels_path, 'rb') as f:
+                root = etree.fromstring(f.read())
+            ns = {'r': 'http://schemas.openxmlformats.org/package/2006/relationships'}
+            for rel in root.xpath('//r:Relationship', namespaces=ns):
+                self.relationships[rel.get('Id')] = {
+                    'target': rel.get('Target'),
+                    'type': rel.get('Type', '').split('/')[-1]
+                }
 
     def _load_styles(self, extract_dir):
         styles_path = extract_dir / "word" / "styles.xml"
@@ -574,9 +577,7 @@ class FullWordToHTMLConverter:
             for fn in root.xpath('//w:footnote', namespaces=ns):
                 fn_id = fn.get(f'{{{ns["w"]}}}id')
                 if fn_id and fn_id not in ['0', '-1']:
-                    # Escape HTML entities in footnote text for safe output
-                    raw_text = self._extract_text(fn)
-                    self.footnotes[fn_id] = self._escape(raw_text)
+                    self.footnotes[fn_id] = self._convert_footnote_content(fn)
 
     def _load_footnotes_wordhtml(self, extract_dir):
         """Load footnotes with full formatting for wordhtml.com style output"""
