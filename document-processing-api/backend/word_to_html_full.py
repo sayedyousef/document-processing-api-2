@@ -1017,6 +1017,32 @@ class FullWordToHTMLConverter:
             return text
         return text.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
 
+    def _build_footnotes_html(self):
+        """Build footnotes HTML from self.footnotes dict."""
+        if not self.footnotes:
+            return ''
+        parts = []
+        for fn_id, fn_content in self.footnotes.items():
+            parts.append(
+                f'<p><a href="#_ftnref{fn_id}" name="_ftn{fn_id}">[{fn_id}]</a> {fn_content}</p>'
+            )
+        return '\n'.join(parts)
+
+    @staticmethod
+    def _insert_footnotes_before_references(content, footnotes_html):
+        """Insert footnotes before the المراجع heading if present, else append at end."""
+        if not footnotes_html:
+            return content
+        import re
+        # Match <h2>المراجع</h2> (possibly with attributes)
+        pattern = r'(<h2[^>]*>المراجع</h2>)'
+        match = re.search(pattern, content)
+        if match:
+            insert_pos = match.start()
+            return content[:insert_pos] + footnotes_html + '\n' + content[insert_pos:]
+        # No references heading found — append at end
+        return content + '\n' + footnotes_html
+
     def _generate_body_html(self, content):
         """Generate body-only HTML for SharePoint pasting.
 
@@ -1044,18 +1070,11 @@ class FullWordToHTMLConverter:
         body = re.sub(r'(\\\(.+?\\\))', r'<span class="inline-math">\1</span>', body)
         body = re.sub(r'(\\\[.+?\\\])', r'<span class="display-math">\1</span>', body, flags=re.DOTALL)
 
-        footnotes_html = ''
-        if self.footnotes:
-            footnotes_parts = []
-            for fn_id, fn_content in self.footnotes.items():
-                footnotes_parts.append(
-                    f'<p><a href="#_ftnref{fn_id}" name="_ftn{fn_id}">[{fn_id}]</a> {fn_content}</p>'
-                )
-            footnotes_html = '\n'.join(footnotes_parts)
+        footnotes_html = self._build_footnotes_html()
+        body = self._insert_footnotes_before_references(body, footnotes_html)
 
         return f'''<div id="mathjax-content">
 {body}
-{footnotes_html}
 </div>'''
 
     def _generate_html_wordhtml(self, content, title):
@@ -1107,15 +1126,8 @@ class FullWordToHTMLConverter:
         }
     </style>'''
 
-        # Footnotes HTML with wordhtml.com naming (_ftn/_ftnref)
-        footnotes_html = ''
-        if self.footnotes:
-            footnotes_parts = []
-            for fn_id, fn_content in self.footnotes.items():
-                footnotes_parts.append(
-                    f'<p><a href="#_ftnref{fn_id}" name="_ftn{fn_id}">[{fn_id}]</a> {fn_content}</p>'
-                )
-            footnotes_html = '\n'.join(footnotes_parts)
+        footnotes_html = self._build_footnotes_html()
+        content = self._insert_footnotes_before_references(content, footnotes_html)
 
         return f'''<!DOCTYPE html>
 <html dir="{direction}">
@@ -1126,7 +1138,6 @@ class FullWordToHTMLConverter:
 <body>
 <div id="mathjax-content">
 {content}
-{footnotes_html}
 </div>
 </body>
 </html>'''
@@ -1352,15 +1363,8 @@ class FullWordToHTMLConverter:
     </style>
 ''' if config.include_styles else ''
 
-        # Footnotes HTML with wordhtml.com naming (_ftn/_ftnref)
-        footnotes_html = ''
-        if self.footnotes:
-            footnotes_parts = []
-            for fn_id, fn_content in self.footnotes.items():
-                footnotes_parts.append(
-                    f'<p><a href="#_ftnref{fn_id}" name="_ftn{fn_id}">[{fn_id}]</a> {fn_content}</p>'
-                )
-            footnotes_html = '\n'.join(footnotes_parts)
+        footnotes_html = self._build_footnotes_html()
+        content = self._insert_footnotes_before_references(content, footnotes_html)
 
         # Equation copy menu script (inline) - read from external JS file
         copy_menu_script = ''
@@ -1384,7 +1388,6 @@ class FullWordToHTMLConverter:
 <body>
 <div id="mathjax-content">
 {content}
-{footnotes_html}
 </div>
 {copy_menu_script}
 </body>
