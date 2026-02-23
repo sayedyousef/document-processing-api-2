@@ -110,7 +110,7 @@ class EnhancedZipConverter:
         else:
             prefix = self.inline_prefix
             suffix = self.inline_suffix
-            text.text = f' {prefix}\\({latex_text}\\){suffix} ' if prefix or suffix else f' \\({latex_text}\\) '
+            text.text = f' {prefix}\\({latex_text}\\){suffix}' if prefix or suffix else f' \\({latex_text}\\)'
 
         return run
 
