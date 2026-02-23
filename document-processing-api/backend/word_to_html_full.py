@@ -743,11 +743,36 @@ class FullWordToHTMLConverter:
         ns = self.namespaces
         parts = []
 
+        # Detect equation-context italic leak: Word's equation editor sometimes
+        # leaves italic on runs after equations even though text isn't italic.
+        # Pattern: paragraph has equations and italic appears only on runs
+        # AFTER the first equation, never before it.
+        has_eq_italic_leak = False
+        has_eq = bool(p_elem.xpath('.//m:oMath | .//m:oMathPara', namespaces=ns))
+        if has_eq:
+            seen_eq = False
+            italic_before = False
+            italic_after = False
+            for child in p_elem:
+                ctag = child.tag.split('}')[-1]
+                if ctag in ['oMath', 'oMathPara']:
+                    seen_eq = True
+                elif ctag == 'r':
+                    ri = bool(child.xpath('.//w:i[not(@w:val="false")]', namespaces=ns))
+                    rt = ''.join(t.text or '' for t in child.xpath('.//w:t', namespaces=ns))
+                    if ri and rt.strip():
+                        if seen_eq:
+                            italic_after = True
+                        else:
+                            italic_before = True
+            if italic_after and not italic_before:
+                has_eq_italic_leak = True
+
         for child in p_elem:
             tag = child.tag.split('}')[-1]
 
             if tag == 'r':
-                parts.append(self._convert_run(child))
+                parts.append(self._convert_run(child, skip_italic=has_eq_italic_leak))
             elif tag == 'hyperlink':
                 parts.append(self._convert_hyperlink(child))
             elif tag == 'drawing':
@@ -813,12 +838,12 @@ class FullWordToHTMLConverter:
             return f'<h{heading_level}>{content}</h{heading_level}>'
         return f'<p>{content}</p>'
 
-    def _convert_run(self, r_elem):
+    def _convert_run(self, r_elem, skip_italic=False):
         ns = self.namespaces
         parts = []
 
         bold = bool(r_elem.xpath('.//w:b[not(@w:val="false")]', namespaces=ns))
-        italic = bool(r_elem.xpath('.//w:i[not(@w:val="false")]', namespaces=ns))
+        italic = bool(r_elem.xpath('.//w:i[not(@w:val="false")]', namespaces=ns)) and not skip_italic
         superscript = bool(r_elem.xpath('.//w:vertAlign[@w:val="superscript"]', namespaces=ns))
         subscript_text = bool(r_elem.xpath('.//w:vertAlign[@w:val="subscript"]', namespaces=ns))
 
@@ -1050,8 +1075,8 @@ class FullWordToHTMLConverter:
         footnotes. No DOCTYPE, html, head, style, script, or body tags.
         Image tags are removed (SharePoint team inserts images manually).
         Equations are wrapped with semantic HTML classes:
-          inline  -> <span class="inline-math">\(...\)</span>
-          display -> <span class="display-math">\[...\]</span>
+          inline  -> <span class="inline-math">\\(...\\)</span>
+          display -> <span class="display-math">\\[...\\]</span>
         """
         import re
         # Remove image tags - SharePoint team inserts images manually
