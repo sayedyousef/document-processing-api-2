@@ -826,11 +826,11 @@ class FullWordToHTMLConverter:
         # Post-process: consolidate adjacent identical formatting tags
         # Word splits runs at special chars (e.g. ڤ in Arabic), producing
         # <b>X</b><b>Y</b> instead of <b>XY</b>
-        for tag in ['b', 'i', 'sub', 'sup']:
+        for tag in ['b', 'i', 's', 'sub', 'sup']:
             # Merge adjacent: </b><b> → nothing
             result = re.sub(rf'</{tag}><{tag}>', '', result)
         # Remove empty tags: <b></b>, <i></i>, etc.
-        for tag in ['b', 'i', 'sub', 'sup']:
+        for tag in ['b', 'i', 's', 'sub', 'sup']:
             result = re.sub(rf'<{tag}>\s*</{tag}>', '', result)
         # Strip zero-width spaces (U+200B) that Word inserts for bidi
         result = result.replace('\u200b', '')
@@ -871,6 +871,8 @@ class FullWordToHTMLConverter:
 
         bold = bool(r_elem.xpath('.//w:b[not(@w:val="false")]', namespaces=ns)) and not skip_bold
         italic = bool(r_elem.xpath('.//w:i[not(@w:val="false")]', namespaces=ns)) and not skip_italic
+        strike = bool(r_elem.xpath('.//w:strike[not(@w:val="false")]', namespaces=ns))
+        dstrike = bool(r_elem.xpath('.//w:dstrike[not(@w:val="false")]', namespaces=ns))
         superscript = bool(r_elem.xpath('.//w:vertAlign[@w:val="superscript"]', namespaces=ns))
         subscript_text = bool(r_elem.xpath('.//w:vertAlign[@w:val="subscript"]', namespaces=ns))
 
@@ -915,6 +917,10 @@ class FullWordToHTMLConverter:
             content = f'<i>{content}</i>'
         if bold:
             content = f'<b>{content}</b>'
+        if dstrike:
+            content = f'<s style="text-decoration-style:double">{content}</s>'
+        elif strike:
+            content = f'<s>{content}</s>'
         if superscript:
             content = f'<sup>{content}</sup>'
         if subscript_text:
