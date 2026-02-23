@@ -743,47 +743,65 @@ class FullWordToHTMLConverter:
         ns = self.namespaces
         parts = []
 
-        # Detect equation-context italic leak: Word's equation editor sometimes
-        # leaves italic on the paragraph default rPr (pPr/rPr/i) even though
-        # text isn't visually italic in Word. This affects:
-        # - Paragraphs with equations where italic leaked from equation editing
+        # Detect equation-context formatting leak: Word's equation editor sometimes
+        # leaves italic/bold on the paragraph default rPr (pPr/rPr) even though
+        # text isn't visually italic/bold in Word. This affects:
+        # - Paragraphs with equations where formatting leaked from equation editing
         # - Adjacent paragraphs in the same section that inherited the leak
-        # Pattern 1: pPr/rPr has italic — the italic is paragraph-default,
-        #   almost always an equation-context artifact (genuine italic uses styles).
-        # Pattern 2: Paragraph has equations and italic appears only on runs
+        # Pattern 1: pPr/rPr has italic (always leak) or bold (leak only if equations present;
+        #   without equations, pPr bold is genuine — headings, titles).
+        # Pattern 2: Paragraph has equations and formatting appears only on runs
         #   AFTER the first equation, never before it.
         has_eq_italic_leak = False
+        has_eq_bold_leak = False
+        has_equations = bool(p_elem.xpath('.//m:oMath | .//m:oMathPara', namespaces=ns))
         ppr_italic = bool(p_elem.xpath('./w:pPr/w:rPr/w:i[not(@w:val="false")]', namespaces=ns))
+        ppr_bold = bool(p_elem.xpath('./w:pPr/w:rPr/w:b[not(@w:val="false")]', namespaces=ns))
         if ppr_italic:
             # Pattern 1: paragraph default has italic = equation context leak
             has_eq_italic_leak = True
-        elif bool(p_elem.xpath('.//m:oMath | .//m:oMathPara', namespaces=ns)):
-            # Pattern 2: italic only after equations, not before
+        if ppr_bold and has_equations:
+            # Pattern 1 for bold: paragraph default has bold AND has equations
+            # (without equations, pPr bold is genuine — headings, titles)
+            has_eq_bold_leak = True
+        if has_equations and (not has_eq_italic_leak or not has_eq_bold_leak):
+            # Pattern 2: formatting only after equations, not before
             seen_eq = False
             italic_before = False
             italic_after = False
+            bold_before = False
+            bold_after = False
             for child in p_elem:
                 ctag = child.tag.split('}')[-1]
                 if ctag in ['oMath', 'oMathPara']:
                     seen_eq = True
                 elif ctag == 'r':
-                    ri = bool(child.xpath('.//w:i[not(@w:val="false")]', namespaces=ns))
                     rt = ''.join(t.text or '' for t in child.xpath('.//w:t', namespaces=ns))
-                    if ri and rt.strip():
-                        if seen_eq:
-                            italic_after = True
-                        else:
-                            italic_before = True
+                    if rt.strip():
+                        ri = bool(child.xpath('.//w:i[not(@w:val="false")]', namespaces=ns))
+                        rb = bool(child.xpath('.//w:b[not(@w:val="false")]', namespaces=ns))
+                        if ri:
+                            if seen_eq:
+                                italic_after = True
+                            else:
+                                italic_before = True
+                        if rb:
+                            if seen_eq:
+                                bold_after = True
+                            else:
+                                bold_before = True
             if italic_after and not italic_before:
                 has_eq_italic_leak = True
+            if bold_after and not bold_before:
+                has_eq_bold_leak = True
 
         for child in p_elem:
             tag = child.tag.split('}')[-1]
 
             if tag == 'r':
-                parts.append(self._convert_run(child, skip_italic=has_eq_italic_leak))
+                parts.append(self._convert_run(child, skip_italic=has_eq_italic_leak, skip_bold=has_eq_bold_leak))
             elif tag == 'hyperlink':
-                parts.append(self._convert_hyperlink(child, skip_italic=has_eq_italic_leak))
+                parts.append(self._convert_hyperlink(child, skip_italic=has_eq_italic_leak, skip_bold=has_eq_bold_leak))
             elif tag == 'drawing':
                 parts.append(self._convert_drawing(child))
             elif tag == 'oMath' and self.equation_converter:
@@ -847,11 +865,11 @@ class FullWordToHTMLConverter:
             return f'<h{heading_level}>{content}</h{heading_level}>'
         return f'<p>{content}</p>'
 
-    def _convert_run(self, r_elem, skip_italic=False):
+    def _convert_run(self, r_elem, skip_italic=False, skip_bold=False):
         ns = self.namespaces
         parts = []
 
-        bold = bool(r_elem.xpath('.//w:b[not(@w:val="false")]', namespaces=ns))
+        bold = bool(r_elem.xpath('.//w:b[not(@w:val="false")]', namespaces=ns)) and not skip_bold
         italic = bool(r_elem.xpath('.//w:i[not(@w:val="false")]', namespaces=ns)) and not skip_italic
         superscript = bool(r_elem.xpath('.//w:vertAlign[@w:val="superscript"]', namespaces=ns))
         subscript_text = bool(r_elem.xpath('.//w:vertAlign[@w:val="subscript"]', namespaces=ns))
@@ -904,11 +922,11 @@ class FullWordToHTMLConverter:
 
         return content
 
-    def _convert_hyperlink(self, h_elem, skip_italic=False):
+    def _convert_hyperlink(self, h_elem, skip_italic=False, skip_bold=False):
         ns = self.namespaces
         r_id = h_elem.get(f'{{{ns["r"]}}}id')
         href = self.relationships.get(r_id, {}).get('target', '#')
-        content = ''.join(self._convert_run(r, skip_italic=skip_italic) for r in h_elem.xpath('.//w:r', namespaces=ns))
+        content = ''.join(self._convert_run(r, skip_italic=skip_italic, skip_bold=skip_bold) for r in h_elem.xpath('.//w:r', namespaces=ns))
         return f'<a href="{href}">{content}</a>'
 
     def _convert_table(self, tbl_elem):
