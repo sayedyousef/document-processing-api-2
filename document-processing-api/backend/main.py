@@ -487,7 +487,13 @@ async def process_job(job_id: str, file_paths: List[Path], processor_type: str, 
                 "size": zip_file.stat().st_size,
                 "type": "application/zip"
             }
-            
+
+            # Preserve body_path from original results for copy-paste textarea
+            for tr in temp_results:
+                if tr.get("body_path"):
+                    zip_result["body_path"] = tr["body_path"]
+                    break
+
             # Replace results with just the ZIP
             jobs[job_id]["results"] = [zip_result]
             logger.info(f"✅ ZIP REPLACEMENT DONE: {jobs[job_id]['results']}")

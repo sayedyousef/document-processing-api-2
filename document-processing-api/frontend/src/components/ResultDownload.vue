@@ -131,10 +131,10 @@ export default {
     const bodyContent = ref(null)
     const bodyLoading = ref(false)
 
-    // Single file = exactly 1 successful result that is not a ZIP
+    // Single result = exactly 1 successful result (incl. ZIP from single-doc conversion)
     const isSingleFile = computed(() => {
       const successful = currentResults.value.filter(r => !r.error)
-      return successful.length === 1 && successful[0].type !== 'application/zip'
+      return successful.length === 1
     })
 
     // MathJax script for rendering equations
