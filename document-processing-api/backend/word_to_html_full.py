@@ -577,7 +577,7 @@ class FullWordToHTMLConverter:
             for fn in root.xpath('//w:footnote', namespaces=ns):
                 fn_id = fn.get(f'{{{ns["w"]}}}id')
                 if fn_id and fn_id not in ['0', '-1']:
-                    self.footnotes[fn_id] = self._convert_footnote_content(fn)
+                    self.footnotes[fn_id] = self._convert_footnote_content(fn, fn_id)
 
     def _load_footnotes_wordhtml(self, extract_dir):
         """Load footnotes with full formatting for wordhtml.com style output"""
@@ -590,9 +590,9 @@ class FullWordToHTMLConverter:
         for fn in root.xpath('//w:footnote', namespaces=ns):
             fn_id = fn.get(f'{{{ns["w"]}}}id')
             if fn_id and fn_id not in ['0', '-1']:
-                self.footnotes[fn_id] = self._convert_footnote_content(fn)
+                self.footnotes[fn_id] = self._convert_footnote_content(fn, fn_id)
 
-    def _convert_footnote_content(self, fn_elem):
+    def _convert_footnote_content(self, fn_elem, fn_id=None):
         """Convert footnote content with formatting preserved"""
         ns = self.namespaces
         parts = []
@@ -616,7 +616,11 @@ class FullWordToHTMLConverter:
             content = ''.join(p_parts)
             if content.strip():
                 parts.append(content)
-        return ' '.join(parts)
+        result = ' '.join(parts)
+        # Strip leading manual footnote number (some docs have it typed manually)
+        if fn_id:
+            result = re.sub(rf'^{re.escape(fn_id)}\s*', '', result)
+        return result
 
     def _extract_images(self, extract_dir, output_dir):
         media_dir = extract_dir / "word" / "media"
@@ -818,10 +822,15 @@ class FullWordToHTMLConverter:
         superscript = bool(r_elem.xpath('.//w:vertAlign[@w:val="superscript"]', namespaces=ns))
         subscript_text = bool(r_elem.xpath('.//w:vertAlign[@w:val="subscript"]', namespaces=ns))
 
+        # If run contains footnoteReference, skip text (it's just the visual number)
+        has_footnote_ref = bool(r_elem.xpath('.//w:footnoteReference', namespaces=ns))
+
         for child in r_elem:
             tag = child.tag.split('}')[-1]
 
             if tag == 't':
+                if has_footnote_ref:
+                    continue
                 parts.append(self._escape(child.text or ''))
             elif tag == 'drawing':
                 parts.append(self._convert_drawing(child))
