@@ -744,12 +744,21 @@ class FullWordToHTMLConverter:
         parts = []
 
         # Detect equation-context italic leak: Word's equation editor sometimes
-        # leaves italic on runs after equations even though text isn't italic.
-        # Pattern: paragraph has equations and italic appears only on runs
-        # AFTER the first equation, never before it.
+        # leaves italic on the paragraph default rPr (pPr/rPr/i) even though
+        # text isn't visually italic in Word. This affects:
+        # - Paragraphs with equations where italic leaked from equation editing
+        # - Adjacent paragraphs in the same section that inherited the leak
+        # Pattern 1: pPr/rPr has italic — the italic is paragraph-default,
+        #   almost always an equation-context artifact (genuine italic uses styles).
+        # Pattern 2: Paragraph has equations and italic appears only on runs
+        #   AFTER the first equation, never before it.
         has_eq_italic_leak = False
-        has_eq = bool(p_elem.xpath('.//m:oMath | .//m:oMathPara', namespaces=ns))
-        if has_eq:
+        ppr_italic = bool(p_elem.xpath('./w:pPr/w:rPr/w:i[not(@w:val="false")]', namespaces=ns))
+        if ppr_italic:
+            # Pattern 1: paragraph default has italic = equation context leak
+            has_eq_italic_leak = True
+        elif bool(p_elem.xpath('.//m:oMath | .//m:oMathPara', namespaces=ns)):
+            # Pattern 2: italic only after equations, not before
             seen_eq = False
             italic_before = False
             italic_after = False
@@ -774,7 +783,7 @@ class FullWordToHTMLConverter:
             if tag == 'r':
                 parts.append(self._convert_run(child, skip_italic=has_eq_italic_leak))
             elif tag == 'hyperlink':
-                parts.append(self._convert_hyperlink(child))
+                parts.append(self._convert_hyperlink(child, skip_italic=has_eq_italic_leak))
             elif tag == 'drawing':
                 parts.append(self._convert_drawing(child))
             elif tag == 'oMath' and self.equation_converter:
@@ -895,11 +904,11 @@ class FullWordToHTMLConverter:
 
         return content
 
-    def _convert_hyperlink(self, h_elem):
+    def _convert_hyperlink(self, h_elem, skip_italic=False):
         ns = self.namespaces
         r_id = h_elem.get(f'{{{ns["r"]}}}id')
         href = self.relationships.get(r_id, {}).get('target', '#')
-        content = ''.join(self._convert_run(r) for r in h_elem.xpath('.//w:r', namespaces=ns))
+        content = ''.join(self._convert_run(r, skip_italic=skip_italic) for r in h_elem.xpath('.//w:r', namespaces=ns))
         return f'<a href="{href}">{content}</a>'
 
     def _convert_table(self, tbl_elem):
