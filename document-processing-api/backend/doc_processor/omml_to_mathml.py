@@ -33,6 +33,29 @@ ACCENT_NAME_MAP = {
     'vec': '\u2192',      # right arrow
 }
 
+# Wingdings / Symbol font character map → Unicode equivalents
+# w:sym elements reference glyphs by font + char code (e.g. Wingdings 2 / F0CD)
+WSYM_MAP = {
+    ('Wingdings 2', 'F0CD'): '\u00D7',  # × multiplication sign
+    ('Wingdings 2', 'F0CE'): '\u00F7',  # ÷ division sign
+    ('Symbol', 'F0B4'): '\u00D7',       # × multiplication sign
+    ('Symbol', 'F0B8'): '\u00F7',       # ÷ division sign
+    ('Symbol', 'F0B1'): '\u00B1',       # ± plus-minus
+    ('Symbol', 'F0B2'): '\u2265',       # ≥ greater-or-equal
+    ('Symbol', 'F0A3'): '\u2264',       # ≤ less-or-equal
+    ('Symbol', 'F0B9'): '\u2260',       # ≠ not equal
+    ('Symbol', 'F0C5'): '\u221E',       # ∞ infinity
+    ('Symbol', 'F0D6'): '\u221A',       # √ square root
+}
+
+
+def _resolve_wsym(sym_elem, ns):
+    """Resolve w:sym element to a Unicode character."""
+    font = sym_elem.get(f'{{{ns["w"]}}}font', '')
+    char = sym_elem.get(f'{{{ns["w"]}}}char', '')
+    return WSYM_MAP.get((font, char), '')
+
+
 # Function names that should be rendered upright in MathML
 FUNCTION_NAMES = {
     'sin', 'cos', 'tan', 'sec', 'csc', 'cot',
@@ -187,9 +210,18 @@ class OmmlToMathMLConverter:
             # Some docs use w:rFonts with double-struck fonts
             pass
 
-        # Get text content
-        texts = elem.xpath('.//m:t/text()', namespaces=self.ns)
-        text = ''.join(texts)
+        # Get text content (m:t text nodes + w:sym symbol elements)
+        parts = []
+        for child in elem:
+            ctag = child.tag.split('}')[-1]
+            if ctag == 't':
+                parts.append(child.text or '')
+            elif ctag == 'sym':
+                # w:sym — symbol from a special font (e.g. Wingdings)
+                sym_char = _resolve_wsym(child, self.ns)
+                if sym_char:
+                    parts.append(sym_char)
+        text = ''.join(parts)
 
         if not text:
             return ''

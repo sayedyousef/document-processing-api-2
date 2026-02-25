@@ -905,6 +905,11 @@ class FullWordToHTMLConverter:
                     parts.append(self._convert_drawing(drawing[0]))
                 elif pict:
                     parts.append(self._convert_pict(pict[0]))
+            elif tag == 'sym':
+                # w:sym — symbol from special font (e.g. Wingdings 2 × sign)
+                sym_char = self._resolve_sym(child)
+                if sym_char:
+                    parts.append(self._escape(sym_char))
             elif tag == 'footnoteReference':
                 fn_id = child.get(f'{{{ns["w"]}}}id')
                 # wordhtml.com format for both modes: <a href="#_ftn1" name="_ftnref1">[1]</a>
@@ -1074,6 +1079,27 @@ class FullWordToHTMLConverter:
             return f'<span class="shape-text">{" ".join(texts)}</span>'
 
         return ''
+
+    # Wingdings / Symbol font → Unicode mapping for w:sym elements
+    WSYM_MAP = {
+        ('Wingdings 2', 'F0CD'): '\u00D7',  # × multiplication sign
+        ('Wingdings 2', 'F0CE'): '\u00F7',  # ÷ division sign
+        ('Symbol', 'F0B4'): '\u00D7',       # × multiplication sign
+        ('Symbol', 'F0B8'): '\u00F7',       # ÷ division sign
+        ('Symbol', 'F0B1'): '\u00B1',       # ± plus-minus
+        ('Symbol', 'F0B2'): '\u2265',       # ≥ greater-or-equal
+        ('Symbol', 'F0A3'): '\u2264',       # ≤ less-or-equal
+        ('Symbol', 'F0B9'): '\u2260',       # ≠ not equal
+        ('Symbol', 'F0C5'): '\u221E',       # ∞ infinity
+        ('Symbol', 'F0D6'): '\u221A',       # √ square root
+    }
+
+    def _resolve_sym(self, sym_elem):
+        """Resolve w:sym element to Unicode character."""
+        ns = self.namespaces
+        font = sym_elem.get(f'{{{ns["w"]}}}font', '')
+        char = sym_elem.get(f'{{{ns["w"]}}}char', '')
+        return self.WSYM_MAP.get((font, char), '')
 
     def _escape(self, text):
         if not text:
